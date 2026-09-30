@@ -58,6 +58,7 @@
         .banner-text h2 { font-size: 24px; font-weight: 800; }
         .banner-icon { font-size: 56px; opacity: 0.85; }
 
+        /* شبكة المواد بالرئيسية */
         .subjects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 14px; margin-bottom: 24px; }
         .subject-box { background: white; border-radius: 14px; padding: 18px 10px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .subject-box i { font-size: 26px; }
@@ -76,22 +77,34 @@
         .dashboard-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
         .dash-card { background: white; border-radius: 16px; border: 1px solid var(--border-color); padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; font-weight: 700; font-size: 15px; }
-        
+
         .action-btn { width: 100%; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .blue-btn { background: var(--primary); }
         .green-btn { background: #10b981; }
         .purple-btn { background: #8b5cf6; }
-        .orange-btn { background: #f59e0b; }
 
         .back-home-btn { background: #e2e8f0; color: #334155; padding: 8px 16px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
 
-        /* صفحة المواد الموحدة التفاعلية */
-        .subject-page-header { background: linear-gradient(135deg, #4f46e5, #3f51b5); color: white; padding: 20px 25px; border-radius: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .subject-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 24px; }
-        .subject-inner-card { background: white; border-radius: 16px; border: 1px solid var(--border-color); padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-        .subject-inner-card h3 { font-size: 17px; margin-bottom: 12px; color: var(--primary-dark); display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
+        /* صفحة المادة والأيقونات المخصصة */
+        .subject-page-header { background: linear-gradient(135deg, #4f46e5, #3730a3); color: white; padding: 22px 28px; border-radius: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
 
-        .sub-input { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; font-size: 14px; }
+        /* شبكة الأيقونات الصغيرة للخدمات داخل المادة */
+        .feature-icons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 24px; }
+        .feature-box { background: white; border-radius: 14px; padding: 16px 12px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .feature-box i { font-size: 24px; }
+        .feature-box span { font-size: 12px; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
+        .feature-box:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 6px 12px rgba(79, 70, 229, 0.12); }
+
+        .icon-blue i { color: #3b82f6; }
+        .icon-purple i { color: #8b5cf6; }
+        .icon-orange i { color: #f59e0b; }
+        .icon-green i { color: #10b981; }
+        .icon-red i { color: #ef4444; }
+        .icon-cyan i { color: #06b6d4; }
+
+        .feature-details-card { background: white; border-radius: 16px; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: none; }
+        .feature-details-card.active-details { display: block; }
+        .feature-details-card h3 { font-size: 16px; color: var(--primary-dark); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: white; padding: 25px; border-radius: 16px; width: 90%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
@@ -104,7 +117,7 @@
         .cancel-btn { background: #e2e8f0; color: #475569; }
 
         @media (max-width: 900px) {
-            .top-grid, .dashboard-cards-grid, .subject-cards-grid { grid-template-columns: 1fr; }
+            .top-grid, .dashboard-cards-grid { grid-template-columns: 1fr; }
             .sidebar { width: 70px; padding: 12px 6px; }
             .menu-item span, .logout-btn span { display: none; }
         }
@@ -175,7 +188,7 @@
                     </div>
                 </div>
 
-                <!-- شبكة المواد (جميعها تتفاعل الآن وتفتح النظام المخصص) -->
+                <!-- شبكة المواد الرئيسية -->
                 <div class="subjects-grid">
                     <div class="subject-box arabic" onclick="openSubjectPage('اللغة العربية')">
                         <i class="fa-solid fa-book"></i>
@@ -218,7 +231,7 @@
                             <a href="javascript:void(0)" onclick="openSubjectPage('اللغة العربية')">فتح المنهج</a>
                         </div>
                         <div class="card-body">
-                            <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">اختر أي مادة لتصفح الملخصات، حلول التمارين، والأسئلة المهمة.</p>
+                            <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">اختر أي مادة لتصفح الشروحات، التلخيصات، والأسئلة المرشحة.</p>
                             <button class="action-btn blue-btn" onclick="openSubjectPage('اللغة العربية')"><i class="fa-solid fa-book-bookmark"></i> استعراض المواد</button>
                         </div>
                     </div>
@@ -249,86 +262,108 @@
 
             </div>
 
-            <!-- صفحة المواد الموحدة التفاعلية -->
+            <!-- صفحة المادة المخصصة المزودة بـ 6 أيقونات صغيرة تفاعلية -->
             <div id="dynamic-subject-page" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 
                 <div class="subject-page-header">
                     <div>
                         <h2 id="page-subject-title">مادة الدراسة</h2>
-                        <p style="font-size:13px; opacity:0.9;">التلخيص، حلول أسئلة المراجعة، الإجابة الذكية، والأهم امتحاناً</p>
+                        <p style="font-size:13px; opacity:0.9;">اختر من الأيقونات أدناه للوصول السريع للخدمة المطلوبة:</p>
                     </div>
-                    <i class="fa-solid fa-book-bookmark" style="font-size:40px;"></i>
+                    <i class="fa-solid fa-graduation-cap" style="font-size:40px;"></i>
                 </div>
 
-                <div class="subject-cards-grid">
-                    <!-- 1. التلخيص -->
-                    <div class="subject-inner-card">
-                        <h3><i class="fa-solid fa-bolt" style="color:#f59e0b;"></i> 1. تلخيص الفصول الأولى</h3>
-                        <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">ملخص شامل لأهم القواعد والمفاهيم المقررة:</p>
-                        <ul style="font-size:13px; line-height:1.7; margin-right:18px;">
-                            <li><strong>المفهوم الرئيسي:</strong> تركيز كامل على الفكرة الجوهرية للدرس والمادة.</li>
-                            <li><strong>القواعد والتعاليل:</strong> توضيح الأسباب والنتائج الوزارية والمدرسية.</li>
-                            <li><strong>الخلاصة:</strong> أهم النقاط المعتمدة للامتحانات الشهرية.</li>
-                        </ul>
+                <!-- شريط الأيقونات الصغيرة التفاعلية الستة -->
+                <div class="feature-icons-grid">
+                    <div class="feature-box icon-blue" onclick="showFeatureDetails('video-section')">
+                        <i class="fa-solid fa-circle-play"></i>
+                        <span>شرح المادة والدرس</span>
                     </div>
 
-                    <!-- 2. حلول أسئلة المراجعة -->
-                    <div class="subject-inner-card">
-                        <h3><i class="fa-solid fa-circle-check" style="color:#10b981;"></i> 2. حلول أسئلة المراجعة</h3>
-                        <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">إجابات كاملة وتفصيلية لأسئلة الكتاب المدرسي:</p>
-                        <button class="action-btn green-btn" onclick="toggleSubSolutions(this)"><i class="fa-solid fa-eye"></i> عرض حلول الأسئلة</button>
-                        <div id="sub-solutions-box" style="display:none; margin-top:12px; font-size:13px; background:#f0fdf4; padding:10px; border-radius:8px;">
-                            <p><strong>س/ ما هي الأهمية الأساسية لهذا الدرس؟</strong></p>
-                            <p>ج/ يهدف لفهم التطبيقات العملية وتسهيل الحلول في التمارين والأنشطة.</p>
-                        </div>
+                    <div class="feature-box icon-purple" onclick="showFeatureDetails('summary-section')">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                        <span>شرح وتلخيص الوحدة</span>
                     </div>
 
-                    <!-- 3. المساعد الذكي للإجابة -->
-                    <div class="subject-inner-card">
-                        <h3><i class="fa-solid fa-robot" style="color:var(--primary);"></i> 3. الإجابة الذكية عن سؤال</h3>
-                        <input type="text" id="sub-question-input" class="sub-input" placeholder="اكتب سؤالك في هذه المادة هنا...">
-                        <button class="action-btn blue-btn" onclick="answerSubQuestion()"><i class="fa-solid fa-paper-plane"></i> إرسال للحصول على الإجابة</button>
-                        <div id="sub-answer-result" style="display:none; margin-top:10px; font-size:13px; background:#e0e7ff; padding:10px; border-radius:8px;"></div>
+                    <div class="feature-box icon-orange" onclick="showFeatureDetails('notes-section')">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>ملخصات مهمة عن الوحدة</span>
                     </div>
 
-                    <!-- 4. الكاميرا الذكية -->
-                    <div class="subject-inner-card">
-                        <h3><i class="fa-solid fa-camera" style="color:#8b5cf6;"></i> 4. الكاميرا الذكية للملاحظات</h3>
-                        <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">إرفاق صورة سبورة المادة لشرح أو تحليل محتواها:</p>
-                        <button class="action-btn purple-btn" onclick="showSection('board-page')"><i class="fa-solid fa-camera"></i> فتح كاميرا السبورة</button>
+                    <div class="feature-box icon-green" onclick="showFeatureDetails('solutions-section')">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>حل أسئلة وتمرينات الفصل</span>
+                    </div>
+
+                    <div class="feature-box icon-cyan" onclick="showFeatureDetails('questions-section')">
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        <span>أسئلة مهمة تخص الفصل</span>
+                    </div>
+
+                    <div class="feature-box icon-red" onclick="showFeatureDetails('exam-section')">
+                        <i class="fa-solid fa-star"></i>
+                        <span>أسئلة مرشحة للامتحان</span>
                     </div>
                 </div>
 
-                <!-- 5. الأسئلة المهمة جداً جداً للامتحان الشهري -->
-                <div class="dash-card" style="margin-bottom:20px;">
-                    <h3 style="color:#b45309; font-size:18px; margin-bottom:12px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i> 5. الأسئلة المهمة جداً جداً (مرشحات الامتحان الشهري)</h3>
-                    <div style="font-size:14px; line-height:1.8; background:#fffbeb; padding:16px; border-radius:12px; border:1px solid #fde68a;">
-                        <p style="color:#92400e; font-weight:bold; margin-bottom:6px;">⚠️ أهم الأسئلة المتوقعة في الاختبار الشهري لهذه المادة:</p>
-                        
-                        <p><strong>س1/ اذكر باختصار أهم المفاهيم والتعاريف المقررة:</strong></p>
-                        <ul style="margin-right:20px; margin-bottom:10px;">
-                            <li>توضيح الخصائص الأساسية وتطبيق القوانين الخاصة بالمنهج.</li>
-                        </ul>
-
-                        <p><strong>س2/ علل ما يأتي علمياً ومنهجياً:</strong></p>
-                        <ul style="margin-right:20px; margin-bottom:10px;">
-                            <li>سبب حدوث الظاهرة أو القاعدة المذكورة في الفصل الأول والثاني.</li>
-                        </ul>
-
-                        <p><strong>س3/ المسألة أو المقارنة الرئيسية:</strong></p>
-                        <div style="background:white; padding:8px; border-radius:6px; border:1px solid #fcd34d; font-size:13px;">
-                            <strong>نصيحة المدرس:</strong> تركز الأسئلة الشهرية بنسبة كبيرة على فهم المقارنات والتمارين العامة في نهاية الفصول.
-                        </div>
+                <!-- كروت تفاصيل الخدمة المعروضة عند الضغط على الأيقونة -->
+                <div id="video-section" class="feature-details-card active-details">
+                    <h3><i class="fa-solid fa-circle-play" style="color:#3b82f6;"></i> 🎥 شرح المادة والدروس المرفوقة</h3>
+                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">روابط وتوضيحات الدرس الحالي من المنهج:</p>
+                    <div style="background:#f0f9ff; padding:12px; border-radius:8px; border-right:4px solid #3b82f6; font-size:13px;">
+                        <strong>درس اليوم المقرر:</strong> قراءة الشرح ومتابعة الدرس الأول للوحدة الحالية بكراس الطالب.
                     </div>
                 </div>
+
+                <div id="summary-section" class="feature-details-card">
+                    <h3><i class="fa-solid fa-book-open-reader" style="color:#8b5cf6;"></i> 📖 شرح وتلخيص الوحدة</h3>
+                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">ملخص مكثف وقواعد الوحدة الحالية:</p>
+                    <ul style="font-size:13px; line-height:1.7; margin-right:18px;">
+                        <li><strong>القواعد والأساسيات:</strong> أهم النقاط والتعاريف الشاملة المقررة في المنهج.</li>
+                        <li><strong>الشرح والملاحظات:</strong> الخطوات النموذجية المطلوبة للحفظ والفهم.</li>
+                    </ul>
+                </div>
+
+                <div id="notes-section" class="feature-details-card">
+                    <h3><i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> 💡 ملخصات مهمة عن الوحدة</h3>
+                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">ملاحظات ذهبية وسريعة للمراجعة قبل الامتحان:</p>
+                    <div style="background:#fffbeb; padding:12px; border-radius:8px; border-right:4px solid #f59e0b; font-size:13px;">
+                        <strong>ملاحظة المدرس:</strong> التركيز على القوانين والمقارنات الرئيسية المدرجة في الصفحات الأخيرة من الفصل.
+                    </div>
+                </div>
+
+                <div id="solutions-section" class="feature-details-card">
+                    <h3><i class="fa-solid fa-pen-to-square" style="color:#10b981;"></i> 📝 حل أسئلة وتمرينات الفصل</h3>
+                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">الحلول التفصيلية لتمارين نهاية الفصل والكراس:</p>
+                    <div style="background:#f0fdf4; padding:12px; border-radius:8px; border-right:4px solid #10b981; font-size:13px;">
+                        <strong>الحل النموذجي:</strong> خطوة بخطوة وفق نموذج الإجابة المعتمد في التصحيح.
+                    </div>
+                </div>
+
+                <div id="questions-section" class="feature-details-card">
+                    <h3><i class="fa-solid fa-file-circle-question" style="color:#06b6d4;"></i> ❓ أسئلة مهمة تخص الفصل</h3>
+                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">بنك أسئلة واختبارات المفاهيم:</p>
+                    <ul style="font-size:13px; line-height:1.7; margin-right:18px;">
+                        <li><strong>س/ علل واشرح التفاصيل المنهجية؟</strong> (تتكرر في الاختبارات الشهرية).</li>
+                        <li><strong>س/ أكمل الفراغات أو اختر الإجابة المناسبة.</strong></li>
+                    </ul>
+                </div>
+
+                <div id="exam-section" class="feature-details-card">
+                    <h3><i class="fa-solid fa-star" style="color:#ef4444;"></i> 🎯 أسئلة مرشحة للامتحان (مهم جداً)</h3>
+                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">أهم المرشحات الضامنة للدرجة الكاملة في الامتحان الشهري:</p>
+                    <div style="background:#fef2f2; padding:14px; border-radius:8px; border-right:4px solid #ef4444; font-size:13px; color:#991b1b;">
+                        <strong>الأسئلة الأكثر تكراراً:</strong> المقارنة بين المفهومين الرئيسيين + تطبيق المسألة أو التمرين الشامل للفصل.
+                    </div>
+                </div>
+
             </div>
 
-            <!-- صفحة السبورة والملاحظات -->
+            <!-- بقية الأقسام -->
             <div id="board-page" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 <h2>📷 السبورة والملاحظات اليومية</h2>
-                <p style="margin-top:10px; color:var(--text-muted);">قم برفع أو التقاط صورة سبورة الدرس لقراءتها وتحليلها.</p>
             </div>
 
             <div id="homework" class="content-section">
@@ -395,35 +430,18 @@
             }
         }
 
-        // فتح صفحة المادة الموحدة لأيقونة مبرمجة
         function openSubjectPage(subjectName) {
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active-section'));
             document.getElementById('dynamic-subject-page').classList.add('active-section');
-            document.getElementById('page-subject-title').innerText = '📖 مادة ' + subjectName + ' - الصف الثاني متوسط';
+            document.getElementById('page-subject-title').innerText = '📖 منهج مادة ' + subjectName + ' - الصف الثاني متوسط';
+            showFeatureDetails('video-section');
         }
 
-        function toggleSubSolutions(btn) {
-            const box = document.getElementById('sub-solutions-box');
-            if(box.style.display === 'none') {
-                box.style.display = 'block';
-                btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> إخفاء الحلول';
-            } else {
-                box.style.display = 'none';
-                btn.innerHTML = '<i class="fa-solid fa-eye"></i> عرض حلول الأسئلة';
-            }
-        }
-
-        function answerSubQuestion() {
-            const input = document.getElementById('sub-question-input').value.trim();
-            const resultBox = document.getElementById('sub-answer-result');
-
-            if(!input) {
-                alert('يرجى كتابة السؤال أولاً!');
-                return;
-            }
-
-            resultBox.innerHTML = `<strong>الإجابة الذكية عن (${input}):</strong><br> تم تحليل السؤال وفقاً لمنهج وزارة التربية للصف الثاني متوسط، والإجابة النموذجية تعتمد على الخطوات الأساسية المقررة في الكتاب.`;
-            resultBox.style.display = 'block';
+        // التبديل بين كروت الأيقونات الصغيرة الستة داخل المادة
+        function showFeatureDetails(featureId) {
+            document.querySelectorAll('.feature-details-card').forEach(card => card.classList.remove('active-details'));
+            const target = document.getElementById(featureId);
+            if(target) target.classList.add('active-details');
         }
 
         function openEditModal() {
