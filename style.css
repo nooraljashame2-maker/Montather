@@ -1,4 +1,3 @@
-
 * {
     box-sizing: border-box;
     font-family: 'Tajawal', sans-serif;
@@ -43,29 +42,6 @@ body {
     color: #777;
 }
 
-.top-actions {
-    display: flex;
-    gap: 12px;
-}
-
-.top-btn {
-    background: #f0f4f8;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 14px;
-    position: relative;
-}
-
-.badge {
-    background: #e74c3c;
-    color: white;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 50%;
-}
-
 /* التقسيم الرئيسي */
 .app-layout {
     display: flex;
@@ -104,129 +80,22 @@ body {
     color: white;
 }
 
-.sidebar-footer {
-    padding: 20px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-}
-
-.logout-btn {
-    color: #f8d7da;
-    text-decoration: none;
-    font-size: 14px;
-}
-
 /* منطقة المحتوى */
 .main-content {
     flex: 1;
     padding: 20px;
 }
 
-.content-section {
-    display: none;
-}
-
-.content-section.active-section {
-    display: block;
-}
-
-/* زر العودة للرئيسية */
-.back-home-btn {
-    background-color: #1d72b8;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-size: 15px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-/* الشبكة العلوية */
-.top-grid {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.student-card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-}
-
-.avatar-box {
-    width: 65px;
-    height: 65px;
-    background: #e3f2fd;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.avatar-icon {
-    font-size: 32px;
-    color: #1d72b8;
-}
-
-.student-info h3 {
-    font-size: 18px;
-    margin-bottom: 4px;
-}
-
-.student-info p {
-    font-size: 13px;
-    color: #666;
-}
-
-.edit-btn {
-    background: none;
-    border: none;
-    color: #1d72b8;
-    font-size: 12px;
-    cursor: pointer;
-    margin-top: 6px;
-}
-
-.banner-card {
-    background: linear-gradient(135deg, #a8e6cf, #dbede3);
-    border-radius: 15px;
-    padding: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.banner-text h3 {
-    color: #2d572c;
-    font-size: 18px;
-}
-
-.banner-text h2 {
-    color: #1b4332;
-    font-size: 24px;
-}
-
-.banner-icon {
-    font-size: 50px;
-    color: #2d572c;
-}
-
-/* المواد الدراسية Grid */
+/* شبكة الأيقونات الست */
 .subjects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
     margin-bottom: 20px;
 }
 
 .subject-box {
-    padding: 15px 10px;
+    padding: 20px 10px;
     border-radius: 12px;
     color: white;
     text-align: center;
@@ -235,153 +104,89 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    font-size: 13px;
-    font-weight: bold;
-    position: relative;
-}
-
-.arabic { background-color: #00bcd4; }
-.math1 { background-color: #2196f3; }
-.english { background-color: #f44336; }
-.math2 { background-color: #4caf50; }
-.social { background-color: #ff9800; }
-.islamic { background-color: #9c27b0; }
-.biology { background-color: #e91e63; }
-.chemistry { background-color: #3f51b5; }
-.physics { background-color: #ff5722; }
-
-/* البطاقات الرئيسية */
-.dashboard-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.dash-card {
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
     font-size: 14px;
     font-weight: bold;
-}
-
-.card-header a {
-    color: #1d72b8;
     text-decoration: none;
-    font-size: 12px;
+    background-color: #9c27b0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
 }
 
-.card-body h4 {
-    font-size: 16px;
-    color: #1d72b8;
+.subject-box:active {
+    transform: scale(0.97);
 }
 
-.action-btn {
-    width: 100%;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.blue-btn { background-color: #2196f3; }
-.green-btn { background-color: #28a745; }
-.purple-btn { background-color: #9c27b0; }
-
-.mini-table {
-    width: 100%;
-    font-size: 12px;
-    border-collapse: collapse;
-}
-
-.mini-table th, .mini-table td {
-    padding: 6px;
-    text-align: center;
-}
-
-.badge-grade {
-    font-weight: bold;
-    border-radius: 4px;
-    padding: 2px 6px;
-}
-
-.badge-grade.green { background: #d4edda; color: #155724; }
-.badge-grade.yellow { background: #fff3cd; color: #856404; }
-
-.progress-circle {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 6px solid #28a745;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 18px;
-    margin: 0 auto 10px auto;
-}
-
-.level-body {
-    text-align: center;
-    font-size: 12px;
-}
-
-/* Modal تعديل البيانات */
+/* تصميم النوافذ المنبثقة (Modals) بطريقة الـ CSS النقي */
 .modal {
     display: none;
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
     background: rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
+    z-index: 1000;
+}
+
+/* إظهار النافذة المستهدفة حصراً عند النقر عليها */
+.modal:target {
+    display: flex;
 }
 
 .modal-content {
     background: white;
     padding: 25px;
     border-radius: 12px;
-    width: 320px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease;
 }
 
-.input-group {
+.modal-content h3 {
+    color: #1d72b8;
     margin-bottom: 12px;
+    font-size: 18px;
 }
 
-.input-group label {
-    display: block;
-    font-size: 13px;
-    margin-bottom: 4px;
+.modal-content p, .modal-content ul {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
-.input-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
+.modal-content ul {
+    padding-right: 20px;
+    margin-top: 8px;
+}
+
+/* زر إغلاق النافذة */
+.close-modal-link {
+    background: #dc3545;
+    color: white;
+    text-decoration: none;
+    padding: 8px 18px;
     border-radius: 6px;
+    display: inline-block;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
 }
 
-.modal-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.save-modal-btn { background: #28a745; color: white; border: none; padding: 8px; flex: 1; border-radius: 6px; cursor: pointer; }
-.close-modal-btn { background: #dc3545; color: white; border: none; padding: 8px; flex: 1; border-radius: 6px; cursor: pointer; }
-
-@media (max-width: 900px) {
-    .top-grid, .dashboard-cards-grid {
-        grid-template-columns: 1fr;
+@media (max-width: 768px) {
+    .app-layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
     }
 }
