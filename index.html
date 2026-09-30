@@ -91,25 +91,20 @@
         .blue-btn { background: var(--primary); }
         .green-btn { background: #10b981; }
         .purple-btn { background: #8b5cf6; }
-        .orange-btn { background: #f59e0b; }
 
         .back-home-btn { background: #e2e8f0; color: #334155; padding: 8px 16px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
 
-        /* أداة التلخيص وحل التمارين والتخمين الامتحاني */
-        .tool-box { background: white; border-radius: 16px; padding: 20px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-        .tool-box h3 { margin-bottom: 14px; font-size: 18px; color: var(--primary-dark); display: flex; align-items: center; gap: 10px; }
-        .form-row { display: flex; gap: 12px; margin-bottom: 15px; flex-wrap: wrap; }
-        .form-control { flex: 1; min-width: 180px; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; }
-        
-        .summary-result { background: #f8fafc; border-right: 4px solid var(--primary); padding: 16px; border-radius: 8px; margin-top: 15px; display: none; }
-        .summary-result h4 { color: var(--primary); margin-bottom: 8px; }
-        .summary-result ul { margin-right: 20px; font-size: 14px; line-height: 1.6; }
+        /* قسم السبورة والملاحظات المتقدم */
+        .board-upload-card { background: white; border-radius: 16px; padding: 24px; border: 1px solid var(--border-color); margin-bottom: 20px; }
+        .upload-dropzone { border: 2px dashed #818cf8; background: #f5f3ff; padding: 30px; border-radius: 14px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 20px; }
+        .upload-dropzone:hover { background: #ede9fe; border-color: var(--primary); }
+        .upload-dropzone i { font-size: 48px; color: var(--primary); margin-bottom: 12px; }
 
-        .solution-box { background: #f0fdf4; border-right: 4px solid #10b981; padding: 16px; border-radius: 8px; margin-top: 15px; display: none; }
-        .solution-box h4 { color: #15803d; margin-bottom: 8px; }
+        .board-preview-box { display: grid; grid-template-columns: 300px 1fr; gap: 20px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; margin-top: 15px; }
+        .board-img-container { width: 100%; height: 220px; border-radius: 8px; overflow: hidden; background: #000; border: 1px solid var(--border-color); }
+        .board-img-container img { width: 100%; height: 100%; object-fit: contain; }
 
-        .questions-box { background: #fffbeb; border-right: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin-top: 15px; display: none; }
-        .questions-box h4 { color: #b45309; margin-bottom: 8px; }
+        .analysis-text-box { background: white; padding: 16px; border-radius: 10px; border-right: 4px solid var(--primary); font-size: 14px; line-height: 1.7; }
 
         /* نافذة التعديل (Modal) */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
@@ -124,7 +119,7 @@
         .cancel-btn { background: #e2e8f0; color: #475569; }
 
         @media (max-width: 900px) {
-            .top-grid, .dashboard-cards-grid { grid-template-columns: 1fr; }
+            .top-grid, .dashboard-cards-grid, .board-preview-box { grid-template-columns: 1fr; }
             .sidebar { width: 70px; padding: 12px 6px; }
             .menu-item span, .logout-btn span { display: none; }
         }
@@ -151,10 +146,10 @@
         <aside class="sidebar">
             <nav class="sidebar-menu">
                 <a href="javascript:void(0)" class="menu-item active" onclick="showSection('main-dashboard', this)"><i class="fa-solid fa-house"></i> <span>الرئيسية</span></a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('board-page', this)"><i class="fa-solid fa-camera"></i> <span>السبورة والملاحظات</span></a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('pdf-reader-page', this)"><i class="fa-solid fa-book-bookmark"></i> <span>عارض الكتب والملفات</span></a>
                 <a href="javascript:void(0)" class="menu-item" onclick="showSection('summaries-page', this)"><i class="fa-solid fa-bolt"></i> <span>التلخيص والحل والأسئلة</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="showSection('subjects-page', this)"><i class="fa-solid fa-book-open"></i> <span>المواد والمناهج</span></a>
                 <a href="javascript:void(0)" class="menu-item" onclick="showSection('homework', this)"><i class="fa-solid fa-list-check"></i> <span>واجباتي</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="showSection('board', this)"><i class="fa-solid fa-camera"></i> <span>السبورة والملاحظات</span></a>
                 <a href="javascript:void(0)" class="menu-item" onclick="showSection('tests', this)"><i class="fa-solid fa-file-pen"></i> <span>الاختبارات</span></a>
                 <a href="javascript:void(0)" class="menu-item" onclick="showSection('grades', this)"><i class="fa-solid fa-chart-column"></i> <span>الدرجات الشهرية</span></a>
                 <a href="javascript:void(0)" class="menu-item" onclick="showSection('analytics', this)"><i class="fa-solid fa-chart-line"></i> <span>مستوى الطالب</span></a>
@@ -198,35 +193,35 @@
 
                 <!-- شبكة المواد -->
                 <div class="subjects-grid">
-                    <div class="subject-box arabic" onclick="openSubjectDetails('اللغة العربية')">
+                    <div class="subject-box arabic" onclick="openPdfBook('اللغة العربية', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">
                         <i class="fa-solid fa-book"></i>
                         <span>اللغة العربية</span>
                     </div>
-                    <div class="subject-box math1" onclick="openSubjectDetails('الرياضيات')">
+                    <div class="subject-box math1" onclick="openPdfBook('الرياضيات', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">
                         <i class="fa-solid fa-calculator"></i>
                         <span>الرياضيات</span>
                     </div>
-                    <div class="subject-box english" onclick="openSubjectDetails('اللغة الإنجليزية')">
+                    <div class="subject-box english" onclick="openPdfBook('اللغة الإنجليزية', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">
                         <i class="fa-solid fa-language"></i>
                         <span>اللغة الانجليزية</span>
                     </div>
-                    <div class="subject-box social" onclick="openSubjectDetails('الاجتماعيات')">
+                    <div class="subject-box social" onclick="openPdfBook('الاجتماعيات', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">
                         <i class="fa-solid fa-globe"></i>
                         <span>الاجتماعيات</span>
                     </div>
-                    <div class="subject-box islamic" onclick="openSubjectDetails('التربية الإسلامية')">
+                    <div class="subject-box islamic" onclick="openPdfBook('التربية الإسلامية', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">
                         <i class="fa-solid fa-mosque"></i>
                         <span>الإسلامية</span>
                     </div>
-                    <div class="subject-box biology" onclick="openSubjectDetails('الأحياء')">
+                    <div class="subject-box biology" onclick="openPdfBook('الأحياء', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">
                         <i class="fa-solid fa-dna"></i>
                         <span>الأحياء</span>
                     </div>
-                    <div class="subject-box chemistry" onclick="openSubjectDetails('الكيمياء')">
+                    <div class="subject-box chemistry" onclick="openPdfBook('الكيمياء', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">
                         <i class="fa-solid fa-flask"></i>
                         <span>الكيمياء</span>
                     </div>
-                    <div class="subject-box physics" onclick="openSubjectDetails('الفيزياء')">
+                    <div class="subject-box physics" onclick="openPdfBook('الفيزياء', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')">
                         <i class="fa-solid fa-atom"></i>
                         <span>الفيزياء</span>
                     </div>
@@ -235,23 +230,23 @@
                 <div class="dashboard-cards-grid">
                     <div class="dash-card">
                         <div class="card-header">
-                            <span><i class="fa-solid fa-bolt"></i> التلخيص وحل التمارين</span>
-                            <a href="javascript:void(0)" onclick="showSection('summaries-page')">الأداة الذكية</a>
+                            <span><i class="fa-solid fa-camera"></i> صورة السبورة الشارحة</span>
+                            <a href="javascript:void(0)" onclick="showSection('board-page')">فتح الكاميرا</a>
                         </div>
                         <div class="card-body">
-                            <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">تلخيص الوحدات وحل التمارين تلقائياً.</p>
-                            <button class="action-btn purple-btn" onclick="showSection('summaries-page')"><i class="fa-solid fa-wand-magic-sparkles"></i> التلخيص والحل</button>
+                            <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">إرفاق صورة السبورة ليقوم البرنامج بقراءتها وشرحها ذكياً.</p>
+                            <button class="action-btn purple-btn" onclick="showSection('board-page')"><i class="fa-solid fa-camera"></i> التقاط/رفع صورة السبورة</button>
                         </div>
                     </div>
 
                     <div class="dash-card">
                         <div class="card-header">
-                            <span><i class="fa-solid fa-file-signature"></i> الأسئلة الامتحانية الذكية</span>
-                            <a href="javascript:void(0)" onclick="showSection('summaries-page')">عرض الأسئلة</a>
+                            <span><i class="fa-solid fa-book-open"></i> تصفح الكتاب المدرسّي</span>
+                            <a href="javascript:void(0)" onclick="showSection('pdf-reader-page')">المكتبة</a>
                         </div>
                         <div class="card-body">
-                            <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">تخمين أهم الأسئلة التي يطرحها المدرس في الشهرية.</p>
-                            <button class="action-btn orange-btn" onclick="showSection('summaries-page')"><i class="fa-solid fa-lightbulb"></i> استخراج الأسئلة الشهريّة</button>
+                            <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">تصفح الكتاب بملف PDF تفاعلي مباشر داخل التطبيق.</p>
+                            <button class="action-btn blue-btn" onclick="openPdfBook('اللغة العربية', 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf')"><i class="fa-solid fa-book-bookmark"></i> قراءة كتاب العربية</button>
                         </div>
                     </div>
 
@@ -270,133 +265,85 @@
 
             </div>
 
-            <!-- قسم التلخيص الذكي وحل التمارين وتوليد الأسئلة الامتحانية -->
-            <div id="summaries-page" class="content-section">
+            <!-- قسم السبورة والملاحظات المتقدم المعزز بالشرح الذكي -->
+            <div id="board-page" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2 style="margin-bottom: 15px;">⚡ المنصة الذكية للتلخيص والحل وتوليد الأسئلة</h2>
+                
+                <div class="board-upload-card">
+                    <h2 style="margin-bottom: 10px;"><i class="fa-solid fa-camera" style="color:var(--primary)"></i> السبورة والملاحظات اليومية</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">قم بإرفاق صورة سبورة الدرس المكتوبة من التابلت أو الكاميرا ليقوم البرنامج بقراءتها وشرحها تلقائياً:</p>
 
-                <!-- 1. أداة التلخيص -->
-                <div class="tool-box">
-                    <h3><i class="fa-solid fa-file-lines" style="color:var(--primary)"></i> 1. استخراج تلخيص المادة والوحدة</h3>
-                    <div class="form-row">
-                        <select id="summary-subject" class="form-control">
-                            <option value="الأحياء">الأحياء</option>
-                            <option value="الكيمياء">الكيمياء</option>
-                            <option value="الفيزياء">الفيزياء</option>
-                            <option value="الرياضيات">الرياضيات</option>
-                            <option value="اللغة العربية">اللغة العربية</option>
-                            <option value="اللغة الإنجليزية">اللغة الإنجليزية</option>
-                        </select>
-                        <select id="summary-unit" class="form-control">
-                            <option value="الوحدة الأولى">الوحدة الأولى</option>
-                            <option value="الوحدة الثانية">الوحدة الثانية</option>
-                            <option value="الوحدة الثالثة">الوحدة الثالثة</option>
-                            <option value="الوحدة الرابعة">الوحدة الرابعة</option>
-                        </select>
-                        <button class="action-btn blue-btn" style="width:auto; padding:10px 24px;" onclick="generateSummary()"><i class="fa-solid fa-bolt"></i> عرض التلخيص الذكي</button>
+                    <!-- منطقة الرفع بالكاميرا / الملفات -->
+                    <div class="upload-dropzone" onclick="document.getElementById('board-camera-input').click()">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <h3>اضغط هنا للتقاط أو رفع صورة السبورة 📷</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">يدعم صيغ الصور (PNG, JPG, JPEG)</p>
+                        <input type="file" id="board-camera-input" accept="image/*" style="display:none" onchange="handleBoardImageUpload(event)">
                     </div>
 
-                    <div id="summary-output" class="summary-result">
-                        <h4 id="summary-title">ملخص الوحدة</h4>
-                        <div id="summary-body"></div>
-                    </div>
-                </div>
-
-                <!-- 2. أداة حل التمارين والتوليد -->
-                <div class="tool-box">
-                    <h3><i class="fa-solid fa-calculator" style="color:#10b981"></i> 2. الحل التلقائي للتمارين مع الأمثلة</h3>
-                    <div class="form-row">
-                        <input type="text" id="exercise-input" class="form-control" placeholder="اكتب رقم أو نص التمرين هنا (مثال: حل مسألة كثافة المادة صفحة 22 أو تمرين 3 رياضيات)...">
-                        <button class="action-btn green-btn" style="width:auto; padding:10px 24px;" onclick="solveExercise()"><i class="fa-solid fa-wand-magic-sparkles"></i> حل التمرين وإرفاق الأمثلة</button>
-                    </div>
-
-                    <div id="solution-output" class="solution-box">
-                        <h4 id="solution-title">نتيجة الحل والخطوات</h4>
-                        <div id="solution-body"></div>
+                    <!-- معاينة الصورة والشرح الذكي -->
+                    <div id="board-analysis-container" style="display:none;">
+                        <h4 style="margin-bottom: 12px; color: var(--primary-dark);"><i class="fa-solid fa-wand-magic-sparkles"></i> المعاينة والشرح الذكي للصورة المرفوعة:</h4>
+                        
+                        <div class="board-preview-box">
+                            <div class="board-img-container">
+                                <img id="board-uploaded-img" src="" alt="صورة السبورة المرفوعة">
+                            </div>
+                            <div class="analysis-text-box">
+                                <h4 style="color: var(--primary); margin-bottom: 8px;"><i class="fa-solid fa-brain"></i> التحليل والشرح الذكي للسبورة:</h4>
+                                <div id="board-explanation-text">
+                                    جاري تحليل نصوص السبورة والشرح...
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- 3. أداة توليد الأسئلة الامتحانية المتوقعة -->
-                <div class="tool-box">
-                    <h3><i class="fa-solid fa-file-circle-question" style="color:#f59e0b"></i> 3. استخراج الأسئلة الذكية المجهزة للامتحان الشهري</h3>
-                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">يقوم البرنامج بتحليل المادة واستخراج الأسئلة المتكررة التي يطرحها المعلم عادةً في الاختبارات:</p>
-                    <div class="form-row">
-                        <select id="exam-subject" class="form-control">
-                            <option value="الأحياء">الأحياء</option>
-                            <option value="الكيمياء">الكيمياء</option>
-                            <option value="الفيزياء">الفيزياء</option>
-                            <option value="الرياضيات">الرياضيات</option>
-                            <option value="اللغة العربية">اللغة العربية</option>
-                            <option value="اللغة الإنجليزية">اللغة الإنجليزية</option>
-                        </select>
-                        <select id="exam-unit" class="form-control">
-                            <option value="الوحدة الأولى">الوحدة الأولى</option>
-                            <option value="الوحدة الثانية">الوحدة الثانية</option>
-                            <option value="الوحدة الثالثة">الوحدة الثالثة</option>
-                        </select>
-                        <button class="action-btn orange-btn" style="width:auto; padding:10px 24px;" onclick="generateExamQuestions()"><i class="fa-solid fa-lightbulb"></i> توليد نموذج أسئلة الامتحان الشهري</button>
-                    </div>
-
-                    <div id="questions-output" class="questions-box">
-                        <h4 id="questions-title">الأسئلة الامتحانية المتوقعة</h4>
-                        <div id="questions-body"></div>
-                    </div>
-                </div>
-
             </div>
 
-            <!-- بقية الأقسام المكتملة -->
-            <div id="subjects-page" class="content-section">
+            <!-- باقي الأقسام المكتملة -->
+            <div id="pdf-reader-page" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2 style="margin-bottom: 12px;">📚 المكتبة المنهجية المدرسية</h2>
-                <div class="files-list">
-                    <p>المناهج والملخصات متوفرة في الأداة الذكية.</p>
+                <div class="pdf-viewer-card">
+                    <h2 id="current-pdf-title"><i class="fa-solid fa-book-bookmark" style="color:var(--primary)"></i> تصفح كتاب المادة (PDF)</h2>
+                    <div class="pdf-frame-container" style="margin-top:15px;">
+                        <iframe id="pdf-frame" src="about:blank"></iframe>
+                    </div>
                 </div>
+            </div>
+
+            <div id="summaries-page" class="content-section">
+                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
+                <h2>⚡ المنصة الذكية للتلخيص والحل وتوليد الأسئلة</h2>
             </div>
 
             <div id="homework" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 <h2>📝 واجباتي المدرسية</h2>
-                <div class="dash-card" style="margin-top:15px;">
-                    <h4>الرياضيات</h4>
-                    <p>حل تمارين كتاب النشاط ص 45</p>
-                </div>
-            </div>
-
-            <div id="board" class="content-section">
-                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2>📷 السبورة والملاحظات</h2>
-                <p style="margin-top:10px;">لا توجد صور جديدة المرفوعة اليوم.</p>
             </div>
 
             <div id="tests" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 <h2>✍ الاختبارات</h2>
-                <p style="margin-top:10px;">لا توجد اختبارات جارية الآن.</p>
             </div>
 
             <div id="grades" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 <h2>📊 الدرجات الشهرية</h2>
-                <p style="margin-top:10px;">جدول الدرجات معروض بالصفحة الرئيسية.</p>
             </div>
 
             <div id="analytics" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 <h2>📈 مستوى الطالب</h2>
-                <p style="margin-top:10px;">المستوى الإجمالي: ممتاز (88%).</p>
             </div>
 
             <div id="parent-reports" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 <h2>👨‍👩‍👦 تقارير ولي الأمر</h2>
-                <p style="margin-top:10px;">مستوى الحضور والانضباط ممتاز.</p>
             </div>
 
             <div id="settings" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 <h2>⚙️ الإعدادات</h2>
-                <p style="margin-top:10px;">إعدادات الحساب وتفضيلات النظام.</p>
             </div>
 
         </main>
@@ -433,95 +380,34 @@
             }
         }
 
-        function openSubjectDetails(subjectName) {
-            showSection('summaries-page');
-            document.getElementById('summary-subject').value = subjectName;
-            document.getElementById('exam-subject').value = subjectName;
-            generateSummary();
-            generateExamQuestions();
-        }
+        // معالجة صورة السبورة المرفوعة وتفعيل الشرح الذكي
+        function handleBoardImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('board-uploaded-img');
+                    img.src = e.target.result;
+                    
+                    document.getElementById('board-analysis-container').style.display = 'block';
 
-        // 1. توليد التلخيص الذكي
-        function generateSummary() {
-            const subject = document.getElementById('summary-subject').value;
-            const unit = document.getElementById('summary-unit').value;
-            const output = document.getElementById('summary-output');
-            const title = document.getElementById('summary-title');
-            const body = document.getElementById('summary-body');
-
-            title.innerText = `📄 تلخيص ${unit} لمادة (${subject})`;
-            
-            body.innerHTML = `
-                <p><strong>أهم مفاهيم وقواعد ${unit}:</strong></p>
-                <ul>
-                    <li><strong>التعريف الأساسي:</strong> شرح المفهوم الرئيسي لدرس ${subject} وأهميته المنهجية.</li>
-                    <li><strong>أهم التعاليل المدرسية:</strong> علل سبب الظاهرة / النتيجة المقررة في المنهج.</li>
-                    <li><strong>النقاط الحفظية المهمة:</strong> 3 نقاط جوهرية متكررة في الامتحانات الشهرية والوزارية.</li>
-                    <li><strong>الخلاصة:</strong> التركيز على حل تمارين كتاب النشاط المرفقة بالوحدة.</li>
-                </ul>
-            `;
-
-            output.style.display = 'block';
-        }
-
-        // 2. الحل التلقائي للتمارين مع إرفاق الأمثلة
-        function solveExercise() {
-            const input = document.getElementById('exercise-input').value.trim();
-            const output = document.getElementById('solution-output');
-            const title = document.getElementById('solution-title');
-            const body = document.getElementById('solution-body');
-
-            if(!input) {
-                alert('يرجى إدخال رقم أو نص التمرين أولاً!');
-                return;
+                    // محاكاة استخراج وتحليل السبورة
+                    const explanationText = document.getElementById('board-explanation-text');
+                    explanationText.innerHTML = `
+                        <p style="color:#10b981; font-weight:bold; margin-bottom:6px;">✓ تم التعرف على الصورة وتفسيرها بنجاح!</p>
+                        <p><strong>1. الموضوع المكتوب:</strong> ملاحظات درس اللغة العربية (أسلوب الاستفهام).</p>
+                        <p><strong>2. النقاط والشرح:</strong> تتضمن السبورة أدوات الاستفهام الأساسية (هل، أ، من، ماذا) وتوضيح الغرض منها في الجملة المفيدة.</p>
+                        <p><strong>3. الواجب والملاحظة المهمة:</strong> كتابة وحل التمرين الثاني صفحة 48 في الكراس للدرس القادم.</p>
+                    `;
+                }
+                reader.readAsDataURL(file);
             }
-
-            title.innerText = `💡 حل التمرين: "${input}"`;
-
-            body.innerHTML = `
-                <p><strong>1. خطوات الحل النموذجية:</strong></p>
-                <p style="margin-bottom:8px; color:#334155;">تحديد المعطيات ⬅ استخدام القانون المقرر ⬅ التعويض المباشر والوصول للناتج النهائي.</p>
-                <p><strong>2. مثال تطبيقي مشابه للحل:</strong></p>
-                <div style="background:white; padding:10px; border-radius:6px; font-size:13px; border:1px solid #cbd5e1;">
-                    <strong>مثال توضيحي:</strong> عند تطبيق نفس خطوات هذا التمرين على مسألة أخرى، نقوم بضرب المعطى الأول في المعطى الثاني للحصول على النتيجة الصحيحة بسرعة.
-                </div>
-            `;
-
-            output.style.display = 'block';
         }
 
-        // 3. استخراج الأسئلة الذكية الامتحانية المتوقعة
-        function generateExamQuestions() {
-            const subject = document.getElementById('exam-subject').value;
-            const unit = document.getElementById('exam-unit').value;
-            const output = document.getElementById('questions-output');
-            const title = document.getElementById('questions-title');
-            const body = document.getElementById('questions-body');
-
-            title.innerText = `🎯 بنك الأسئلة الامتحانية الشهريّة المتوقعة: ${unit} - مادة (${subject})`;
-
-            body.innerHTML = `
-                <div style="font-size:14px; line-height:1.7; color:#1e293b;">
-                    <p><strong>س1: (أسئلة التعاريف والتعاليل الأكثر تكراراً):</strong></p>
-                    <ul style="margin-right:20px; margin-bottom:10px;">
-                        <li>عرف المفهوم الأساسي في ${unit} موضحاً الوحدات والأمثلة.</li>
-                        <li>علل: التغير الحاصل عند إجراء التجربة المقررة في درس ${subject}.</li>
-                    </ul>
-
-                    <p><strong>س2: (سؤال الاختيارات والفراغات السريعة):</strong></p>
-                    <ul style="margin-right:20px; margin-bottom:10px;">
-                        <li>اكمل الفراغات التالية بما يناسبها من مصطلحات ${subject}.</li>
-                        <li>اختر الإجابة الصحيحة من بين القوسين.</li>
-                    </ul>
-
-                    <p><strong>س3: (السؤال المقالي / المسألة الرئيسية):</strong></p>
-                    <div style="background:white; padding:10px; border-radius:6px; font-size:13px; border:1px solid #fde68a;">
-                        <strong>نصيحة المعلم:</strong> ركز على المقارنة بين المفهوم الأول والمفهوم الثاني في كتاب ${subject}، حيث تتكرر بنسبة كبيرة في الاختبارات الشهرية.
-                    </div>
-                </div>
-            `;
-
-            output.style.display = 'block';
+        function openPdfBook(subjectName, pdfUrl) {
+            showSection('pdf-reader-page');
+            document.getElementById('current-pdf-title').innerHTML = `<i class="fa-solid fa-book-bookmark" style="color:var(--primary)"></i> تصفح كتاب مادة (${subjectName})`;
+            document.getElementById('pdf-frame').src = pdfUrl;
         }
 
         function openEditModal() {
