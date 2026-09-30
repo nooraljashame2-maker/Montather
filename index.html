@@ -91,7 +91,7 @@
         .save-file-btn { background: #10b981; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold; font-size: 12px; cursor: pointer; display: none; align-items: center; gap: 6px; }
         .uploaded-badge-mini { background: #06b6d4; color: white; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; display: none; align-items: center; gap: 4px; }
 
-        /* الأيقونات الستة التفاعلية */
+        /* الأيقونات الستة التفاعلية الذكية */
         .feature-icons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 24px; }
         .feature-box { background: white; border-radius: 14px; padding: 16px 12px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
         .feature-box i { font-size: 24px; }
@@ -108,7 +108,7 @@
         .feature-details-card { background: white; border-radius: 16px; border: 1px solid var(--border-color); padding: 22px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         .feature-details-card h3 { font-size: 17px; color: var(--primary-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
 
-        .pdf-preview-box { width: 100%; height: 460px; border: 1px solid var(--border-color); border-radius: 12px; margin-top: 15px; overflow: hidden; display: none; }
+        .pdf-preview-box { width: 100%; height: 480px; border: 1px solid var(--border-color); border-radius: 12px; margin-top: 15px; overflow: hidden; display: none; }
         .pdf-preview-box iframe { width: 100%; height: 100%; border: none; }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
@@ -193,7 +193,7 @@
                     </div>
                 </div>
 
-                <!-- شبكة المواد (تظهر نقطة خضراء إذا تم حفظ كتاب للمادة في التطبيق) -->
+                <!-- شبكة المواد (تظهر نقطة خضراء للمادة التي تم حفظ كتابها) -->
                 <div class="subjects-grid">
                     <div class="subject-box arabic" onclick="openSubjectPage('اللغة العربية')">
                         <div class="saved-dot" id="dot-اللغة العربية"></div>
@@ -275,7 +275,7 @@
 
             </div>
 
-            <!-- صفحة المادة مع أزرار الحفظ الذكي للأيقونات الست -->
+            <!-- صفحة المادة مع قاعدة البيانات المحلية للكتب الكبيرة -->
             <div id="dynamic-subject-page" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 
@@ -292,7 +292,7 @@
                             <i class="fa-solid fa-cloud-arrow-up"></i> رفع كتاب المادة
                         </button>
 
-                        <button id="save-to-app-btn" class="save-file-btn" onclick="saveBookToApp()">
+                        <button id="save-to-app-btn" class="save-file-btn" onclick="saveBookToIndexedDB()">
                             <i class="fa-solid fa-floppy-disk"></i> حفظ في التطبيق
                         </button>
 
@@ -408,11 +408,31 @@
 
     <script>
         let currentSubjectName = '';
-        let currentPdfData = null; // تخزين مؤقت لبيانات الـ PDF
+        let currentPdfBlobUrl = null; 
+        let currentRawBlob = null;
 
-        // التحقق من الكتب المحفوظة في ذاكرة التطبيق عند التحميل
-        window.onload = function() {
+        // تهيئة قاعدة بيانات التطبيق المحلية IndexedDB للكتب الكبيرة
+        let db;
+        const request = indexedDB.open("MontatherStudyAppDB", 1);
+        
+        request.onerror = function(event) {
+            console.log("خطأ في فتح قاعدة البيانات");
+        };
+
+        request.onsuccess = function(event) {
+            db = event.target.result;
             checkSavedBooksDots();
+        };
+
+        request.onupgradeneeded = function(event) {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains("books")) {
+                db.createObjectStore("books");
+            }
+        };
+
+        window.onload = function() {
+            setTimeout(checkSavedBooksDots, 500);
         };
 
         function showSection(sectionId, element) {
@@ -432,79 +452,113 @@
             document.getElementById('dynamic-subject-page').classList.add('active-section');
             document.getElementById('page-subject-title').innerText = '📖 منهج مادة ' + subjectName + ' - الصف الثاني متوسط';
             
-            // تحقق إذا كان للمادة كتاب محفوظ مسبقاً في التطبيق
-            const savedBook = localStorage.getItem('saved_book_' + subjectName);
-            if(savedBook) {
-                currentPdfData = savedBook;
-                document.getElementById('subject-pdf-frame').src = savedBook;
-                document.getElementById('embedded-pdf-view').style.display = 'block';
-                document.getElementById('mini-upload-success').style.display = 'inline-flex';
-                document.getElementById('save-to-app-btn').style.display = 'none';
-            } else {
-                currentPdfData = null;
-                document.getElementById('embedded-pdf-view').style.display = 'none';
-                document.getElementById('mini-upload-success').style.display = 'none';
-                document.getElementById('save-to-app-btn').style.display = 'none';
-            }
-
+            // جلب الكتاب المحفوظ من IndexedDB
+            loadBookFromIndexedDB(subjectName);
             triggerSmartFeature('video');
         }
 
-        // رفع ملف PDF واكتشافه
+        // رفع ملف PDF واستعراضه فوراً
         function handleMiniPdfUpload(event) {
             const file = event.target.files[0];
             if(file && file.type === "application/pdf") {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    currentPdfData = e.target.result; // قاعدة بيانات Base64 للحفظ الدائم
-                    
-                    document.getElementById('subject-pdf-frame').src = currentPdfData;
-                    document.getElementById('embedded-pdf-view').style.display = 'block';
-                    document.getElementById('save-to-app-btn').style.display = 'inline-flex';
-                    document.getElementById('mini-upload-success').style.display = 'none';
+                currentRawBlob = file;
+                currentPdfBlobUrl = URL.createObjectURL(file);
+                
+                document.getElementById('subject-pdf-frame').src = currentPdfBlobUrl;
+                document.getElementById('embedded-pdf-view').style.display = 'block';
+                document.getElementById('save-to-app-btn').style.display = 'inline-flex';
+                document.getElementById('mini-upload-success').style.display = 'none';
 
-                    alert('تم رفع ملف كتاب (' + file.name + '). اضغطي الآن على زر (حفظ في التطبيق) ليبقى محفوظاً دائماً!');
-                    triggerSmartFeature('video');
-                };
-                reader.readAsDataURL(file);
+                alert('تم رفع ملف كتاب (' + file.name + '). اضغطي الآن على زر (حفظ في التطبيق) ليحفظ في ذاكرة البرنامج الكبيرة!');
+                triggerSmartFeature('video');
             } else {
                 alert('يرجى اختيار ملف كتاب بصيغة PDF فقط!');
             }
         }
 
-        // حفظ الملف في ذاكرة التطبيق المحلبة LocalStorage
-        function saveBookToApp() {
-            if(!currentPdfData) {
+        // حفظ الكتاب في IndexedDB (يتسع لملفات الـ PDF الكبيرة حتى فوق 50 ميجابايت)
+        function saveBookToIndexedDB() {
+            if(!currentRawBlob) {
                 alert('لا يوجد ملف مرفوع للحفظ!');
                 return;
             }
-            try {
-                localStorage.setItem('saved_book_' + currentSubjectName, currentPdfData);
+            if(!db) {
+                alert('قاعدة البيانات غير جاهزة بعد، جربي مرة أخرى.');
+                return;
+            }
+
+            const transaction = db.transaction(["books"], "readwrite");
+            const store = transaction.objectStore("books");
+            const request = store.put(currentRawBlob, currentSubjectName);
+
+            request.onsuccess = function() {
                 document.getElementById('save-to-app-btn').style.display = 'none';
                 document.getElementById('mini-upload-success').style.display = 'inline-flex';
                 checkSavedBooksDots();
-                alert('تم حفظ كتاب (' + currentSubjectName + ') في ذاكرة التطبيق بنجاح تام! لن يضيع بعد الآن.');
-            } catch (error) {
-                alert('حجم الملف كبير جداً على ذاكرة المتصفح، يجدر استخدام ملف PDF أصغر حجماً.');
+                alert('تم حفظ كتاب (' + currentSubjectName + ') في التطبيق بنجاح تام ولن يضيع أبداً!');
+            };
+
+            request.onerror = function() {
+                alert('حدث خطأ أثناء حفظ الملف، يجدر إعادة المحاولة.');
+            };
+        }
+
+        // تحميل الكتاب من قاعدة البيانات
+        function loadBookFromIndexedDB(subjectName) {
+            if(!db) return;
+            try {
+                const transaction = db.transaction(["books"], "readonly");
+                const store = transaction.objectStore("books");
+                const request = store.get(subjectName);
+
+                request.onsuccess = function(event) {
+                    const result = event.target.result;
+                    if(result) {
+                        currentRawBlob = result;
+                        currentPdfBlobUrl = URL.createObjectURL(result);
+                        document.getElementById('subject-pdf-frame').src = currentPdfBlobUrl;
+                        document.getElementById('embedded-pdf-view').style.display = 'block';
+                        document.getElementById('mini-upload-success').style.display = 'inline-flex';
+                        document.getElementById('save-to-app-btn').style.display = 'none';
+                    } else {
+                        currentRawBlob = null;
+                        currentPdfBlobUrl = null;
+                        document.getElementById('embedded-pdf-view').style.display = 'none';
+                        document.getElementById('mini-upload-success').style.display = 'none';
+                        document.getElementById('save-to-app-btn').style.display = 'none';
+                    }
+                };
+            } catch(e) {
+                console.log(e);
             }
         }
 
         // إظهار النقطة الخضراء للمواد المحفوظة في الواجهة الرئيسية
         function checkSavedBooksDots() {
+            if(!db) return;
             const subjects = ['اللغة العربية', 'الرياضيات', 'اللغة الإنجليزية', 'الاجتماعيات', 'التربية الإسلامية', 'الأحياء', 'الكيمياء', 'الفيزياء'];
-            subjects.forEach(sub => {
-                const dot = document.getElementById('dot-' + sub);
-                if(dot) {
-                    if(localStorage.getItem('saved_book_' + sub)) {
-                        dot.style.display = 'block';
-                    } else {
-                        dot.style.display = 'none';
-                    }
-                }
-            });
+            
+            try {
+                const transaction = db.transaction(["books"], "readonly");
+                const store = transaction.objectStore("books");
+
+                subjects.forEach(sub => {
+                    const req = store.get(sub);
+                    req.onsuccess = function(e) {
+                        const dot = document.getElementById('dot-' + sub);
+                        if(dot) {
+                            if(e.target.result) {
+                                dot.style.display = 'block';
+                            } else {
+                                dot.style.display = 'none';
+                            }
+                        }
+                    };
+                });
+            } catch(e) {}
         }
 
-        // التفاعل الذكي للأيقونات الست واستخراج الإجابات والحلول
+        // التفاعل الذكي للأيقونات الست واستخراج الحلول
         function triggerSmartFeature(type) {
             document.querySelectorAll('.feature-box').forEach(b => b.classList.remove('active-box'));
             
@@ -512,7 +566,7 @@
             const bodyElem = document.getElementById('result-card-body');
             const pdfViewer = document.getElementById('embedded-pdf-view');
 
-            const hasBook = currentPdfData !== null;
+            const hasBook = currentPdfBlobUrl !== null;
 
             if(type === 'video') {
                 document.getElementById('box-video').classList.add('active-box');
@@ -529,7 +583,7 @@
                     <div style="background:#f5f3ff; padding:16px; border-radius:12px; border-right:4px solid #8b5cf6;">
                         <p style="font-weight:bold; color:#5b21b6; margin-bottom:8px;">الملخص الشامل والذكي للمادة:</p>
                         <ul style="margin-right:18px; line-height:1.8;">
-                            <li><strong>أبرز المفاهيم المحورية:</strong> استخلاص أهم القواعد والتعاريف الخاصة بالوحدة الأولى.</li>
+                            <li><strong>أبرز المفاهيم المحورية:</strong> استخلاص أهم القواعد والتعاريف الخاصة بالوحدة الأولى في ${currentSubjectName}.</li>
                             <li><strong>التركيز اليومي:</strong> القواعد الأساسية المطلوبة للفهم والتحضير المدرسي.</li>
                         </ul>
                     </div>
