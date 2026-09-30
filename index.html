@@ -91,7 +91,6 @@
         .link-save-btn { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer; }
         .uploaded-badge-mini { background: #06b6d4; color: white; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; display: none; align-items: center; gap: 4px; }
 
-        /* الأيقونات الستة التفاعلية الذكية */
         .feature-icons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 24px; }
         .feature-box { background: white; border-radius: 14px; padding: 16px 12px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
         .feature-box i { font-size: 24px; }
@@ -121,7 +120,6 @@
         .save-btn { background: var(--primary); color: white; }
         .cancel-btn { background: #e2e8f0; color: #475569; }
 
-        /* نافذة منبثقة تفاعلية للمحتوى والتلخيصات والأسئلة */
         .info-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1100; padding: 20px; }
         .info-modal-box { background: white; border-radius: 16px; width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.2); border-top: 6px solid var(--primary); }
         .info-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--border-color); background: #f8fafc; }
@@ -283,22 +281,22 @@
 
             </div>
 
-            <!-- صفحة المادة مع زر رفع ملف PDF من الجهاز والتابلت مباشرة -->
+            <!-- صفحة المادة مع رفع مؤقت عبر ذاكرة التابلت الحية (Blob) -->
             <div id="dynamic-subject-page" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 
                 <div class="subject-page-header">
                     <div>
                         <h2 id="page-subject-title">منهج مادة الدراسة</h2>
-                        <p style="font-size:13px; opacity:0.9;">اختاري ملف كتاب المادة (PDF) من جهازكِ أو التابلت لرفعه وعرضه فوراً:</p>
+                        <p style="font-size:13px; opacity:0.9;">اختاري ملف كتاب المادة (PDF) من التابلت مهما كان حجمه لعرضه فوراً:</p>
                     </div>
                     
                     <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                         <div class="link-input-box">
                             <input type="file" id="pdf-file-input" accept="application/pdf">
-                            <button class="link-save-btn" onclick="uploadPdfFileToApp()"><i class="fa-solid fa-upload"></i> رفع وعرض</button>
+                            <button class="link-save-btn" onclick="loadPdfBlobToViewer()"><i class="fa-solid fa-upload"></i> عرض الكتاب</button>
                         </div>
-                        <span id="mini-upload-success" class="uploaded-badge-mini"><i class="fa-solid fa-check"></i> تم رفع الكتاب</span>
+                        <span id="mini-upload-success" class="uploaded-badge-mini"><i class="fa-solid fa-check"></i> تم التحميل بنجاح</span>
                     </div>
                 </div>
 
@@ -339,7 +337,7 @@
                 <div class="feature-details-card">
                     <h3 id="result-card-title"><i class="fa-solid fa-book-open" style="color:#3b82f6;"></i> عارض الكتاب المباشر</h3>
                     <div id="result-card-body" style="font-size:14px; margin-bottom:10px; color:var(--text-muted);">
-                        ارفعي ملف المادة من الأعلى لاستعراض صفحات الكتاب مباشرة، وانقري على أيقونات التلخيص والأسئلة لفتح النوافذ المنبثقة التفصيلية.
+                        اختر ملف PDF من الأعلى واضغط "عرض الكتاب" لاستعراض صفحات الكتاب بسلاسة تامة مهما كان حجم الملف كبيراً.
                     </div>
 
                     <div id="embedded-pdf-view" class="pdf-preview-box">
@@ -422,10 +420,8 @@
 
     <script>
         let currentSubjectName = '';
-
-        window.onload = function() {
-            checkSavedLinksDots();
-        };
+        // تخزين مؤقت في ذاكرة التابلت الحية لكل مادة لتجنب حدود المتصفح
+        const activeSubjectBlobs = {};
 
         function showSection(sectionId, element) {
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active-section'));
@@ -444,13 +440,12 @@
             document.getElementById('dynamic-subject-page').classList.add('active-section');
             document.getElementById('page-subject-title').innerText = '📖 منهج مادة ' + subjectName + ' - الصف الثاني متوسط';
             
-            const savedFile = localStorage.getItem('book_file_' + subjectName);
             const successBadge = document.getElementById('mini-upload-success');
             const pdfViewer = document.getElementById('embedded-pdf-view');
             const pdfFrame = document.getElementById('subject-pdf-frame');
 
-            if(savedFile) {
-                pdfFrame.src = savedFile;
+            if(activeSubjectBlobs[subjectName]) {
+                pdfFrame.src = activeSubjectBlobs[subjectName];
                 pdfViewer.style.display = 'block';
                 successBadge.style.display = 'inline-flex';
             } else {
@@ -460,8 +455,8 @@
             }
         }
 
-        // رفع ملف الـ PDF مباشرة من الجهاز أو التابلت وتخزينه محلياً
-        function uploadPdfFileToApp() {
+        // تحميل وعرض ملف الـ PDF مباشرة باستخدام ذاكرة الحوسبة الحية للتابلت (Blob URL)
+        function loadPdfBlobToViewer() {
             const fileInput = document.getElementById('pdf-file-input');
             if(!fileInput.files || fileInput.files.length === 0) {
                 alert('يرجى اختيار ملف PDF أولاً من جهازكِ أو التابلت!');
@@ -469,41 +464,20 @@
             }
 
             const file = fileInput.files[0];
-            const reader = new FileReader();
+            // إنشاء رابط بيانات مؤقت مباشر (يتعامل مع أضخم الأحجام دون امتلاء الذاكرة)
+            const fileBlobUrl = URL.createObjectURL(file);
+            
+            activeSubjectBlobs[currentSubjectName] = fileBlobUrl;
 
-            reader.onload = function(e) {
-                const base64Data = e.target.result;
-                try {
-                    localStorage.setItem('book_file_' + currentSubjectName, base64Data);
-                    document.getElementById('mini-upload-success').style.display = 'inline-flex';
-                    
-                    const pdfViewer = document.getElementById('embedded-pdf-view');
-                    const pdfFrame = document.getElementById('subject-pdf-frame');
-                    pdfFrame.src = base64Data;
-                    pdfViewer.style.display = 'block';
+            const pdfViewer = document.getElementById('embedded-pdf-view');
+            const pdfFrame = document.getElementById('subject-pdf-frame');
+            pdfFrame.src = fileBlobUrl;
+            pdfViewer.style.display = 'block';
 
-                    checkSavedLinksDots();
-                    alert('تم رفع وعرض كتاب (' + currentSubjectName + ') وحفظه بنجاح تام في التطبيق!');
-                } catch(err) {
-                    alert('عذراً، حجم الملف كبير جداً على ذاكرة المتصفح المحلية. يفضل اختيار ملف مختصر أو فصل دراسي واحد.');
-                }
-            };
-
-            reader.readAsDataURL(file);
-        }
-
-        function checkSavedLinksDots() {
-            const subjects = ['اللغة العربية', 'الرياضيات', 'اللغة الإنجليزية', 'الاجتماعيات', 'التربية الإسلامية', 'الأحياء', 'الكيمياء', 'الفيزياء'];
-            subjects.forEach(sub => {
-                const dot = document.getElementById('dot-' + sub);
-                if(dot) {
-                    if(localStorage.getItem('book_file_' + sub)) {
-                        dot.style.display = 'block';
-                    } else {
-                        dot.style.display = 'none';
-                    }
-                }
-            });
+            document.getElementById('mini-upload-success').style.display = 'inline-flex';
+            document.getElementById('dot-' + currentSubjectName).style.display = 'block';
+            
+            alert('تم تحميل وعرض الكتاب بنجاح تام وسلاسة مطلقة!');
         }
 
         // تفاعل الأيقونات الست وإظهار النافذة المنبثقة الذكية
@@ -511,15 +485,15 @@
             const modal = document.getElementById('info-modal');
             const titleElem = document.getElementById('info-modal-title');
             const bodyElem = document.getElementById('info-modal-body');
-            const savedFile = localStorage.getItem('book_file_' + currentSubjectName);
+            const hasFile = activeSubjectBlobs[currentSubjectName] ? true : false;
 
             modal.style.display = 'flex';
 
             if(type === 'video') {
                 titleElem.innerHTML = `<i class="fa-solid fa-circle-play" style="color:#3b82f6;"></i> عرض كتاب مادة ${currentSubjectName}`;
-                bodyElem.innerHTML = savedFile ? 
-                    `<p style="color:#10b981; font-weight:bold; margin-bottom:12px;">✓ الكتاب مرفوع ومحفوظ بنجاح. يمكنك استعراضه بالكامل في الأسفل ضمن الصفحة الرئيسية للمادة.</p>` :
-                    `<p style="color:#ef4444; font-weight:bold;">⚠️ لم تقومي برفع ملف كتاب لهذه المادة بعد. اختاري ملف PDF من الأعلى واضغطي "رفع وعرض".</p>`;
+                bodyElem.innerHTML = hasFile ? 
+                    `<p style="color:#10b981; font-weight:bold; margin-bottom:12px;">✓ الكتاب محمّل وجاهز. يمكنك استعراضه بالكامل في الأسفل ضمن الصفحة الرئيسية للمادة.</p>` :
+                    `<p style="color:#ef4444; font-weight:bold;">⚠️ لم تقومي بتحميل ملف كتاب لهذه المادة بعد. اختاري ملف PDF من الأعلى واضغطي "عرض الكتاب".</p>`;
             } 
             else if(type === 'summary') {
                 titleElem.innerHTML = `<i class="fa-solid fa-book-open-reader" style="color:#8b5cf6;"></i> شرح وتلخيص الوحدة الأولى - ${currentSubjectName}`;
