@@ -2,609 +2,139 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دراستي - معاً نحو مستقبل أفضل</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-dark: #3730a3;
-            --bg-light: #f8fafc;
-            --card-bg: #ffffff;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-dark); direction: rtl; }
-
-        .top-bar { background: #1e293b; color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .logo-area { display: flex; align-items: center; gap: 12px; }
-        .logo-icon { font-size: 28px; color: #818cf8; }
-        .logo-area h2 { font-size: 20px; font-weight: 800; line-height: 1.1; }
-        .logo-area span { font-size: 11px; color: #94a3b8; }
-        .top-actions { display: flex; gap: 10px; }
-        .top-btn { background: #334155; color: white; border: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-        .top-btn:hover { background: #475569; }
-        .badge { background: #ef4444; color: white; padding: 2px 6px; border-radius: 10px; font-size: 11px; }
-
-        .app-layout { display: flex; min-height: calc(100vh - 60px); }
-
-        .sidebar { width: 240px; background: white; border-left: 1px solid var(--border-color); padding: 20px 12px; display: flex; flex-direction: column; justify-content: space-between; }
-        .sidebar-menu { display: flex; flex-direction: column; gap: 6px; }
-        .menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--text-muted); text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 14px; transition: all 0.2s; }
-        .menu-item i { font-size: 16px; width: 20px; text-align: center; }
-        .menu-item:hover, .menu-item.active { background: #e0e7ff; color: var(--primary); }
-        .logout-btn { color: #ef4444; display: flex; align-items: center; gap: 10px; padding: 12px 16px; text-decoration: none; font-weight: 600; font-size: 14px; border-radius: 10px; }
-        .logout-btn:hover { background: #fef2f2; }
-
-        .main-content { flex: 1; padding: 24px; overflow-y: auto; }
-        .content-section { display: none; }
-        .content-section.active-section { display: block; }
-
-        .top-grid { display: grid; grid-template-columns: 320px 1fr; gap: 20px; margin-bottom: 24px; }
-        .student-card { background: white; border-radius: 16px; padding: 20px; display: flex; gap: 16px; align-items: center; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-        .avatar-box { width: 70px; height: 70px; background: #e0e7ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--primary); }
-        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-        .avatar-icon { font-size: 34px; color: var(--primary); }
-        .student-info h3 { font-size: 18px; color: var(--text-dark); margin-bottom: 4px; }
-        .student-info p { font-size: 13px; color: var(--text-muted); margin-bottom: 2px; }
-        .edit-btn { background: none; border: none; color: var(--primary); font-weight: 700; font-size: 12px; cursor: pointer; padding: 0; margin-top: 6px; display: inline-flex; align-items: center; gap: 4px; }
-
-        .banner-card { background: linear-gradient(135deg, #6366f1, #4f46e5); border-radius: 16px; padding: 24px 32px; color: white; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25); }
-        .banner-text h3 { font-size: 16px; font-weight: 500; opacity: 0.9; margin-bottom: 6px; }
-        .banner-text h2 { font-size: 24px; font-weight: 800; }
-        .banner-icon { font-size: 56px; opacity: 0.85; }
-
-        .subjects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 14px; margin-bottom: 24px; }
-        .subject-box { background: white; border-radius: 14px; padding: 18px 10px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; }
-        .subject-box i { font-size: 26px; }
-        .subject-box span { font-size: 13px; font-weight: 700; color: var(--text-dark); }
-        .subject-box:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,0.06); border-color: var(--primary); }
-        .saved-dot { position: absolute; top: 8px; left: 8px; width: 10px; height: 10px; background: #10b981; border-radius: 50%; display: none; }
-
-        .arabic i { color: #3b82f6; }
-        .math1 i, .math2 i { color: #f59e0b; }
-        .english i { color: #10b981; }
-        .social i { color: #8b5cf6; }
-        .islamic i { color: #06b6d4; }
-        .biology i { color: #ec4899; }
-        .chemistry i { color: #6366f1; }
-        .physics i { color: #ef4444; }
-
-        .dashboard-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
-        .dash-card { background: white; border-radius: 16px; border: 1px solid var(--border-color); padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; font-weight: 700; font-size: 15px; }
-
-        .action-btn { width: 100%; border: none; padding: 10px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .blue-btn { background: var(--primary); }
-        .green-btn { background: #10b981; }
-        .purple-btn { background: #8b5cf6; }
-
-        .back-home-btn { background: #e2e8f0; color: #334155; padding: 8px 16px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
-
-        .subject-page-header { background: linear-gradient(135deg, #4f46e5, #3730a3); color: white; padding: 20px 25px; border-radius: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .link-input-box { display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.3); }
-        .link-input-box input[type="file"] { color: white; font-size: 12px; width: 220px; }
-        .link-save-btn { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer; }
-        .uploaded-badge-mini { background: #06b6d4; color: white; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; display: none; align-items: center; gap: 4px; }
-
-        .feature-icons-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px; }
-        .feature-box { background: white; border-radius: 14px; padding: 16px 10px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
-        .feature-box i { font-size: 24px; }
-        .feature-box span { font-size: 11px; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
-        .feature-box:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 6px 12px rgba(79, 70, 229, 0.15); background: #f5f3ff; }
-
-        .icon-blue i { color: #3b82f6; }
-        .icon-purple i { color: #8b5cf6; }
-        .icon-orange i { color: #f59e0b; }
-        .icon-green i { color: #10b981; }
-        .icon-red i { color: #ef4444; }
-        .icon-cyan i { color: #06b6d4; }
-
-        .feature-details-card { background: white; border-radius: 16px; border: 1px solid var(--border-color); padding: 22px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-        .feature-details-card h3 { font-size: 17px; color: var(--primary-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-
-        .pdf-preview-box { width: 100%; height: 550px; border: 1px solid var(--border-color); border-radius: 12px; margin-top: 15px; overflow: hidden; display: none; }
-        .pdf-preview-box iframe { width: 100%; height: 100%; border: none; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: white; padding: 25px; border-radius: 16px; width: 90%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-        .form-group input[type="text"], .form-group input[type="file"] { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; }
-        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
-        .modal-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
-        .save-btn { background: var(--primary); color: white; }
-        .cancel-btn { background: #e2e8f0; color: #475569; }
-
-        .info-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1100; padding: 20px; }
-        .info-modal-box { background: white; border-radius: 16px; width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.2); border-top: 6px solid var(--primary); }
-        .info-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--border-color); background: #f8fafc; }
-        .info-modal-header h3 { font-size: 18px; color: var(--primary-dark); display: flex; align-items: center; gap: 8px; }
-        .close-info-btn { background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer; }
-        .info-modal-body { padding: 22px; font-size: 14px; line-height: 1.8; color: var(--text-dark); }
-
-        @media (max-width: 900px) {
-            .top-grid, .dashboard-cards-grid { grid-template-columns: 1fr; }
-            .sidebar { width: 70px; padding: 12px 6px; }
-            .menu-item span, .logout-btn span { display: none; }
-            .feature-icons-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-    </style>
+    <title>دراستي - منهج التربية الإسلامية</title>
+    <link rel="stylesheet" href="style.css"> <!-- استبدليه باسم ملف الـ CSS لديكِ -->
 </head>
 <body>
 
-    <header class="top-bar">
+    <!-- الشريط العلوي -->
+    header class="top-bar">
         <div class="logo-area">
-            <i class="fa-solid fa-graduation-cap logo-icon"></i>
+            <div class="logo-icon">📚</div>
             <div>
                 <h2>دراستي</h2>
                 <span>معاً نحو مستقبل أفضل</span>
             </div>
         </div>
-        <div class="top-actions">
-            <button class="top-btn" onclick="showSection('settings')"><i class="fa-solid fa-gear"></i> الإعدادات</button>
-            <button class="top-btn notification-btn"><i class="fa-solid fa-bell"></i> الإشعارات <span class="badge">3</span></button>
-        </div>
     </header>
 
     <div class="app-layout">
-
+        <!-- القائمة الجانبية -->
         <aside class="sidebar">
-            <nav class="sidebar-menu">
-                <a href="javascript:void(0)" class="menu-item active" onclick="showSection('main-dashboard', this)"><i class="fa-solid fa-house"></i> <span>الرئيسية</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="openSubjectPage('اللغة العربية')"><i class="fa-solid fa-book-open"></i> <span>المواد الدراسية</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="showSection('board-page', this)"><i class="fa-solid fa-camera"></i> <span>السبورة والملاحظات</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="showSection('homework', this)"><i class="fa-solid fa-list-check"></i> <span>واجباتي</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="showSection('tests', this)"><i class="fa-solid fa-file-pen"></i> <span>الاختبارات</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="showSection('grades', this)"><i class="fa-solid fa-chart-column"></i> <span>الدرجات الشهرية</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="showSection('analytics', this)"><i class="fa-solid fa-chart-line"></i> <span>مستوى الطالب</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="showSection('parent-reports', this)"><i class="fa-solid fa-users"></i> <span>تقارير ولي الأمر</span></a>
-                <a href="javascript:void(0)" class="menu-item" onclick="showSection('settings', this)"><i class="fa-solid fa-gear"></i> <span>الإعدادات</span></a>
-            </nav>
-            <div class="sidebar-footer">
-                <a href="javascript:void(0)" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> <span>تسجيل الخروج</span></a>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active">الرئيسية</a>
+                <a href="#" class="menu-item">المواد الدراسية</a>
+                <a href="#" class="menu-item">واجباتي</a>
+                <a href="#" class="menu-item">الاختبارات</a>
             </div>
         </aside>
 
+        <!-- المحتوى الرئيسي -->
         <main class="main-content">
+            <h2 style="margin-bottom: 20px; color: #0b3c5d;">منهج مادة التربية الإسلامية - الصف الثاني متوسط</h2>
 
-            <!-- الواجهة الرئيسية -->
-            <div id="main-dashboard" class="content-section active-section">
-                
-                <div class="top-grid">
-                    <div class="student-card">
-                        <div class="avatar-box" id="avatar-container">
-                            <i class="fa-solid fa-user-graduate avatar-icon" id="default-avatar"></i>
-                            <img id="student-photo" src="" alt="صورة الطالب" style="display:none;">
-                        </div>
-                        <div class="student-info">
-                            <h3 id="student-name-display">أحمد محمد</h3>
-                            <p id="student-grade">الصف: الثاني متوسط</p>
-                            <p id="student-school">المدرسة: المتفوقين النموذجية</p>
-                            <button class="edit-btn" onclick="openEditModal()"><i class="fa-solid fa-pen-to-square"></i> تعديل الاسم والصورة</button>
-                        </div>
-                    </div>
-
-                    <div class="banner-card">
-                        <div class="banner-text">
-                            <h3>بخُطوات صغيرة ..</h3>
-                            <h2>نصل إلى أحلام كبيرة 🤍</h2>
-                        </div>
-                        <div class="banner-icon-box">
-                            <i class="fa-solid fa-book-open-reader banner-icon"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- شبكة المواد -->
-                <div class="subjects-grid">
-                    <div class="subject-box arabic" onclick="openSubjectPage('اللغة العربية')">
-                        <div class="saved-dot" id="dot-اللغة العربية"></div>
-                        <i class="fa-solid fa-book"></i>
-                        <span>اللغة العربية</span>
-                    </div>
-                    <div class="subject-box math1" onclick="openSubjectPage('الرياضيات')">
-                        <div class="saved-dot" id="dot-الرياضيات"></div>
-                        <i class="fa-solid fa-calculator"></i>
-                        <span>الرياضيات</span>
-                    </div>
-                    <div class="subject-box english" onclick="openSubjectPage('اللغة الإنجليزية')">
-                        <div class="saved-dot" id="dot-اللغة الإنجليزية"></div>
-                        <i class="fa-solid fa-language"></i>
-                        <span>اللغة الانجليزية</span>
-                    </div>
-                    <div class="subject-box social" onclick="openSubjectPage('الاجتماعيات')">
-                        <div class="saved-dot" id="dot-الاجتماعيات"></div>
-                        <i class="fa-solid fa-globe"></i>
-                        <span>الاجتماعيات</span>
-                    </div>
-                    <div class="subject-box islamic" onclick="openSubjectPage('التربية الإسلامية')">
-                        <div class="saved-dot" id="dot-التربية الإسلامية"></div>
-                        <i class="fa-solid fa-mosque"></i>
-                        <span>الإسلامية</span>
-                    </div>
-                    <div class="subject-box biology" onclick="openSubjectPage('الأحياء')">
-                        <div class="saved-dot" id="dot-الأحياء"></div>
-                        <i class="fa-solid fa-dna"></i>
-                        <span>الأحياء</span>
-                    </div>
-                    <div class="subject-box chemistry" onclick="openSubjectPage('الكيمياء')">
-                        <div class="saved-dot" id="dot-الكيمياء"></div>
-                        <i class="fa-solid fa-flask"></i>
-                        <span>الكيمياء</span>
-                    </div>
-                    <div class="subject-box physics" onclick="openSubjectPage('الفيزياء')">
-                        <div class="saved-dot" id="dot-الفيزياء"></div>
-                        <i class="fa-solid fa-atom"></i>
-                        <span>الفيزياء</span>
-                    </div>
-                </div>
-
-                <div class="dashboard-cards-grid">
-                    <div class="dash-card">
-                        <div class="card-header">
-                            <span><i class="fa-solid fa-book-open"></i> المواد الدراسية</span>
-                            <a href="javascript:void(0)" onclick="openSubjectPage('اللغة العربية')">فتح المنهج</a>
-                        </div>
-                        <div class="card-body">
-                            <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">اختر أي مادة لتصفح الشروحات، التلخيصات، والأسئلة المرشحة.</p>
-                            <button class="action-btn blue-btn" onclick="openSubjectPage('اللغة العربية')"><i class="fa-solid fa-book-bookmark"></i> استعراض المواد</button>
-                        </div>
-                    </div>
-
-                    <div class="dash-card">
-                        <div class="card-header">
-                            <span><i class="fa-solid fa-camera"></i> صورة السبورة</span>
-                            <a href="javascript:void(0)" onclick="showSection('board-page')">الكاميرا</a>
-                        </div>
-                        <div class="card-body">
-                            <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">إرفاق صورة السبورة ليقوم البرنامج بقراءتها وشرحها ذكياً.</p>
-                            <button class="action-btn purple-btn" onclick="showSection('board-page')"><i class="fa-solid fa-camera"></i> رفع صورة السبورة</button>
-                        </div>
-                    </div>
-
-                    <div class="dash-card">
-                        <div class="card-header">
-                            <span><i class="fa-solid fa-calendar-check"></i> واجب اليوم</span>
-                            <a href="javascript:void(0)" onclick="showSection('homework')">عرض الكل</a>
-                        </div>
-                        <div class="card-body">
-                            <h4>الرياضيات</h4>
-                            <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">حل التمارين من صفحة 45 إلى 48</p>
-                            <button class="action-btn green-btn" onclick="toggleTask(this)"><i class="fa-solid fa-check"></i> تم إنجاز الواجب</button>
-                        </div>
-                    </div>
-                </div>
-
+            <!-- الأيقونات الست (كل أيقونة ترتبط بـ نافذة خاصة بها) -->
+            <div class="subjects-grid">
+                <a href="#book-modal" class="subject-box">
+                    <span>📖</span>
+                    <span>عرض الكتاب</span>
+                </a>
+                <a href="#summary-modal" class="subject-box">
+                    <span>📑</span>
+                    <span>شرح الوحدة</span>
+                </a>
+                <a href="#questions-modal" class="subject-box">
+                    <span>❓</span>
+                    <span>أسئلة الفصل</span>
+                </a>
+                <a href="#exams-modal" class="subject-box">
+                    <span>⭐</span>
+                    <span>مرشحات الامتحان</span>
+                </a>
+                <a href="#notes-modal" class="subject-box">
+                    <span>💡</span>
+                    <span>إضاءات وملاحظات</span>
+                </a>
+                <a href="#answers-modal" class="subject-box">
+                    <span>✅</span>
+                    <span>حل التمرينات</span>
+                </a>
             </div>
-
-            <!-- صفحة المادة مع رفع مؤقت عبر ذاكرة التابلت الحية (Blob) -->
-            <div id="dynamic-subject-page" class="content-section">
-                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                
-                <div class="subject-page-header">
-                    <div>
-                        <h2 id="page-subject-title">منهج مادة الدراسة</h2>
-                        <p style="font-size:13px; opacity:0.9;">اختاري ملف كتاب المادة (PDF) من التابلت مهما كان حجمه لعرضه فوراً:</p>
-                    </div>
-                    
-                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                        <div class="link-input-box">
-                            <input type="file" id="pdf-file-input" accept="application/pdf">
-                            <button class="link-save-btn" onclick="loadPdfBlobToViewer()"><i class="fa-solid fa-upload"></i> عرض الكتاب</button>
-                        </div>
-                        <span id="mini-upload-success" class="uploaded-badge-mini"><i class="fa-solid fa-check"></i> تم التحميل بنجاح</span>
-                    </div>
-                </div>
-
-                <!-- الأيقونات الستة بالترتيب الصحيح من اليمين لليسار -->
-                <div class="feature-icons-grid">
-                    <div class="feature-box icon-blue" onclick="triggerSmartFeature('video')">
-                        <i class="fa-solid fa-circle-play"></i>
-                        <span>عرض كتاب المادة</span>
-                    </div>
-
-                    <div class="feature-box icon-purple" onclick="triggerSmartFeature('summary')">
-                        <i class="fa-solid fa-book-open-reader"></i>
-                        <span>شرح وتلخيص الوحدة</span>
-                    </div>
-
-                    <div class="feature-box icon-orange" onclick="triggerSmartFeature('notes')">
-                        <i class="fa-solid fa-lightbulb"></i>
-                        <span>ملخصات مهمة عن الوحدة</span>
-                    </div>
-
-                    <div class="feature-box icon-green" onclick="triggerSmartFeature('solutions')">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <span>حل أسئلة وتمرينات الفصل</span>
-                    </div>
-
-                    <div class="feature-box icon-cyan" onclick="triggerSmartFeature('questions')">
-                        <i class="fa-solid fa-file-circle-question"></i>
-                        <span>أسئلة مهمة تخص الفصل</span>
-                    </div>
-
-                    <div class="feature-box icon-red" onclick="triggerSmartFeature('exam')">
-                        <i class="fa-solid fa-star"></i>
-                        <span>أسئلة مرشحة للامتحان</span>
-                    </div>
-                </div>
-
-                <!-- كرت عارض ملف الكتاب المباشر -->
-                <div class="feature-details-card">
-                    <h3 id="result-card-title"><i class="fa-solid fa-book-open" style="color:#3b82f6;"></i> عارض الكتاب المباشر</h3>
-                    <div id="result-card-body" style="font-size:14px; margin-bottom:10px; color:var(--text-muted);">
-                        اختر ملف PDF من الأعلى واضغط "عرض الكتاب" لاستعراض صفحات الكتاب بسلاسة تامة مهما كان حجم الملف كبيراً.
-                    </div>
-
-                    <div id="embedded-pdf-view" class="pdf-preview-box">
-                        <iframe id="subject-pdf-frame" src="about:blank"></iframe>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- بقية الأقسام -->
-            <div id="board-page" class="content-section">
-                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2>📷 السبورة والملاحظات اليومية</h2>
-            </div>
-
-            <div id="homework" class="content-section">
-                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2>📝 واجباتي المدرسية</h2>
-            </div>
-
-            <div id="tests" class="content-section">
-                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2>✍ الاختبارات</h2>
-            </div>
-
-            <div id="grades" class="content-section">
-                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2>📊 الدرجات الشهرية</h2>
-            </div>
-
-            <div id="analytics" class="content-section">
-                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2>📈 مستوى الطالب</h2>
-            </div>
-
-            <div id="parent-reports" class="content-section">
-                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2>👨‍👩‍👦 تقارير ولي الأمر</h2>
-            </div>
-
-            <div id="settings" class="content-section">
-                <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
-                <h2>⚙️ الإعدادات</h2>
-            </div>
-
         </main>
     </div>
 
-    <!-- نافذة تعديل بيانات الطالب -->
-    <div id="edit-student-modal" class="modal">
+    <!-- النوافذ المنبثقة الست (كل نافذة بمحتواها المستقل والمضبوط) -->
+
+    <!-- 1. نافذة عرض الكتاب -->
+    <div id="book-modal" class="modal">
         <div class="modal-content">
-            <h3>تعديل بيانات الطالب</h3>
-            <div class="form-group">
-                <label>اسم الطالب الجديد:</label>
-                <input type="text" id="input-student-name">
-            </div>
-            <div class="form-group">
-                <label>رفع صورة الطالب الشخصية:</label>
-                <input type="file" id="input-student-photo" accept="image/*">
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn save-btn" onclick="saveStudentProfile()">حفظ التغييرات</button>
-                <button class="modal-btn cancel-btn" onclick="closeEditModal()">إلغاء</button>
-            </div>
+            <h3>عرض كتاب مادة التربية الإسلامية</h3>
+            <p>✔ الكتاب محمل وجاهز. يمكنك استعراضه بالكامل والوصول إلى صفحات المادة بكل سلاسة من هنا.</p>
+            <a href="#" class="close-modal-link">إغلاق</a>
         </div>
     </div>
 
-    <!-- نافذة منبثقة تفاعلية لعرض التلخيصات والشروحات والأسئلة -->
-    <div id="info-modal" class="info-modal">
-        <div class="info-modal-box">
-            <div class="info-modal-header">
-                <h3 id="info-modal-title"><i class="fa-solid fa-book"></i> عنوان النافذة</h3>
-                <button class="close-info-btn" onclick="closeInfoModal()">&times;</button>
-            </div>
-            <div class="info-modal-body" id="info-modal-body">
-                محتوى الشرح والأسئلة يظهر هنا...
-            </div>
+    <!-- 2. نافذة شرح وتلخيص الوحدة -->
+    <div id="summary-modal" class="modal">
+        <div class="modal-content">
+            <h3>شرح وتلخيص الوحدة الأولى</h3>
+            <p>ملخص شامل ومبسط يتناول أهم المفاهيم الأساسية والقواعد العامة في مادة التربية الإسلامية:</p>
+            <ul>
+                <li>التعاريف والاصطلاحات المركزية للوحدة.</li>
+                <li>الخطوات المنهجية المعتمدة لحل التمارين.</li>
+            </ul>
+            <a href="#" class="close-modal-link">إغلاق</a>
         </div>
     </div>
 
-    <script>
-        let currentSubjectName = '';
-        const activeSubjectBlobs = {};
+    <!-- 3. نافذة أسئلة الفصل -->
+    <div id="questions-modal" class="modal">
+        <div class="modal-content">
+            <h3>أسئلة مهمة تخص الفصل</h3>
+            <p><strong>بنك الأسئلة واختبار الفهم:</strong></p>
+            <ul>
+                <li>س/ ما هي الأهمية الأساسية لدراسة هذا الفصل في التربية الإسلامية؟</li>
+                <li>س/ وضح بالخطوات أو الأمثلة التطبيقية أهم القواعد الواردة؟</li>
+            </ul>
+            <a href="#" class="close-modal-link">إغلاق</a>
+        </div>
+    </div>
 
-        function showSection(sectionId, element) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active-section'));
-            const targetSection = document.getElementById(sectionId);
-            if(targetSection) targetSection.classList.add('active-section');
+    <!-- 4. نافذة مرشحات الامتحان -->
+    <div id="exams-modal" class="modal">
+        <div class="modal-content">
+            <h3>أسئلة مرشحة للامتحان</h3>
+            <p style="background: #fff3cd; padding: 8px; border-radius: 5px; color: #856404;">هذه الأسئلة تم اختيارها بدقة لتطابق نمط الأسئلة الوزارية والمدرسية:</p>
+            <ul>
+                <li>التركيز على المسائل والتعاريف المتكررة في امتحانات السنوات السابقة.</li>
+                <li>الأسهل والأكثر ترشيحاً للحصول على الدرجة الكاملة (100).</li>
+            </ul>
+            <a href="#" class="close-modal-link">إغلاق</a>
+        </div>
+    </div>
 
-            if(element) {
-                document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-                element.classList.add('active');
-            }
-        }
+    <!-- 5. نافذة الإضاءات والملاحظات -->
+    <div id="notes-modal" class="modal">
+        <div class="modal-content">
+            <h3>إضاءات وملاحظات ذهبية</h3>
+            <p>أبرز النقاط المركزية التي يركز عليها المنهج الدراسي:</p>
+            <ul>
+                <li>احرص على فهم التطبيقات العملية للدرس.</li>
+                <li>الانتباه إلى الفروقات الأساسية بين القواعد أو العناصر المذكورة في المادة.</li>
+            </ul>
+            <a href="#" class="close-modal-link">إغلاق</a>
+        </div>
+    </div>
 
-        function openSubjectPage(subjectName) {
-            currentSubjectName = subjectName;
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active-section'));
-            document.getElementById('dynamic-subject-page').classList.add('active-section');
-            document.getElementById('page-subject-title').innerText = '📖 منهج مادة ' + subjectName + ' - الصف الثاني متوسط';
-            
-            const successBadge = document.getElementById('mini-upload-success');
-            const pdfViewer = document.getElementById('embedded-pdf-view');
-            const pdfFrame = document.getElementById('subject-pdf-frame');
+    <!-- 6. نافذة حل التمرينات -->
+    <div id="answers-modal" class="modal">
+        <div class="modal-content">
+            <h3>حل أسئلة وتمرينات الفصل</h3>
+            <p><strong>الحلول النموذجية المعتمدة:</strong></p>
+            <p>إجابات تفصيلية وواضحة لجميع أسئلة وأنشطة نهاية الفصل الدراسي مع الشرح والخطوات التدريجية للحل.</p>
+            <a href="#" class="close-modal-link">إغلاق</a>
+        </div>
+    </div>
 
-            if(activeSubjectBlobs[subjectName]) {
-                pdfFrame.src = activeSubjectBlobs[subjectName];
-                pdfViewer.style.display = 'block';
-                successBadge.style.display = 'inline-flex';
-            } else {
-                pdfFrame.src = 'about:blank';
-                pdfViewer.style.display = 'none';
-                successBadge.style.display = 'none';
-            }
-        }
-
-        function loadPdfBlobToViewer() {
-            const fileInput = document.getElementById('pdf-file-input');
-            if(!fileInput.files || fileInput.files.length === 0) {
-                alert('يرجى اختيار ملف PDF أولاً من جهازكِ أو التابلت!');
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const fileBlobUrl = URL.createObjectURL(file);
-            
-            activeSubjectBlobs[currentSubjectName] = fileBlobUrl;
-
-            const pdfViewer = document.getElementById('embedded-pdf-view');
-            const pdfFrame = document.getElementById('subject-pdf-frame');
-            pdfFrame.src = fileBlobUrl;
-            pdfViewer.style.display = 'block';
-
-            document.getElementById('mini-upload-success').style.display = 'inline-flex';
-            document.getElementById('dot-' + currentSubjectName).style.display = 'block';
-            
-            alert('تم تحميل وعرض الكتاب بنجاح تام وسلاسة مطلقة!');
-        }
-
-        function triggerSmartFeature(type) {
-            const modal = document.getElementById('info-modal');
-            const titleElem = document.getElementById('info-modal-title');
-            const bodyElem = document.getElementById('info-modal-body');
-            const hasFile = activeSubjectBlobs[currentSubjectName] ? true : false;
-
-            modal.style.display = 'flex';
-
-            if(type === 'video') {
-                titleElem.innerHTML = `<i class="fa-solid fa-circle-play" style="color:#3b82f6;"></i> عرض كتاب مادة ${currentSubjectName}`;
-                bodyElem.innerHTML = hasFile ? 
-                    `<p style="color:#10b981; font-weight:bold; margin-bottom:12px;">✓ الكتاب محمّل وجاهز. يمكنك استعراضه بالكامل في الأسفل ضمن الصفحة الرئيسية للمادة.</p>` :
-                    `<p style="color:#ef4444; font-weight:bold;">⚠️️ لم تقومي بتحميل ملف كتاب لهذه المادة بعد. اختاري ملف PDF من الأعلى واضغطي "عرض الكتاب".</p>`;
-            } 
-            else if(type === 'summary') {
-                titleElem.innerHTML = `<i class="fa-solid fa-book-open-reader" style="color:#8b5cf6;"></i> شرح وتلخيص الوحدة الأولى - ${currentSubjectName}`;
-                bodyElem.innerHTML = `
-                    <div style="background:#f5f3ff; padding:18px; border-radius:12px; border-right:5px solid #8b5cf6;">
-                        <h4 style="color:#5b21b6; margin-bottom:10px;">ملخص شامل ومبسط:</h4>
-                        <p style="margin-bottom:10px;">يتناول هذا الفصل أهم المفاهيم الأساسية والقواعد العامة في مادة <strong>${currentSubjectName}</strong> بأسلوب سلس ومناسب للفهم السريع.</p>
-                        <ul style="margin-right:20px; line-height:2;">
-                            <li>التعاريف والاصطلاحات المركزية للوحدة.</li>
-                            <li>الخطوات المنهجية المعتمدة لحل التمارين.</li>
-                            <li>ملاحظات الأستاذ المهمة للتحضير اليومي.</li>
-                        </ul>
-                    </div>
-                `;
-            }
-            else if(type === 'notes') {
-                titleElem.innerHTML = `<i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> ملخصات مهمة عن الوحدة - ${currentSubjectName}`;
-                bodyElem.innerHTML = `
-                    <div style="background:#fffbeb; padding:18px; border-radius:12px; border-right:5px solid #f59e0b;">
-                        <h4 style="color:#b45309; margin-bottom:10px;">💡 إضاءات وملاحظات ذهبية:</h4>
-                        <p style="margin-bottom:10px;">أبرز النقاط المركزية التي يركز عليها المنهج الدراسي:</p>
-                        <ul style="margin-right:20px; line-height:2;">
-                            <li>احرص على فهم التطبيقات العملية للدرس.</li>
-                            <li>الانتباه إلى الفروقات الأساسية بين القواعد أو العناصر المذكورة في المادة.</li>
-                        </ul>
-                    </div>
-                `;
-            }
-            else if(type === 'solutions') {
-                titleElem.innerHTML = `<i class="fa-solid fa-pen-to-square" style="color:#10b981;"></i> حل أسئلة وتمرينات الفصل - ${currentSubjectName}`;
-                bodyElem.innerHTML = `
-                    <div style="background:#f0fdf4; padding:18px; border-radius:12px; border-right:5px solid #10b981;">
-                        <h4 style="color:#065f46; margin-bottom:10px;">📝 الحلول النموذجية المعتمدة:</h4>
-                        <p style="margin-bottom:10px;">إجابات تفصيلية ونموذجية لجميع أسئلة وأنشطة نهاية الفصل الدراسي:</p>
-                        <ul style="margin-right:20px; line-height:2;">
-                            <li><strong>السؤال الأول:</strong> الحل النموذجي المباشر والمفصل.</li>
-                            <li><strong>السؤال الثاني:</strong> الشرح والخطوات التدريجية للحل.</li>
-                        </ul>
-                    </div>
-                `;
-            }
-            else if(type === 'questions') {
-                titleElem.innerHTML = `<i class="fa-solid fa-file-circle-question" style="color:#06b6d4;"></i> أسئلة مهمة تخص الفصل - ${currentSubjectName}`;
-                bodyElem.innerHTML = `
-                    <div style="background:#ecfeff; padding:18px; border-radius:12px; border-right:5px solid #06b6d4;">
-                        <h4 style="color:#155e75; margin-bottom:10px;">❓ بنك الأسئلة واختبار الفهم:</h4>
-                        <ol style="margin-right:20px; line-height:2;">
-                            <li>س/ ما هي الأهمية الأساسية لدراسة هذا الفصل في ${currentSubjectName}؟</li>
-                            <li>س/ وضح بالخطوات أو الأمثلة التطبيقية أهم القواعد الواردة؟</li>
-                        </ol>
-                    </div>
-                `;
-            }
-            else if(type === 'exam') {
-                titleElem.innerHTML = `<i class="fa-solid fa-star" style="color:#ef4444;"></i> أسئلة مرشحة للامتحان - ${currentSubjectName}`;
-                bodyElem.innerHTML = `
-                    <div style="background:#fef2f2; padding:18px; border-radius:12px; border-right:5px solid #ef4444; color:#991b1b;">
-                        <h4 style="margin-bottom:10px;">🎯 مرشحات الامتحانات الشهرية والنهائية:</h4>
-                        <p style="margin-bottom:10px;">هذه الأسئلة تم اختيارها بدقة لتتطابق مع نمط الأسئلة الوزارية والمدرسية:</p>
-                        <ul style="margin-right:20px; line-height:2;">
-                            <li>التركيز على المسائل والتعاريف المتكررة في امتحانات السنوات السابقة.</li>
-                            <li>الأسئلة الأكثر ترشيحاً للحصول على الدرجة الكاملة (100).</li>
-                        </ul>
-                    </div>
-                `;
-            }
-        }
-
-        function closeInfoModal() {
-            document.getElementById('info-modal').style.display = 'none';
-        }
-
-        function openEditModal() {
-            document.getElementById('edit-student-modal').style.display = 'flex';
-            document.getElementById('input-student-name').value = document.getElementById('student-name-display').innerText;
-        }
-
-        function closeEditModal() {
-            document.getElementById('edit-student-modal').style.display = 'none';
-        }
-
-        function saveStudentProfile() {
-            const newName = document.getElementById('input-student-name').value;
-            const photoInput = document.getElementById('input-student-photo');
-
-            if (newName && newName.trim() !== '') {
-                document.getElementById('student-name-display').innerText = newName;
-            }
-
-            if (photoInput.files && photoInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.getElementById('student-photo');
-                    img.src = e.target.result;
-                    img.style.display = 'block';
-                    document.getElementById('default-avatar').style.display = 'none';
-                }
-                reader.readAsDataURL(photoInput.files[0]);
-            }
-
-            closeEditModal();
-        }
-
-        function toggleTask(btn) {
-            if(btn.classList.contains('completed')) {
-                btn.classList.remove('completed');
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> تم إنجاز الواجب';
-                btn.style.backgroundColor = '#10b981';
-            } else {
-                btn.classList.add('completed');
-                btn.innerHTML = '<i class="fa-solid fa-check-double"></i> مكتمل!';
-                btn.style.backgroundColor = '#6c757d';
-            }
-        }
-    </script>
 </body>
 </html>
