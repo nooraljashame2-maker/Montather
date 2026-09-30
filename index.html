@@ -91,11 +91,11 @@
         .link-save-btn { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer; }
         .uploaded-badge-mini { background: #06b6d4; color: white; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; display: none; align-items: center; gap: 4px; }
 
-        .feature-icons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 24px; }
-        .feature-box { background: white; border-radius: 14px; padding: 16px 12px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .feature-icons-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px; }
+        .feature-box { background: white; border-radius: 14px; padding: 16px 10px; text-align: center; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
         .feature-box i { font-size: 24px; }
-        .feature-box span { font-size: 12px; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
-        .feature-box:hover, .feature-box.active-box { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 6px 12px rgba(79, 70, 229, 0.15); background: #f5f3ff; }
+        .feature-box span { font-size: 11px; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
+        .feature-box:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 6px 12px rgba(79, 70, 229, 0.15); background: #f5f3ff; }
 
         .icon-blue i { color: #3b82f6; }
         .icon-purple i { color: #8b5cf6; }
@@ -131,6 +131,7 @@
             .top-grid, .dashboard-cards-grid { grid-template-columns: 1fr; }
             .sidebar { width: 70px; padding: 12px 6px; }
             .menu-item span, .logout-btn span { display: none; }
+            .feature-icons-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
@@ -300,7 +301,7 @@
                     </div>
                 </div>
 
-                <!-- الأيقونات الستة التفاعلية الذكية -->
+                <!-- الأيقونات الستة بالترتيب الصحيح من اليمين لليسار -->
                 <div class="feature-icons-grid">
                     <div class="feature-box icon-blue" onclick="triggerSmartFeature('video')">
                         <i class="fa-solid fa-circle-play"></i>
@@ -420,7 +421,6 @@
 
     <script>
         let currentSubjectName = '';
-        // تخزين مؤقت في ذاكرة التابلت الحية لكل مادة لتجنب حدود المتصفح
         const activeSubjectBlobs = {};
 
         function showSection(sectionId, element) {
@@ -455,7 +455,6 @@
             }
         }
 
-        // تحميل وعرض ملف الـ PDF مباشرة باستخدام ذاكرة الحوسبة الحية للتابلت (Blob URL)
         function loadPdfBlobToViewer() {
             const fileInput = document.getElementById('pdf-file-input');
             if(!fileInput.files || fileInput.files.length === 0) {
@@ -464,7 +463,6 @@
             }
 
             const file = fileInput.files[0];
-            // إنشاء رابط بيانات مؤقت مباشر (يتعامل مع أضخم الأحجام دون امتلاء الذاكرة)
             const fileBlobUrl = URL.createObjectURL(file);
             
             activeSubjectBlobs[currentSubjectName] = fileBlobUrl;
@@ -480,7 +478,6 @@
             alert('تم تحميل وعرض الكتاب بنجاح تام وسلاسة مطلقة!');
         }
 
-        // تفاعل الأيقونات الست وإظهار النافذة المنبثقة الذكية
         function triggerSmartFeature(type) {
             const modal = document.getElementById('info-modal');
             const titleElem = document.getElementById('info-modal-title');
@@ -493,7 +490,7 @@
                 titleElem.innerHTML = `<i class="fa-solid fa-circle-play" style="color:#3b82f6;"></i> عرض كتاب مادة ${currentSubjectName}`;
                 bodyElem.innerHTML = hasFile ? 
                     `<p style="color:#10b981; font-weight:bold; margin-bottom:12px;">✓ الكتاب محمّل وجاهز. يمكنك استعراضه بالكامل في الأسفل ضمن الصفحة الرئيسية للمادة.</p>` :
-                    `<p style="color:#ef4444; font-weight:bold;">⚠️ لم تقومي بتحميل ملف كتاب لهذه المادة بعد. اختاري ملف PDF من الأعلى واضغطي "عرض الكتاب".</p>`;
+                    `<p style="color:#ef4444; font-weight:bold;">⚠️️ لم تقومي بتحميل ملف كتاب لهذه المادة بعد. اختاري ملف PDF من الأعلى واضغطي "عرض الكتاب".</p>`;
             } 
             else if(type === 'summary') {
                 titleElem.innerHTML = `<i class="fa-solid fa-book-open-reader" style="color:#8b5cf6;"></i> شرح وتلخيص الوحدة الأولى - ${currentSubjectName}`;
