@@ -87,8 +87,7 @@
 
         .subject-page-header { background: linear-gradient(135deg, #4f46e5, #3730a3); color: white; padding: 20px 25px; border-radius: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .link-input-box { display: flex; gap: 8px; align-items: center; background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.3); }
-        .link-input-box input { background: transparent; border: none; color: white; outline: none; font-size: 13px; width: 220px; font-family: 'Tajawal', sans-serif; }
-        .link-input-box input::placeholder { color: rgba(255,255,255,0.7); }
+        .link-input-box input[type="file"] { color: white; font-size: 12px; width: 220px; }
         .link-save-btn { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer; }
         .uploaded-badge-mini { background: #06b6d4; color: white; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; display: none; align-items: center; gap: 4px; }
 
@@ -284,22 +283,22 @@
 
             </div>
 
-            <!-- صفحة المادة مع شريط ربط الرابط السحابي الذكي وعارض الكتاب -->
+            <!-- صفحة المادة مع زر رفع ملف PDF من الجهاز والتابلت مباشرة -->
             <div id="dynamic-subject-page" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 
                 <div class="subject-page-header">
                     <div>
                         <h2 id="page-subject-title">منهج مادة الدراسة</h2>
-                        <p style="font-size:13px; opacity:0.9;">ضعي رابط كتاب المادة (PDF) هنا ليبقى محفوظاً ويعمل فوراً:</p>
+                        <p style="font-size:13px; opacity:0.9;">اختاري ملف كتاب المادة (PDF) من جهازكِ أو التابلت لرفعه وعرضه فوراً:</p>
                     </div>
                     
                     <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                         <div class="link-input-box">
-                            <input type="text" id="pdf-link-input" placeholder="الصقي رابط الكتاب أو المنهج هنا...">
-                            <button class="link-save-btn" onclick="savePdfLinkToApp()"><i class="fa-solid fa-floppy-disk"></i> حفظ</button>
+                            <input type="file" id="pdf-file-input" accept="application/pdf">
+                            <button class="link-save-btn" onclick="uploadPdfFileToApp()"><i class="fa-solid fa-upload"></i> رفع وعرض</button>
                         </div>
-                        <span id="mini-upload-success" class="uploaded-badge-mini"><i class="fa-solid fa-check"></i> مرتبط بالبرنامج</span>
+                        <span id="mini-upload-success" class="uploaded-badge-mini"><i class="fa-solid fa-check"></i> تم رفع الكتاب</span>
                     </div>
                 </div>
 
@@ -336,11 +335,11 @@
                     </div>
                 </div>
 
-                <!-- كرت عارض ملف الكتاب المباشر السحابي -->
+                <!-- كرت عارض ملف الكتاب المباشر -->
                 <div class="feature-details-card">
-                    <h3 id="result-card-title"><i class="fa-solid fa-book-open" style="color:#3b82f6;"></i> عارض الكتاب السحابي المباشر</h3>
+                    <h3 id="result-card-title"><i class="fa-solid fa-book-open" style="color:#3b82f6;"></i> عارض الكتاب المباشر</h3>
                     <div id="result-card-body" style="font-size:14px; margin-bottom:10px; color:var(--text-muted);">
-                        يمكنك استعراض صفحات الكتاب بالأسفل مباشرة، أو النقر على أيقونات التلخيص والأسئلة بالأعلى لتفتح لك نافذة منبثقة تفصيلية فوراً.
+                        ارفعي ملف المادة من الأعلى لاستعراض صفحات الكتاب مباشرة، وانقري على أيقونات التلخيص والأسئلة لفتح النوافذ المنبثقة التفصيلية.
                     </div>
 
                     <div id="embedded-pdf-view" class="pdf-preview-box">
@@ -445,42 +444,52 @@
             document.getElementById('dynamic-subject-page').classList.add('active-section');
             document.getElementById('page-subject-title').innerText = '📖 منهج مادة ' + subjectName + ' - الصف الثاني متوسط';
             
-            const savedLink = localStorage.getItem('book_link_' + subjectName);
-            const inputField = document.getElementById('pdf-link-input');
+            const savedFile = localStorage.getItem('book_file_' + subjectName);
             const successBadge = document.getElementById('mini-upload-success');
             const pdfViewer = document.getElementById('embedded-pdf-view');
             const pdfFrame = document.getElementById('subject-pdf-frame');
 
-            if(savedLink) {
-                inputField.value = savedLink;
-                pdfFrame.src = savedLink;
+            if(savedFile) {
+                pdfFrame.src = savedFile;
                 pdfViewer.style.display = 'block';
                 successBadge.style.display = 'inline-flex';
             } else {
-                inputField.value = '';
                 pdfFrame.src = 'about:blank';
                 pdfViewer.style.display = 'none';
                 successBadge.style.display = 'none';
             }
         }
 
-        function savePdfLinkToApp() {
-            const link = document.getElementById('pdf-link-input').value.trim();
-            if(!link) {
-                alert('يرجى لصق رابط كتاب المادة أولاً!');
+        // رفع ملف الـ PDF مباشرة من الجهاز أو التابلت وتخزينه محلياً
+        function uploadPdfFileToApp() {
+            const fileInput = document.getElementById('pdf-file-input');
+            if(!fileInput.files || fileInput.files.length === 0) {
+                alert('يرجى اختيار ملف PDF أولاً من جهازكِ أو التابلت!');
                 return;
             }
 
-            localStorage.setItem('book_link_' + currentSubjectName, link);
-            document.getElementById('mini-upload-success').style.display = 'inline-flex';
-            
-            const pdfViewer = document.getElementById('embedded-pdf-view');
-            const pdfFrame = document.getElementById('subject-pdf-frame');
-            pdfFrame.src = link;
-            pdfViewer.style.display = 'block';
+            const file = fileInput.files[0];
+            const reader = new FileReader();
 
-            checkSavedLinksDots();
-            alert('تم حفظ رابط كتاب (' + currentSubjectName + ') في التطبيق بنجاح تام!');
+            reader.onload = function(e) {
+                const base64Data = e.target.result;
+                try {
+                    localStorage.setItem('book_file_' + currentSubjectName, base64Data);
+                    document.getElementById('mini-upload-success').style.display = 'inline-flex';
+                    
+                    const pdfViewer = document.getElementById('embedded-pdf-view');
+                    const pdfFrame = document.getElementById('subject-pdf-frame');
+                    pdfFrame.src = base64Data;
+                    pdfViewer.style.display = 'block';
+
+                    checkSavedLinksDots();
+                    alert('تم رفع وعرض كتاب (' + currentSubjectName + ') وحفظه بنجاح تام في التطبيق!');
+                } catch(err) {
+                    alert('عذراً، حجم الملف كبير جداً على ذاكرة المتصفح المحلية. يفضل اختيار ملف مختصر أو فصل دراسي واحد.');
+                }
+            };
+
+            reader.readAsDataURL(file);
         }
 
         function checkSavedLinksDots() {
@@ -488,7 +497,7 @@
             subjects.forEach(sub => {
                 const dot = document.getElementById('dot-' + sub);
                 if(dot) {
-                    if(localStorage.getItem('book_link_' + sub)) {
+                    if(localStorage.getItem('book_file_' + sub)) {
                         dot.style.display = 'block';
                     } else {
                         dot.style.display = 'none';
@@ -502,16 +511,15 @@
             const modal = document.getElementById('info-modal');
             const titleElem = document.getElementById('info-modal-title');
             const bodyElem = document.getElementById('info-modal-body');
-            const savedLink = localStorage.getItem('book_link_' + currentSubjectName);
+            const savedFile = localStorage.getItem('book_file_' + currentSubjectName);
 
             modal.style.display = 'flex';
 
             if(type === 'video') {
                 titleElem.innerHTML = `<i class="fa-solid fa-circle-play" style="color:#3b82f6;"></i> عرض كتاب مادة ${currentSubjectName}`;
-                bodyElem.innerHTML = savedLink ? 
-                    `<p style="color:#10b981; font-weight:bold; margin-bottom:12px;">✓ الكتاب مرتبطة بنجاح. يمكنك استعراضه بالكامل في الأسفل ضمن الصفحة الرئيسية للمادة.</p>
-                     <p>تم تحميل الكتاب في العارض المباشر.</p>` :
-                    `<p style="color:#ef4444; font-weight:bold;">⚠️ لم تقومي بإضافة رابط كتاب لهذه المادة بعد. ضعي رابط الـ PDF في شريط الأعلى واضغطي حفظ.</p>`;
+                bodyElem.innerHTML = savedFile ? 
+                    `<p style="color:#10b981; font-weight:bold; margin-bottom:12px;">✓ الكتاب مرفوع ومحفوظ بنجاح. يمكنك استعراضه بالكامل في الأسفل ضمن الصفحة الرئيسية للمادة.</p>` :
+                    `<p style="color:#ef4444; font-weight:bold;">⚠️ لم تقومي برفع ملف كتاب لهذه المادة بعد. اختاري ملف PDF من الأعلى واضغطي "رفع وعرض".</p>`;
             } 
             else if(type === 'summary') {
                 titleElem.innerHTML = `<i class="fa-solid fa-book-open-reader" style="color:#8b5cf6;"></i> شرح وتلخيص الوحدة الأولى - ${currentSubjectName}`;
@@ -598,7 +606,7 @@
             const photoInput = document.getElementById('input-student-photo');
 
             if (newName && newName.trim() !== '') {
-                document.getElementById('student-name-display').innerText =newName;
+                document.getElementById('student-name-display').innerText = newName;
             }
 
             if (photoInput.files && photoInput.files[0]) {
