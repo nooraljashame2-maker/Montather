@@ -5,26 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دراستي - واجهة الطالب</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body { background-color: #f4f6f9; color: #333; }
-        header { background: #1e293b; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .layout { display: flex; min-height: 100vh; }
-        aside { width: 220px; background: #fff; border-left: 1px solid #ddd; padding: 20px 10px; }
-        aside a { display: block; padding: 12px 15px; margin-bottom: 8px; color: #333; text-decoration: none; border-radius: 8px; font-weight: 500; }
+        header { background: #1e293b; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .layout { display: flex; min-height: calc(100vh - 60px); }
+        
+        /* القائمة الجانبية */
+        aside { width: 220px; background: #fff; border-left: 1px solid #e2e8f0; padding: 20px 10px; }
+        aside a { display: flex; align-items: center; gap: 10px; padding: 12px 15px; margin-bottom: 8px; color: #475569; text-decoration: none; border-radius: 8px; font-weight: 500; transition: all 0.2s; }
         aside a:hover, aside a.active { background: #4f46e5; color: white; }
-        main { flex: 1; padding: 20px; }
-        .welcome-card { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .subject-card { background: white; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid #eee; }
-        .subject-card:hover { border-color: #6366f1; color: #6366f1; }
+        
+        main { flex: 1; padding: 25px; }
+        
+        /* البطاقة الترحيبية */
+        .welcome-card { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; padding: 20px 25px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2); }
+        
+        /* شبكة المواد */
+        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 15px; color: #1e293b; display: flex; align-items: center; gap: 8px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .subject-card { background: white; padding: 20px; border-radius: 12px; text-align: center; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.04); cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
+        .subject-card i { font-size: 32px; display: block; margin-bottom: 10px; color: #4f46e5; }
+        .subject-card:hover { border-color: #6366f1; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(99, 102, 241, 0.15); }
+        
+        /* بطاقات الإنجاز والمعلومات */
         .cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .info-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .info-card h3 { margin-bottom: 12px; font-size: 18px; color: #1e293b; border-bottom: 2px solid #f4f6f9; padding-bottom: 8px; }
-        .btn { background: #4f46e5; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; font-weight: bold; }
+        .info-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; }
+        .info-card h3 { margin-bottom: 12px; font-size: 17px; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        
+        /* الأزرار */
+        .btn { background: #4f46e5; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 12px; font-weight: bold; font-size: 14px; transition: background 0.2s; }
+        .btn:hover { background: #4338ca; }
         .btn-success { background: #10b981; }
+        .btn-success:hover { background: #059669; }
+        .back-btn { background: #e2e8f0; color: #334155; padding: 8px 16px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
+        .back-btn:hover { background: #cbd5e1; }
+
+        /* الأقسام الصفحية */
         .section { display: none; }
         .section.active { display: block; }
+
+        /* قائمة ملفات المادة */
+        .files-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .file-item { background: white; padding: 15px 20px; border-radius: 10px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .file-info { display: flex; align-items: center; gap: 12px; }
+        .file-info i { font-size: 24px; color: #ef4444; }
+        .download-link { background: #EEF2FF; color: #4F46E5; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+        .download-link:hover { background: #4F46E5; color: white; }
     </style>
 </head>
 <body>
@@ -35,82 +63,231 @@
     </header>
 
     <div class="layout">
+        <!-- القائمة الجانبية -->
         <aside>
-            <a href="#" class="active" onclick="switchTab('dash', this)">الرئيسية</a>
-            <a href="#" onclick="switchTab('subjects', this)">المواد الدراسية</a>
-            <a href="#" onclick="switchTab('homework', this)">الواجبات</a>
-            <a href="#" onclick="switchTab('tests', this)">الاختبارات</a>
-            <a href="#" onclick="switchTab('grades', this)">الدرجات</a>
+            <a href="#" class="active" onclick="switchTab('dash', this)"><i class="fa-solid fa-house"></i> الرئيسية</a>
+            <a href="#" onclick="switchTab('subjects', this)"><i class="fa-solid fa-book-open"></i> المواد الدراسية</a>
+            <a href="#" onclick="switchTab('homework', this)"><i class="fa-solid fa-list-check"></i> الواجبات</a>
+            <a href="#" onclick="switchTab('tests', this)"><i class="fa-solid fa-file-pen"></i> الاختبارات</a>
+            <a href="#" onclick="switchTab('grades', this)"><i class="fa-solid fa-chart-column"></i> الدرجات</a>
         </aside>
 
+        <!-- المحتوى الرئيسي -->
         <main>
-            <!-- القسم الرئيسي -->
+            <!-- 1. الشاشة الرئيسية -->
             <div id="dash" class="section active">
                 <div class="welcome-card">
                     <h2>مرحباً بك يا أحمد 👋</h2>
-                    <p>الصف: الثاني متوسط | المدرسة: المتفوقين</p>
+                    <p>الصف: الثاني متوسط | المدرسة: المتفوقين النموذجية</p>
                 </div>
 
-                <h3>المواد الدراسية</h3>
+                <div class="section-title"><i class="fa-solid fa-books"></i> اختر المادة الدراسية:</div>
                 <div class="grid">
-                    <div class="subject-card">اللغة العربية</div>
-                    <div class="subject-card">الرياضيات</div>
-                    <div class="subject-card">اللغة الإنجليزية</div>
-                    <div class="subject-card">العلوم</div>
-                    <div class="subject-card">الاجتماعيات</div>
-                    <div class="subject-card">التربية الإسلامية</div>
+                    <div class="subject-card" onclick="openSubjectDetails('اللغة العربية', 'arabic')">
+                        <i class="fa-solid fa-book"></i>
+                        <span>اللغة العربية</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('الرياضيات', 'math')">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>الرياضيات</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('اللغة الإنجليزية', 'english')">
+                        <i class="fa-solid fa-language"></i>
+                        <span>اللغة الإنجليزية</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('العلوم', 'science')">
+                        <i class="fa-solid fa-atom"></i>
+                        <span>العلوم</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('الاجتماعيات', 'social')">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>الاجتماعيات</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('التربية الإسلامية', 'islamic')">
+                        <i class="fa-solid fa-mosque"></i>
+                        <span>التربية الإسلامية</span>
+                    </div>
                 </div>
 
                 <div class="cards-row">
                     <div class="info-card">
-                        <h3>📚 درس اليوم</h3>
-                        <p><strong>اللغة العربية:</strong> أسلوب الاستفهام</p>
-                        <button class="btn">مشاهدة الشرح</button>
+                        <h3><i class="fa-solid fa-book-open-reader"></i> درس اليوم</h3>
+                        <p><strong>اللغة العربية:</strong> أسلوب الاستفهام - قواعد</p>
+                        <button class="btn" onclick="openSubjectDetails('اللغة العربية', 'arabic')">مشاهدة المنهج والملفات</button>
                     </div>
 
                     <div class="info-card">
-                        <h3>📝 واجب اليوم</h3>
-                        <p><strong>الرياضيات:</strong> حل تمارين صفحة 45</p>
-                        <button class="btn btn-success" onclick="this.innerText='تم الإنجاز بنجاح ✓'">تأكيد حل الواجب</button>
+                        <h3><i class="fa-solid fa-pen-to-square"></i> واجب اليوم</h3>
+                        <p><strong>الرياضيات:</strong> حل تمارين صفحة 45 إلى 48</p>
+                        <button class="btn btn-success" onclick="toggleHomework(this)">تأكيد حل الواجب</button>
                     </div>
 
                     <div class="info-card">
-                        <h3>📊 مستوى الطالب</h3>
-                        <p>الأداء العام: <strong>ممتاز (88%)</strong></p>
-                        <p>نقاط القوة: اللغة العربية، العلوم</p>
+                        <h3><i class="fa-solid fa-chart-line"></i> مستوى الطالب</h3>
+                        <p>الأداء العام: <strong>ممتاز (88%) ⭐</strong></p>
+                        <p style="font-size: 13px; color: #64748b; margin-top: 5px;">نقاط القوة: اللغة العربية، العلوم</p>
                     </div>
                 </div>
             </div>
 
-            <!-- أقسام فرعية -->
+            <!-- 2. صفحة تفاصيل المادة (الملفات والملازم والكتاب) -->
+            <div id="subject-details" class="section">
+                <button class="back-btn" onclick="switchTab('dash')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
+                <h2 id="selected-subject-title" class="section-title">منهج المادة</h2>
+                <p style="color: #64748b; margin-bottom: 20px;">يمكنك تحميل كتاب المادة، الملخصات، والملازم الدراسية أدناه:</p>
+
+                <div class="files-list" id="files-container">
+                    <!-- سيتم تحميل ملفات المادة هنا ديناميكياً -->
+                </div>
+            </div>
+
+            <!-- 3. قسم كافة المواد -->
             <div id="subjects" class="section">
-                <h2>📚 المواد الدراسية</h2>
-                <p style="margin-top:10px;">هنا تظهر جميع المناهج والكتب المقررة.</p>
+                <h2 class="section-title"><i class="fa-solid fa-book-open"></i> كافة المواد الدراسية</h2>
+                <div class="grid">
+                    <div class="subject-card" onclick="openSubjectDetails('اللغة العربية', 'arabic')">
+                        <i class="fa-solid fa-book"></i>
+                        <span>اللغة العربية</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('الرياضيات', 'math')">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>الرياضيات</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('اللغة الإنجليزية', 'english')">
+                        <i class="fa-solid fa-language"></i>
+                        <span>اللغة الإنجليزية</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('العلوم', 'science')">
+                        <i class="fa-solid fa-atom"></i>
+                        <span>العلوم</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('الاجتماعيات', 'social')">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>الاجتماعيات</span>
+                    </div>
+                    <div class="subject-card" onclick="openSubjectDetails('التربية الإسلامية', 'islamic')">
+                        <i class="fa-solid fa-mosque"></i>
+                        <span>التربية الإسلامية</span>
+                    </div>
+                </div>
             </div>
 
+            <!-- 4. الواجبات -->
             <div id="homework" class="section">
-                <h2>📝 الواجبات المدرسية</h2>
-                <p style="margin-top:10px;">قائمة الواجبات المطلوبة لهذا الأسبوع.</p>
+                <h2 class="section-title"><i class="fa-solid fa-list-check"></i> الواجبات المدرسية</h2>
+                <div class="info-card">
+                    <p><strong>الرياضيات:</strong> حل تمارين صفحة 45 إلى 48 (تاريخ التسليم: الغد)</p>
+                    <button class="btn btn-success" style="width: auto;" onclick="toggleHomework(this)">تأكيد الإنجاز</button>
+                </div>
             </div>
 
+            <!-- 5. الاختبارات -->
             <div id="tests" class="section">
-                <h2>✍️ الاختبارات والامتحانات</h2>
-                <p style="margin-top:10px;">لا توجد اختبارات متاحة حالياً.</p>
+                <h2 class="section-title"><i class="fa-solid fa-file-pen"></i> الاختبارات والامتحانات</h2>
+                <div class="info-card"><p>لا توجد اختبارات مفعّلة حالياً.</p></div>
             </div>
 
+            <!-- 6. الدرجات -->
             <div id="grades" class="section">
-                <h2>📊 سجل الدرجات</h2>
-                <p style="margin-top:10px;">درجات الشهر الأول والشهر الثاني.</p>
+                <h2 class="section-title"><i class="fa-solid fa-chart-column"></i> سجل الدرجات الشهرية</h2>
+                <div class="info-card"><p>درجة الشهر الأول - اللغة العربية: 90/100 | الرياضيات: 85/100</p></div>
             </div>
         </main>
     </div>
 
     <script>
+        // قاعدة بيانات الكتب والملازم للمواد
+        const subjectData = {
+            'arabic': [
+                { name: 'كتاب اللغة العربية - الجزء الأول (PDF)', size: '12.4 MB', type: 'كتاب رسمي', url: '#' },
+                { name: 'ملزمة قواعد اللغة العربية - الشاملة', size: '4.8 MB', type: 'ملزمة', url: '#' },
+                { name: 'ملخص أسلوب الاستفهام والإنشاء', size: '1.2 MB', type: 'ملخص', url: '#' }
+            ],
+            'math': [
+                { name: 'كتاب الرياضيات - الجزء الأول (PDF)', size: '18.2 MB', type: 'كتاب رسمي', url: '#' },
+                { name: 'ملزمة حلول تمارين الكتاب', size: '6.5 MB', type: 'حلول', url: '#' }
+            ],
+            'english': [
+                { name: 'English Student\'s Book', size: '15.0 MB', type: 'كتاب رسمي', url: '#' },
+                { name: 'English Activity Book', size: '9.3 MB', type: 'كتاب التمارين', url: '#' },
+                { name: 'ملزمة القواعد والقطع المطلوبة', size: '3.1 MB', type: 'ملزمة', url: '#' }
+            ],
+            'science': [
+                { name: 'كتاب العلوم العامة (PDF)', size: '22.0 MB', type: 'كتاب رسمي', url: '#' },
+                { name: 'ملخص ملزمة الفيزياء والكيمياء', size: '5.4 MB', type: 'ملزمة', url: '#' }
+            ],
+            'social': [
+                { name: 'كتاب الاجتماعيات (PDF)', size: '14.1 MB', type: 'كتاب رسمي', url: '#' },
+                { name: 'ملخص التاريخ والجغرافيا', size: '2.8 MB', type: 'ملخص', url: '#' }
+            ],
+            'islamic': [
+                { name: 'كتاب التربية الإسلامية (PDF)', size: '10.5 MB', type: 'كتاب رسمي', url: '#' },
+                { name: 'حفظ سور القران والأحاديث النبوية', size: '1.9 MB', type: 'ملخص', url: '#' }
+            ]
+        };
+
+        // التبديل بين الشاشات الرئيسية
         function switchTab(id, elem) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('aside a').forEach(a => a.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            elem.classList.add('active');
+            
+            const target = document.getElementById(id);
+            if(target) target.classList.add('active');
+
+            if(elem) {
+                elem.classList.add('active');
+            } else {
+                const homeLink = document.querySelector('aside a');
+                if(homeLink) homeLink.classList.add('active');
+            }
+        }
+
+        // فتح صفحة تفاصيل المادة وعرض كتبها وملازمها
+        function openSubjectDetails(subjectName, subjectKey) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('subject-details').classList.add('active');
+            document.getElementById('selected-subject-title').innerText = '📚 منهج ' + subjectName;
+
+            const container = document.getElementById('files-container');
+            container.innerHTML = '';
+
+            const files = subjectData[subjectKey] || [];
+
+            if (files.length === 0) {
+                container.innerHTML = '<p>لا توجد ملفات رفعت لهذه المادة بعد.</p>';
+                return;
+            }
+
+            files.forEach(file => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <div class="file-info">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <div>
+                            <strong>${file.name}</strong>
+                            <div style="font-size: 12px; color: #64748b; margin-top:2px;">النوع: ${file.type} | الحجم: ${file.size}</div>
+                        </div>
+                    </div>
+                    <a href="${file.url}" class="download-link" onclick="alert('جارٍ تجهيز وتحميل الملف: ${file.name}')">
+                        <i class="fa-solid fa-download"></i> تحميل
+                    </a>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // إنجاز الواجبات
+        function toggleHomework(btn) {
+            if(btn.classList.contains('btn-success')) {
+                btn.innerText = 'تم الإنجاز بنجاح ✓';
+                btn.style.backgroundColor = '#6c757d';
+                btn.classList.remove('btn-success');
+            } else {
+                btn.innerText = 'تأكيد حل الواجب';
+                btn.style.backgroundColor = '#10b981';
+                btn.classList.add('btn-success');
+            }
         }
     </script>
 </body>
