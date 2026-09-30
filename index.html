@@ -1,188 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة معلم اللغة الإنجليزية - السادس الابتدائي</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-* {
-    box-sizing: border-box;
-    font-family: 'Tajawal', sans-serif;
-    margin: 0;
-    padding: 0;
-}
+    <header class="main-header">
+        <h1>منصة معلم اللغة الإنجليزية 📚</h1>
+        <p>الصف السادس الابتدائي - الخطة اليومية والمكتبة الوزارية</p>
+    </header>
 
-body {
-    background-color: #f4f7f9;
-    color: #333;
-    direction: rtl;
-}
+    <div class="container">
+        <!-- القائمة الجانبية للتنقل -->
+        <nav class="sidebar">
+            <button class="nav-btn active" onclick="showTab('plan')">📋 الخطة اليومية</button>
+            <button class="nav-btn" onclick="showTab('books')">📖 الكتب المنهجية</button>
+            <button class="nav-btn" onclick="showTab('ministerial')">📝 الأسئلة الوزارية</button>
+        </nav>
 
-.main-header {
-    background-color: #1a365d;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+        <!-- المحتوى الرئيسي -->
+        <main class="content">
 
-.main-header h1 {
-    font-size: 24px;
-    margin-bottom: 5px;
-}
+            <!-- النافذة الأولى: الخطة اليومية -->
+            <section id="plan" class="tab-content active-content">
+                <h2>الخطة اليومية للمنهج المقرر</h2>
+                <div class="card">
+                    <form id="lesson-form">
+                        <div class="form-group">
+                            <label>الوحدة والدرس (Unit & Lesson):</label>
+                            <input type="text" placeholder="مثال: Unit 1 - Lesson 1 (My Family)">
+                        </div>
+                        <div class="form-group">
+                            <label>الأهداف السلوكية (Objectives):</label>
+                            <textarea rows="2" placeholder="يتعلم الطالب المفردات الجديدة الخاصة بالعائلة..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>الوسائل التعليمية (Teaching Aids):</label>
+                            <input type="text" placeholder="السبورة، البطاقات الخاطفة، المسجل الصوت">
+                        </div>
+                        <div class="form-group">
+                            <label>خطوات العرض والواجب البيتي:</label>
+                            <textarea rows="3" placeholder="التهيئة، القراءة، حل تمارين Activity Book الصفحة 4..."></textarea>
+                        </div>
+                        <button type="button" class="btn-primary">حفظ الخطة اليومية</button>
+                    </form>
+                </div>
+            </section>
 
-.container {
-    display: flex;
-    max-width: 1200px;
-    margin: 20px auto;
-    gap: 20px;
-    padding: 0 15px;
-}
+            <!-- النافذة الثانية: الكتب المنهجية -->
+            <section id="books" class="tab-content">
+                <h2>المكتبة المنهجية (الكتاب والدليل)</h2>
+                <div class="card">
+                    <p>قم برفع ملفات PDF الخاصة بالمنهج لسهولة التصفح والوصول:</p>
+                    <div class="upload-box">
+                        <input type="file" id="book-upload" accept=".pdf">
+                        <label for="book-upload" class="btn-upload">📤 رفع كتاب الطالب / النشاط / الدليل</label>
+                    </div>
+                    <ul class="file-list" id="books-list">
+                        <li>📚 كتاب الطالب للصف السادس (Student Book)</li>
+                        <li>📘 كتاب النشاط (Activity Book)</li>
+                        <li>📗 دليل المعلم (Teacher's Guide)</li>
+                    </ul>
+                </div>
+            </section>
 
-.sidebar {
-    width: 250px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+            <!-- النافذة الثالثة: الأسئلة الوزارية للسنوات السابقة -->
+            <section id="ministerial" class="tab-content">
+                <h2>أرشيف الأسئلة الوزارية</h2>
+                
+                <!-- رفع الأسئلة -->
+                <div class="card">
+                    <h3>إضافة نموذج أسئلة وزاري جديد</h3>
+                    <div class="form-row">
+                        <input type="text" id="exam-year" placeholder="أدخل السنة والدور (مثال: 2024 - الدور الأول)">
+                        <input type="file" id="exam-file" accept=".pdf,.png,.jpg,.jpeg">
+                    </div>
+                    <button type="button" class="btn-primary" onclick="addExam()">📥 حفظ وتصنيف الأسئلة</button>
+                </div>
 
-.nav-btn {
-    padding: 15px;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #2d3748;
-    cursor: pointer;
-    text-align: right;
-    transition: all 0.3s;
-}
+                <!-- البحث واستخراج الأسئلة -->
+                <div class="card">
+                    <h3>استخراج وتصفح الأسئلة الوزارية</h3>
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="اكتب السنة أو الدور هنا (مثال: 2023)...">
+                        <button type="button" class="btn-search" onclick="searchExam()">🔍 استخراج الأسئلة</button>
+                    </div>
+                    <div id="search-results" class="results-box">
+                        <p class="placeholder-text">اكتب السنة اضغطي على زر الاستخراج لعرض الأسئلة المطابقة.</p>
+                    </div>
+                </div>
+            </section>
 
-.nav-btn.active, .nav-btn:hover {
-    background-color: #2b6cb0;
-    color: white;
-    border-color: #2b6cb0;
-}
+        </main>
+    </div>
 
-.content {
-    flex: 1;
-}
+    <script>
+        // التبديل بين النوافذ
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active-content'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active-content');
+            event.currentTarget.classList.add('active');
+        }
 
-.tab-content {
-    display: none;
-}
+        // حفظ بسيط ومحاكاة استخراج الأسئلة
+        let examsDatabase = [
+            { year: "2024 - الدور الأول", file: "أسئلة اللغة الإنجليزية 2024 الدور الأول.pdf" },
+            { year: "2023 - الدور الأول", file: "أسئلة اللغة الإنجليزية 2023 الدور الأول.pdf" },
+            { year: "2023 - الدور الثاني", file: "أسئلة اللغة الإنجليزية 2023 الدور الثاني.pdf" }
+        ];
 
-.tab-content.active-content {
-    display: block;
-}
+        function addExam() {
+            const yearInput = document.getElementById('exam-year').value;
+            if(yearInput) {
+                examsDatabase.push({ year: yearInput, file: "نموذج أسئلة مضاف.pdf" });
+                alert("تم إضافة نموذج الأسئلة لـ " + yearInput + " بنجاح!");
+                document.getElementById('exam-year').value = '';
+            } else {
+                alert("يرجى كتابة السنة/الدور أولاً!");
+            }
+        }
 
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
-}
+        function searchExam() {
+            const query = document.getElementById('search-input').value.trim();
+            const resultsDiv = document.getElementById('search-results');
+            
+            if(!query) {
+                resultsDiv.innerHTML = "<p class='error-text'>يرجى إدخال سنة أو دور للبحث!</p>";
+                return;
+            }
 
-.card h2, .card h3 {
-    margin-bottom: 15px;
-    color: #2c5282;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input[type="text"], textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-    font-size: 14px;
-}
-
-.form-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.btn-primary, .btn-search {
-    background-color: #319795;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.btn-primary:hover, .btn-search:hover {
-    background-color: #2c7a7b;
-}
-
-.upload-box {
-    margin: 15px 0;
-}
-
-.btn-upload {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #edf2f7;
-    border: 2px dashed #cbd5e0;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.file-list {
-    margin-top: 15px;
-    list-style: none;
-}
-
-.file-list li {
-    padding: 10px;
-    background: #f7fafc;
-    margin-bottom: 8px;
-    border-radius: 5px;
-}
-
-.search-box {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.results-box {
-    background: #f7fafc;
-    padding: 15px;
-    border-radius: 6px;
-    border: 1px solid #e2e8f0;
-}
-
-.results-box ul {
-    list-style: none;
-}
-
-.results-box li {
-    padding: 8px 0;
-    border-bottom: 1px solid #edf2f7;
-}
-
-.placeholder-text {
-    color: #a0aec0;
-}
-
-.error-text {
-    color: #e53e3e;
-}
-
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-    }
-}
+            const filtered = examsDatabase.filter(exam => exam.year.includes(query));
+            
+            if(filtered.length > 0) {
+                let html = "<ul>";
+                filtered.forEach(item => {
+                    html += `<li>📄 <strong>${item.year}</strong> - <a href='#'>عرض وتحميل الملف (${item.file})</a></li>`;
+                });
+                html += "</ul>";
+                resultsDiv.innerHTML = html;
+            } else {
+                resultsDiv.innerHTML = "<p class='error-text'>لم يتم العثور على أسئلة وزارية لهذا التاريخ.</p>";
+            }
+        }
+    </script>
+</body>
+</html>
