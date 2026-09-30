@@ -3,114 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دراستي - واجهة الطالب</title>
+    <title>دراستي - معاً نحو مستقبل أفضل</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-        body { background-color: #f4f6f9; color: #333; }
-        header { background: #1e293b; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .layout { display: flex; min-height: 100vh; }
-        aside { width: 220px; background: #fff; border-left: 1px solid #ddd; padding: 20px 10px; }
-        aside a { display: block; padding: 12px 15px; margin-bottom: 8px; color: #333; text-decoration: none; border-radius: 8px; font-weight: 500; }
-        aside a:hover, aside a.active { background: #4f46e5; color: white; }
-        main { flex: 1; padding: 20px; }
-        .welcome-card { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .subject-card { background: white; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid #eee; }
-        .subject-card:hover { border-color: #6366f1; color: #6366f1; }
-        .cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .info-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .info-card h3 { margin-bottom: 12px; font-size: 18px; color: #1e293b; border-bottom: 2px solid #f4f6f9; padding-bottom: 8px; }
-        .btn { background: #4f46e5; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; font-weight: bold; }
-        .btn-success { background: #10b981; }
-        .section { display: none; }
-        .section.active { display: block; }
-    </style>
 </head>
 <body>
 
-    <header>
-        <h2>🎓 منصة دراستي</h2>
-        <span>واجهة الطالب</span>
+    <header class="top-bar">
+        <div class="logo-area">
+            <i class="fa-solid fa-graduation-cap logo-icon"></i>
+            <div>
+                <h2>دراستي</h2>
+                <span>معاً نحو مستقبل أفضل</span>
+            </div>
+        </div>
+        <div class="top-actions">
+            <button class="top-btn" onclick="showSection('settings')"><i class="fa-solid fa-gear"></i> الإعدادات</button>
+            <button class="top-btn notification-btn"><i class="fa-solid fa-bell"></i> الإشعارات <span class="badge">3</span></button>
+        </div>
     </header>
 
-    <div class="layout">
-        <aside>
-            <a href="#" class="active" onclick="switchTab('dash', this)">الرئيسية</a>
-            <a href="#" onclick="switchTab('subjects', this)">المواد الدراسية</a>
-            <a href="#" onclick="switchTab('homework', this)">الواجبات</a>
-            <a href="#" onclick="switchTab('tests', this)">الاختبارات</a>
-            <a href="#" onclick="switchTab('grades', this)">الدرجات</a>
+    <div class="app-layout">
+
+        <aside class="sidebar">
+            <nav class="sidebar-menu">
+                <a href="javascript:void(0)" class="menu-item active" onclick="showSection('main-dashboard', this)"><i class="fa-solid fa-house"></i> الرئيسية</a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('subjects', this)"><i class="fa-solid fa-book-open"></i> المواد الدراسية</a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('homework', this)"><i class="fa-solid fa-list-check"></i> واجباتي</a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('board', this)"><i class="fa-solid fa-camera"></i> السبورة والملاحظات</a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('tests', this)"><i class="fa-solid fa-file-pen"></i> الاختبارات</a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('grades', this)"><i class="fa-solid fa-chart-column"></i> الدرجات الشهرية</a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('analytics', this)"><i class="fa-solid fa-chart-line"></i> مستوى الطالب</a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('parent-reports', this)"><i class="fa-solid fa-users"></i> تقارير ولي الأمر</a>
+                <a href="javascript:void(0)" class="menu-item" onclick="showSection('settings', this)"><i class="fa-solid fa-gear"></i> الإعدادات</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="javascript:void(0)" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</a>
+            </div>
         </aside>
 
-        <main>
-            <!-- القسم الرئيسي -->
-            <div id="dash" class="section active">
-                <div class="welcome-card">
-                    <h2>مرحباً بك يا أحمد 👋</h2>
-                    <p>الصف: الثاني متوسط | المدرسة: المتفوقين</p>
-                </div>
+        <main class="main-content">
 
-                <h3>المواد الدراسية</h3>
-                <div class="grid">
-                    <div class="subject-card">اللغة العربية</div>
-                    <div class="subject-card">الرياضيات</div>
-                    <div class="subject-card">اللغة الإنجليزية</div>
-                    <div class="subject-card">العلوم</div>
-                    <div class="subject-card">الاجتماعيات</div>
-                    <div class="subject-card">التربية الإسلامية</div>
-                </div>
-
-                <div class="cards-row">
-                    <div class="info-card">
-                        <h3>📚 درس اليوم</h3>
-                        <p><strong>اللغة العربية:</strong> أسلوب الاستفهام</p>
-                        <button class="btn">مشاهدة الشرح</button>
+            <!-- الواجهة الرئيسية -->
+            <div id="main-dashboard" class="content-section active-section">
+                
+                <div class="top-grid">
+                    <div class="student-card">
+                        <div class="avatar-box">
+                            <i class="fa-solid fa-user-graduate avatar-icon"></i>
+                        </div>
+                        <div class="student-info">
+                            <h3 id="student-name">أحمد محمد</h3>
+                            <p id="student-grade">الصف: الثاني متوسط</p>
+                            <p id="student-school">المدرسة: المتوسطة النموذجية</p>
+                            <button class="edit-btn" onclick="openEditModal()"><i class="fa-solid fa-pen"></i> تعديل البيانات</button>
+                        </div>
                     </div>
 
-                    <div class="info-card">
-                        <h3>📝 واجب اليوم</h3>
-                        <p><strong>الرياضيات:</strong> حل تمارين صفحة 45</p>
-                        <button class="btn btn-success" onclick="this.innerText='تم الإنجاز بنجاح ✓'">تأكيد حل الواجب</button>
-                    </div>
-
-                    <div class="info-card">
-                        <h3>📊 مستوى الطالب</h3>
-                        <p>الأداء العام: <strong>ممتاز (88%)</strong></p>
-                        <p>نقاط القوة: اللغة العربية، العلوم</p>
+                    <div class="banner-card">
+                        <div class="banner-text">
+                            <h3>بخُطوات صغيرة ..</h3>
+                            <h2>نصل إلى أحلام كبيرة 🤍</h2>
+                        </div>
+                        <div class="banner-icon-box">
+                            <i class="fa-solid fa-book-open-reader banner-icon"></i>
+                        </div>
                     </div>
                 </div>
+
+                <div class="subjects-grid">
+                    <div class="subject-box arabic" onclick="showSection('subjects')">
+                        <i class="fa-solid fa-book"></i>
+                        <span>اللغة العربية</span>
+                    </div>
+                    <div class="subject-box math1" onclick="showSection('subjects')">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>الرياضيات</span>
+                    </div>
+                    <div class="subject-box english" onclick="showSection('subjects')">
+                        <i class="fa-solid fa-language"></i>
+                        <span>اللغة الانجليزية</span>
+                    </div>
+                    <div class="subject-box math2" onclick="showSection('subjects')">
+                        <i class="fa-solid fa-square-root-variable"></i>
+                        <span>الرياضيات</span>
+                    </div>
+                    <div class="subject-box social" onclick="showSection('subjects')">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>الاجتماعيات</span>
+                    </div>
+                    <div class="subject-box islamic" onclick="showSection('subjects')">
+                        <i class="fa-solid fa-mosque"></i>
+                        <span>الإسلامية</span>
+                    </div>
+                    <div class="subject-box biology" onclick="showSection('subjects')">
+                        <i class="fa-solid fa-dna"></i>
+                        <span>الأحياء</span>
+                    </div>
+                    <div class="subject-box chemistry" onclick="showSection('subjects')">
+                        <i class="fa-solid fa-flask"></i>
+                        <span>الكيمياء</span>
+                    </div>
+                    <div class="subject-box physics" onclick="showSection('subjects')">
+                        <i class="fa-solid fa-atom"></i>
+                        <span>الفيزياء</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-cards-grid">
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-camera"></i> صورة السبورة</span>
+                            <a href="javascript:void(0)" onclick="showSection('board')">عرض الكل</a>
+                        </div>
+                        <div class="card-body board-body">
+                            <div class="board-preview">
+                                <p>ملاحظات المعلم - اللغة العربية</p>
+                                <span>2026/09/26</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-book-open"></i> درس اليوم</span>
+                            <a href="javascript:void(0)" onclick="showSection('subjects')">عرض الكل</a>
+                        </div>
+                        <div class="card-body">
+                            <h4>اللغة العربية</h4>
+                            <p class="lesson-title">أسلوب الاستفهام</p>
+                            <p class="lesson-sub">قراءة الدرس ومشاهدة الشرح المرفق</p>
+                            <button class="action-btn blue-btn"><i class="fa-solid fa-play"></i> مشاهدة الدرس</button>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-calendar-check"></i> واجب اليوم</span>
+                            <a href="javascript:void(0)" onclick="showSection('homework')">عرض الكل</a>
+                        </div>
+                        <div class="card-body">
+                            <h4>الرياضيات</h4>
+                            <p class="homework-desc">حل التمارين من صفحة 45 إلى 48</p>
+                            <p class="date-text"><i class="fa-regular fa-calendar"></i> السبت 2026/09/27</p>
+                            <button class="action-btn green-btn" onclick="toggleTask(this)"><i class="fa-solid fa-check"></i> تم إنجاز الواجب</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-cards-grid">
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-chart-pie"></i> مستوى الطالب</span>
+                            <a href="javascript:void(0)" onclick="showSection('analytics')">عرض التفاصيل</a>
+                        </div>
+                        <div class="card-body level-body">
+                            <div class="progress-circle">
+                                <span>78%</span>
+                            </div>
+                            <div class="level-info">
+                                <p>مستوى الأداء العام: <strong>جيد جداً ⭐</strong></p>
+                                <div class="strengths">
+                                    <p class="green-text">نقاط القوة:</p>
+                                    <span>• اللغة العربية • الإسلامية</span>
+                                </div>
+                                <div class="weaknesses">
+                                    <p class="red-text">أحتاج إلى تحسين:</p>
+                                    <span>• الرياضيات • الفيزياء</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-chart-simple"></i> الدرجات الشهرية</span>
+                            <a href="javascript:void(0)" onclick="showSection('grades')">عرض الكل</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="mini-table">
+                                <thead>
+                                    <tr>
+                                        <th>المادة</th>
+                                        <th>الدرجة</th>
+                                        <th>الشهر</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>اللغة العربية</td><td class="badge-grade green">88</td><td>2</td></tr>
+                                    <tr><td>الرياضيات</td><td class="badge-grade yellow">76</td><td>1</td></tr>
+                                    <tr><td>اللغة الإنجليزية</td><td class="badge-grade green">82</td><td>2</td></tr>
+                                    <tr><td>الفيزياء</td><td class="badge-grade yellow">70</td><td>1</td></tr>
+                                    <tr><td>الكيمياء</td><td class="badge-grade green">90</td><td>1</td></tr>
+                                    <tr><td>الأحياء</td><td class="badge-grade green">85</td><td>1</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-vial"></i> الاختبار بعد الواجب</span>
+                            <a href="javascript:void(0)" onclick="showSection('tests')">عرض الكل</a>
+                        </div>
+                        <div class="card-body">
+                            <h4>الرياضيات</h4>
+                            <p>عدد الأسئلة: 10 سؤال</p>
+                            <p>الوقت: 15 دقيقة</p>
+                            <button class="action-btn purple-btn" onclick="showSection('tests')"><i class="fa-solid fa-play"></i> ابدأ الاختبار</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- أقسام فرعية -->
-            <div id="subjects" class="section">
+            <!-- النوافذ الفرعية مع أزرار العودة للرئيسية -->
+            <div id="subjects" class="content-section">
+                <button class="back-home-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 <h2>📚 المواد الدراسية</h2>
-                <p style="margin-top:10px;">هنا تظهر جميع المناهج والكتب المقررة.</p>
+                <div class="card-box"><p>قسم عرض الدروس والمواد الدراسية.</p></div>
             </div>
 
-            <div id="homework" class="section">
-                <h2>📝 الواجبات المدرسية</h2>
-                <p style="margin-top:10px;">قائمة الواجبات المطلوبة لهذا الأسبوع.</p>
+            <div id="homework" class="content-section">
+                <button class="back-home-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
+                <h2>📝 واجباتي المدرسية</h2>
+                <div class="card-box"><p>قائمة الواجبات المدرسية المطلوب حلها.</p></div>
             </div>
 
-            <div id="tests" class="section">
-                <h2>✍️ الاختبارات والامتحانات</h2>
-                <p style="margin-top:10px;">لا توجد اختبارات متاحة حالياً.</p>
+            <div id="board" class="content-section">
+                <button class="back-home-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
+                <h2>📷 السبورة والملاحظات</h2>
+                <div class="card-box"><p>صور الملاحظات المسجلة من السبورة.</p></div>
             </div>
 
-            <div id="grades" class="section">
-                <h2>📊 سجل الدرجات</h2>
-                <p style="margin-top:10px;">درجات الشهر الأول والشهر الثاني.</p>
+            <div id="tests" class="content-section">
+                <button class="back-home-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
+                <h2>✍️ الاختبارات</h2>
+                <div class="card-box"><p>قسم الاختبارات التفاعلية السريعة.</p></div>
             </div>
+
+            <div id="grades" class="content-section">
+                <button class="back-home-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
+                <h2>📊 الدرجات الشهرية</h2>
+                <div class="card-box"><p>سجل درجات الامتحانات الشهرية.</p></div>
+            </div>
+
+            <div id="analytics" class="content-section">
+                <button class="back-home-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
+                <h2>📈 مستوى الطالب</h2>
+                <div class="card-box"><p>تقارير وتحليلات أداء الطالب.</p></div>
+            </div>
+
+            <div id="parent-reports" class="content-section">
+                <button class="back-home-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
+                <h2>👨‍👩‍👦 تقارير ولي الأمر</h2>
+                <div class="card-box"><p>تقارير متابعة الحضور والالتزام.</p></div>
+            </div>
+
+            <div id="settings" class="content-section">
+                <button class="back-home-btn" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
+                <h2>⚙️ الإعدادات</h2>
+                <div class="card-box"><p>إعدادات الحساب والتطبيق.</p></div>
+            </div>
+
         </main>
     </div>
 
+    <!-- نافذة تعديل بيانات الطالب -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3>تعديل بيانات الطالب</h3>
+            <div class="input-group">
+                <label>اسم الطالب:</label>
+                <input type="text" id="input-name" value="أحمد محمد">
+            </div>
+            <div class="input-group">
+                <label>الصف الدراسي:</label>
+                <input type="text" id="input-grade" value="الصف: الثاني متوسط">
+            </div>
+            <div class="input-group">
+                <label>اسم المدرسة:</label>
+                <input type="text" id="input-school" value="المدرسة: المتوسطة النموذجية">
+            </div>
+            <div class="modal-buttons">
+                <button class="save-modal-btn" onclick="saveStudentInfo()">حفظ التغيرات</button>
+                <button class="close-modal-btn" onclick="closeEditModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function switchTab(id, elem) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('aside a').forEach(a => a.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            elem.classList.add('active');
+        function showSection(sectionId, element) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active-section'));
+            const targetSection = document.getElementById(sectionId);
+            if(targetSection) targetSection.classList.add('active-section');
+
+            if(element) {
+                document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+                element.classList.add('active');
+            }
+        }
+
+        function goHome() {
+            showSection('main-dashboard');
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            const homeBtn = document.querySelector('.menu-item');
+            if(homeBtn) homeBtn.classList.add('active');
+        }
+
+        function openEditModal() {
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        function saveStudentInfo() {
+            const name = document.getElementById('input-name').value;
+            const grade = document.getElementById('input-grade').value;
+            const school = document.getElementById('input-school').value;
+
+            if(name) document.getElementById('student-name').innerText = name;
+            if(grade) document.getElementById('student-grade').innerText = grade;
+            if(school) document.getElementById('student-school').innerText = school;
+
+            closeEditModal();
+        }
+
+        function toggleTask(btn) {
+            if(btn.classList.contains('completed')) {
+                btn.classList.remove('completed');
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> تم إنجاز الواجب';
+                btn.style.backgroundColor = '#28a745';
+            } else {
+                btn.classList.add('completed');
+                btn.innerHTML = '<i class="fa-solid fa-check-double"></i> مكتمل!';
+                btn.style.backgroundColor = '#6c757d';
+            }
         }
     </script>
 </body>
