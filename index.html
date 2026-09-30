@@ -109,11 +109,11 @@
         .feature-details-card { background: white; border-radius: 16px; border: 1px solid var(--border-color); padding: 22px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
         .feature-details-card h3 { font-size: 17px; color: var(--primary-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
 
-        .pdf-preview-box { width: 100%; height: 500px; border: 1px solid var(--border-color); border-radius: 12px; margin-top: 15px; overflow: hidden; display: none; }
+        .pdf-preview-box { width: 100%; height: 550px; border: 1px solid var(--border-color); border-radius: 12px; margin-top: 15px; overflow: hidden; display: none; }
         .pdf-preview-box iframe { width: 100%; height: 100%; border: none; }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: white; padding: 25px; border-radius: 16px; width: 90%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .modal-content { background: white; padding: 25px; border-radius: 16px; width: 90%; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .form-group { margin-bottom: 14px; }
         .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
         .form-group input[type="text"], .form-group input[type="file"] { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; }
@@ -121,6 +121,14 @@
         .modal-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
         .save-btn { background: var(--primary); color: white; }
         .cancel-btn { background: #e2e8f0; color: #475569; }
+
+        /* نافذة منبثقة تفاعلية للمحتوى والتلخيصات والأسئلة */
+        .info-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1100; padding: 20px; }
+        .info-modal-box { background: white; border-radius: 16px; width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.2); border-top: 6px solid var(--primary); }
+        .info-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--border-color); background: #f8fafc; }
+        .info-modal-header h3 { font-size: 18px; color: var(--primary-dark); display: flex; align-items: center; gap: 8px; }
+        .close-info-btn { background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer; }
+        .info-modal-body { padding: 22px; font-size: 14px; line-height: 1.8; color: var(--text-dark); }
 
         @media (max-width: 900px) {
             .top-grid, .dashboard-cards-grid { grid-template-columns: 1fr; }
@@ -194,7 +202,7 @@
                     </div>
                 </div>
 
-                <!-- شبكة المواد (تظهر نقطة خضراء للمادة المرتبطة برابط الكتاب) -->
+                <!-- شبكة المواد -->
                 <div class="subjects-grid">
                     <div class="subject-box arabic" onclick="openSubjectPage('اللغة العربية')">
                         <div class="saved-dot" id="dot-اللغة العربية"></div>
@@ -276,7 +284,7 @@
 
             </div>
 
-            <!-- صفحة المادة مع شريط ربط الرابط السحابي الذكي (بدون مشاكل حجم الملف) -->
+            <!-- صفحة المادة مع شريط ربط الرابط السحابي الذكي وعارض الكتاب -->
             <div id="dynamic-subject-page" class="content-section">
                 <button class="back-home-btn" onclick="showSection('main-dashboard')"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية</button>
                 
@@ -297,45 +305,44 @@
 
                 <!-- الأيقونات الستة التفاعلية الذكية -->
                 <div class="feature-icons-grid">
-                    <div class="feature-box icon-blue active-box" id="box-video" onclick="triggerSmartFeature('video')">
+                    <div class="feature-box icon-blue" onclick="triggerSmartFeature('video')">
                         <i class="fa-solid fa-circle-play"></i>
-                        <span>شرح المادة والدرس</span>
+                        <span>عرض كتاب المادة</span>
                     </div>
 
-                    <div class="feature-box icon-purple" id="box-summary" onclick="triggerSmartFeature('summary')">
+                    <div class="feature-box icon-purple" onclick="triggerSmartFeature('summary')">
                         <i class="fa-solid fa-book-open-reader"></i>
                         <span>شرح وتلخيص الوحدة</span>
                     </div>
 
-                    <div class="feature-box icon-orange" id="box-notes" onclick="triggerSmartFeature('notes')">
+                    <div class="feature-box icon-orange" onclick="triggerSmartFeature('notes')">
                         <i class="fa-solid fa-lightbulb"></i>
                         <span>ملخصات مهمة عن الوحدة</span>
                     </div>
 
-                    <div class="feature-box icon-green" id="box-solutions" onclick="triggerSmartFeature('solutions')">
+                    <div class="feature-box icon-green" onclick="triggerSmartFeature('solutions')">
                         <i class="fa-solid fa-pen-to-square"></i>
                         <span>حل أسئلة وتمرينات الفصل</span>
                     </div>
 
-                    <div class="feature-box icon-cyan" id="box-questions" onclick="triggerSmartFeature('questions')">
+                    <div class="feature-box icon-cyan" onclick="triggerSmartFeature('questions')">
                         <i class="fa-solid fa-file-circle-question"></i>
                         <span>أسئلة مهمة تخص الفصل</span>
                     </div>
 
-                    <div class="feature-box icon-red" id="box-exam" onclick="triggerSmartFeature('exam')">
+                    <div class="feature-box icon-red" onclick="triggerSmartFeature('exam')">
                         <i class="fa-solid fa-star"></i>
                         <span>أسئلة مرشحة للامتحان</span>
                     </div>
                 </div>
 
-                <!-- كرت النتائج الذكية المتفاعل وعارض الكتاب -->
+                <!-- كرت عارض ملف الكتاب المباشر السحابي -->
                 <div class="feature-details-card">
-                    <h3 id="result-card-title"><i class="fa-solid fa-circle-play" style="color:#3b82f6;"></i> 🎥 شرح المادة والدروس المرفوقة</h3>
-                    <div id="result-card-body" style="font-size:14px; line-height:1.8; margin-bottom:10px;">
-                        جاري تحميل البيانات الذكية للمادة...
+                    <h3 id="result-card-title"><i class="fa-solid fa-book-open" style="color:#3b82f6;"></i> عارض الكتاب السحابي المباشر</h3>
+                    <div id="result-card-body" style="font-size:14px; margin-bottom:10px; color:var(--text-muted);">
+                        يمكنك استعراض صفحات الكتاب بالأسفل مباشرة، أو النقر على أيقونات التلخيص والأسئلة بالأعلى لتفتح لك نافذة منبثقة تفصيلية فوراً.
                     </div>
 
-                    <!-- عارض ملف الكتاب المباشر السحابي -->
                     <div id="embedded-pdf-view" class="pdf-preview-box">
                         <iframe id="subject-pdf-frame" src="about:blank"></iframe>
                     </div>
@@ -382,7 +389,7 @@
         </main>
     </div>
 
-    <!-- نافذة تعديل البيانات -->
+    <!-- نافذة تعديل بيانات الطالب -->
     <div id="edit-student-modal" class="modal">
         <div class="modal-content">
             <h3>تعديل بيانات الطالب</h3>
@@ -397,6 +404,19 @@
             <div class="modal-actions">
                 <button class="modal-btn save-btn" onclick="saveStudentProfile()">حفظ التغييرات</button>
                 <button class="modal-btn cancel-btn" onclick="closeEditModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة منبثقة تفاعلية لعرض التلخيصات والشروحات والأسئلة -->
+    <div id="info-modal" class="info-modal">
+        <div class="info-modal-box">
+            <div class="info-modal-header">
+                <h3 id="info-modal-title"><i class="fa-solid fa-book"></i> عنوان النافذة</h3>
+                <button class="close-info-btn" onclick="closeInfoModal()">&times;</button>
+            </div>
+            <div class="info-modal-body" id="info-modal-body">
+                محتوى الشرح والأسئلة يظهر هنا...
             </div>
         </div>
     </div>
@@ -425,7 +445,6 @@
             document.getElementById('dynamic-subject-page').classList.add('active-section');
             document.getElementById('page-subject-title').innerText = '📖 منهج مادة ' + subjectName + ' - الصف الثاني متوسط';
             
-            // جلب الرابط المحفوظ للمادة
             const savedLink = localStorage.getItem('book_link_' + subjectName);
             const inputField = document.getElementById('pdf-link-input');
             const successBadge = document.getElementById('mini-upload-success');
@@ -443,11 +462,8 @@
                 pdfViewer.style.display = 'none';
                 successBadge.style.display = 'none';
             }
-
-            triggerSmartFeature('video');
         }
 
-        // حفظ رابط الكتاب في التطبيق نهائياً
         function savePdfLinkToApp() {
             const link = document.getElementById('pdf-link-input').value.trim();
             if(!link) {
@@ -464,10 +480,9 @@
             pdfViewer.style.display = 'block';
 
             checkSavedLinksDots();
-            alert('تم حفظ رابط كتاب (' + currentSubjectName + ') في التطبيق بنجاح تام ولن يضيع أبداً!');
+            alert('تم حفظ رابط كتاب (' + currentSubjectName + ') في التطبيق بنجاح تام!');
         }
 
-        // التحقق من الروابط المحفوظة لإظهار النقطة الخضراء بالواجهة الرئيسية
         function checkSavedLinksDots() {
             const subjects = ['اللغة العربية', 'الرياضيات', 'اللغة الإنجليزية', 'الاجتماعيات', 'التربية الإسلامية', 'الأحياء', 'الكيمياء', 'الفيزياء'];
             subjects.forEach(sub => {
@@ -482,81 +497,91 @@
             });
         }
 
-        // التفاعل الذكي للأيقونات الست واستخراج الحلول
+        // تفاعل الأيقونات الست وإظهار النافذة المنبثقة الذكية
         function triggerSmartFeature(type) {
-            document.querySelectorAll('.feature-box').forEach(b => b.classList.remove('active-box'));
-            
-            const titleElem = document.getElementById('result-card-title');
-            const bodyElem = document.getElementById('result-card-body');
-            const pdfViewer = document.getElementById('embedded-pdf-view');
+            const modal = document.getElementById('info-modal');
+            const titleElem = document.getElementById('info-modal-title');
+            const bodyElem = document.getElementById('info-modal-body');
             const savedLink = localStorage.getItem('book_link_' + currentSubjectName);
 
+            modal.style.display = 'flex';
+
             if(type === 'video') {
-                document.getElementById('box-video').classList.add('active-box');
-                titleElem.innerHTML = `<i class="fa-solid fa-circle-play" style="color:#3b82f6;"></i> 🎥 عرض وتصفح كتاب (${currentSubjectName})`;
+                titleElem.innerHTML = `<i class="fa-solid fa-circle-play" style="color:#3b82f6;"></i> عرض كتاب مادة ${currentSubjectName}`;
                 bodyElem.innerHTML = savedLink ? 
-                    `<p style="color:#10b981; font-weight:bold; margin-bottom:8px;">✓ يتم عرض الكتاب من الرابط المحفوظ في التطبيق:</p>` :
-                    `<p style="color:var(--text-muted);">لم تقومي بإضافة رابط كتاب لهذه المادة بعد. ضعي رابط الـ PDF بالأعلى واضغطي حفظ.</p>`;
-                pdfViewer.style.display = savedLink ? 'block' : 'none';
+                    `<p style="color:#10b981; font-weight:bold; margin-bottom:12px;">✓ الكتاب مرتبطة بنجاح. يمكنك استعراضه بالكامل في الأسفل ضمن الصفحة الرئيسية للمادة.</p>
+                     <p>تم تحميل الكتاب في العارض المباشر.</p>` :
+                    `<p style="color:#ef4444; font-weight:bold;">⚠️ لم تقومي بإضافة رابط كتاب لهذه المادة بعد. ضعي رابط الـ PDF في شريط الأعلى واضغطي حفظ.</p>`;
             } 
             else if(type === 'summary') {
-                document.getElementById('box-summary').classList.add('active-box');
-                titleElem.innerHTML = `<i class="fa-solid fa-book-open-reader" style="color:#8b5cf6;"></i> 📖 شرح وتلخيص الوحدة الأولى (${currentSubjectName})`;
+                titleElem.innerHTML = `<i class="fa-solid fa-book-open-reader" style="color:#8b5cf6;"></i> شرح وتلخيص الوحدة الأولى - ${currentSubjectName}`;
                 bodyElem.innerHTML = `
-                    <div style="background:#f5f3ff; padding:16px; border-radius:12px; border-right:4px solid #8b5cf6;">
-                        <p style="font-weight:bold; color:#5b21b6; margin-bottom:8px;">الملخص الشامل والذكي للمادة:</p>
-                        <ul style="margin-right:18px; line-height:1.8;">
-                            <li><strong>أبرز المفاهيم المحورية:</strong> استخلاص أهم القواعد والتعاريف الخاصة بالوحدة الأولى في ${currentSubjectName}.</li>
-                            <li><strong>التركيز اليومي:</strong> القواعد الأساسية المطلوبة للفهم والتحضير المدرسي.</li>
+                    <div style="background:#f5f3ff; padding:18px; border-radius:12px; border-right:5px solid #8b5cf6;">
+                        <h4 style="color:#5b21b6; margin-bottom:10px;">ملخص شامل ومبسط:</h4>
+                        <p style="margin-bottom:10px;">يتناول هذا الفصل أهم المفاهيم الأساسية والقواعد العامة في مادة <strong>${currentSubjectName}</strong> بأسلوب سلس ومناسب للفهم السريع.</p>
+                        <ul style="margin-right:20px; line-height:2;">
+                            <li>التعاريف والاصطلاحات المركزية للوحدة.</li>
+                            <li>الخطوات المنهجية المعتمدة لحل التمارين.</li>
+                            <li>ملاحظات الأستاذ المهمة للتحضير اليومي.</li>
                         </ul>
                     </div>
                 `;
-                pdfViewer.style.display = 'none';
             }
             else if(type === 'notes') {
-                document.getElementById('box-notes').classList.add('active-box');
-                titleElem.innerHTML = `<i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> 💡 ملخصات مهمة عن الوحدة (${currentSubjectName})`;
+                titleElem.innerHTML = `<i class="fa-solid fa-lightbulb" style="color:#f59e0b;"></i> ملخصات مهمة عن الوحدة - ${currentSubjectName}`;
                 bodyElem.innerHTML = `
-                    <div style="background:#fffbeb; padding:16px; border-radius:12px; border-right:4px solid #f59e0b;">
-                        <p style="font-weight:bold; color:#b45309; margin-bottom:8px;">ملاحظات ذهبية للمراجعة السريعة:</p>
-                        <p>تتضمن تنبيهات الأستاذ حول النقاط الدقيقة التي تتكرر عادة في الفصول الدراسية وتسهل حفظ المادة.</p>
+                    <div style="background:#fffbeb; padding:18px; border-radius:12px; border-right:5px solid #f59e0b;">
+                        <h4 style="color:#b45309; margin-bottom:10px;">💡 إضاءات وملاحظات ذهبية:</h4>
+                        <p style="margin-bottom:10px;">أبرز النقاط المركزية التي يركز عليها المنهج الدراسي:</p>
+                        <ul style="margin-right:20px; line-height:2;">
+                            <li>احرص على فهم التطبيقات العملية للدرس.</li>
+                            <li>الانتباه إلى الفروقات الأساسية بين القواعد أو العناصر المذكورة في المادة.</li>
+                        </ul>
                     </div>
                 `;
-                pdfViewer.style.display = 'none';
             }
             else if(type === 'solutions') {
-                document.getElementById('box-solutions').classList.add('active-box');
-                titleElem.innerHTML = `<i class="fa-solid fa-pen-to-square" style="color:#10b981;"></i> 📝 حل أسئلة وتمرينات الفصل (${currentSubjectName})`;
+                titleElem.innerHTML = `<i class="fa-solid fa-pen-to-square" style="color:#10b981;"></i> حل أسئلة وتمرينات الفصل - ${currentSubjectName}`;
                 bodyElem.innerHTML = `
-                    <div style="background:#f0fdf4; padding:16px; border-radius:12px; border-right:4px solid #10b981;">
-                        <p style="font-weight:bold; color:#065f46; margin-bottom:8px;">الحلول النموذجية المعتمدة لأسئلة الكتاب:</p>
-                        <p>إجابات كاملة وتفصيلية لجميع تمارين وأنشطة نهاية الفصل خطوة بخطوة.</p>
+                    <div style="background:#f0fdf4; padding:18px; border-radius:12px; border-right:5px solid #10b981;">
+                        <h4 style="color:#065f46; margin-bottom:10px;">📝 الحلول النموذجية المعتمدة:</h4>
+                        <p style="margin-bottom:10px;">إجابات تفصيلية ونموذجية لجميع أسئلة وأنشطة نهاية الفصل الدراسي:</p>
+                        <ul style="margin-right:20px; line-height:2;">
+                            <li><strong>السؤال الأول:</strong> الحل النموذجي المباشر والمفصل.</li>
+                            <li><strong>السؤال الثاني:</strong> الشرح والخطوات التدريجية للحل.</li>
+                        </ul>
                     </div>
                 `;
-                pdfViewer.style.display = 'none';
             }
             else if(type === 'questions') {
-                document.getElementById('box-questions').classList.add('active-box');
-                titleElem.innerHTML = `<i class="fa-solid fa-file-circle-question" style="color:#06b6d4;"></i> ❓ أسئلة مهمة تخص الفصل (${currentSubjectName})`;
+                titleElem.innerHTML = `<i class="fa-solid fa-file-circle-question" style="color:#06b6d4;"></i> أسئلة مهمة تخص الفصل - ${currentSubjectName}`;
                 bodyElem.innerHTML = `
-                    <div style="background:#ecfeff; padding:16px; border-radius:12px; border-right:4px solid #06b6d4;">
-                        <p style="font-weight:bold; color:#155e75; margin-bottom:8px;">بنك أسئلة واختبار المفاهيم:</p>
-                        <p>1. علل واشرح الأسباب العلمية أو المنهجية للظواهر والقواعد.<br>2. قارن بين المفاهيم الرئيسية الواردة في الفصل.</p>
+                    <div style="background:#ecfeff; padding:18px; border-radius:12px; border-right:5px solid #06b6d4;">
+                        <h4 style="color:#155e75; margin-bottom:10px;">❓ بنك الأسئلة واختبار الفهم:</h4>
+                        <ol style="margin-right:20px; line-height:2;">
+                            <li>س/ ما هي الأهمية الأساسية لدراسة هذا الفصل في ${currentSubjectName}؟</li>
+                            <li>س/ وضح بالخطوات أو الأمثلة التطبيقية أهم القواعد الواردة؟</li>
+                        </ol>
                     </div>
                 `;
-                pdfViewer.style.display = 'none';
             }
             else if(type === 'exam') {
-                document.getElementById('box-exam').classList.add('active-box');
-                titleElem.innerHTML = `<i class="fa-solid fa-star" style="color:#ef4444;"></i> 🎯 أسئلة مرشحة للامتحان الشهري (${currentSubjectName})`;
+                titleElem.innerHTML = `<i class="fa-solid fa-star" style="color:#ef4444;"></i> أسئلة مرشحة للامتحان - ${currentSubjectName}`;
                 bodyElem.innerHTML = `
-                    <div style="background:#fef2f2; padding:16px; border-radius:12px; border-right:4px solid #ef4444; color:#991b1b;">
-                        <p style="font-weight:bold; margin-bottom:8px;">⚠️ مرشحات الامتحان الشهري الضامنة للدرجة الكاملة:</p>
-                        <p>أهم الأسئلة والمسائل المرشحة بقوة من المنهج والتي تركز عليها لجان الاختبارات الشهرية.</p>
+                    <div style="background:#fef2f2; padding:18px; border-radius:12px; border-right:5px solid #ef4444; color:#991b1b;">
+                        <h4 style="margin-bottom:10px;">🎯 مرشحات الامتحانات الشهرية والنهائية:</h4>
+                        <p style="margin-bottom:10px;">هذه الأسئلة تم اختيارها بدقة لتتطابق مع نمط الأسئلة الوزارية والمدرسية:</p>
+                        <ul style="margin-right:20px; line-height:2;">
+                            <li>التركيز على المسائل والتعاريف المتكررة في امتحانات السنوات السابقة.</li>
+                            <li>الأسئلة الأكثر ترشيحاً للحصول على الدرجة الكاملة (100).</li>
+                        </ul>
                     </div>
                 `;
-                pdfViewer.style.display = 'none';
             }
+        }
+
+        function closeInfoModal() {
+            document.getElementById('info-modal').style.display = 'none';
         }
 
         function openEditModal() {
@@ -569,11 +594,11 @@
         }
 
         function saveStudentProfile() {
-            const newName = document.getElementById('input-student-name-input') ? document.getElementById('input-student-name-input').value : document.getElementById('input-student-name').value;
+            const newName = document.getElementById('input-student-name').value;
             const photoInput = document.getElementById('input-student-photo');
 
             if (newName && newName.trim() !== '') {
-                document.getElementById('student-name-display').innerText = newName;
+                document.getElementById('student-name-display').innerText =newName;
             }
 
             if (photoInput.files && photoInput.files[0]) {
