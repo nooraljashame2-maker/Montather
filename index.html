@@ -414,12 +414,12 @@
                     for(let i=0; i<5; i++) {
                         tableHTML += `<td>
                             <div class="cell-wrapper">
-                                <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="saveDataAndCheck()">
+                                <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="saveDataAndCheck()" onblur="saveDataAndCheck()">
                             </div>
                         </td>`;
                         tableHTML += `<td>
                             <div class="cell-wrapper">
-                                <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="saveDataAndCheck()">
+                                <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="saveDataAndCheck()" onblur="saveDataAndCheck()">
                             </div>
                         </td>`;
                     }
