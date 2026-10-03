@@ -39,6 +39,39 @@
             color: #d32f2f;
             font-family: 'Times New Roman', Times, serif, Tahoma;
         }
+        /* لوحة التحكم الذكية للتوزيع */
+        .control-panel {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            min-width: 140px;
+        }
+        .control-group label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #334e68;
+        }
+        .control-group input, .control-group select {
+            padding: 7px;
+            border: 1px solid #d9e2ec;
+            border-radius: 6px;
+            font-family: 'Cairo', Tahoma, sans-serif;
+            font-size: 12px;
+            background-color: #f8fafc;
+        }
         .actions-bar {
             display: flex;
             justify-content: space-between;
@@ -63,8 +96,14 @@
             gap: 6px;
             text-decoration: none;
         }
+        .btn-primary {
+            background-color: #2b6cb0;
+        }
         .btn-whatsapp {
             background-color: #25d366;
+        }
+        .btn-danger {
+            background-color: #e53e3e;
         }
         .btn:hover {
             opacity: 0.9;
@@ -88,12 +127,6 @@
             font-weight: bold;
             font-size: 13px;
             text-align: center;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
         }
         .table-container {
             width: 100%;
@@ -151,7 +184,6 @@
             background-color: #ffffff;
             outline: 2px solid #3182ce;
         }
-        /* تنسيق خلية التضارب الذكي */
         .conflict-cell {
             background-color: #ffc9c9 !important;
             color: #9b2c2c !important;
@@ -160,7 +192,7 @@
         }
 
         @media print {
-            .actions-bar, #conflict-alert {
+            .control-panel, .actions-bar, #conflict-alert {
                 display: none;
             }
             body {
@@ -186,12 +218,67 @@
             <div class="designer-name">Noor Rahman</div>
         </div>
 
+        <h2>جدول الحصص المدرسية - المرحلة الابتدائية</h2>
+
+        <!-- لوحة التحكم الذكية للإدخال والتوزيع التلقائي -->
+        <div class="control-panel">
+            <div class="control-group">
+                <label>اسم المعلم:</label>
+                <input type="text" id="teacherNameInput" placeholder="أدخل اسم المعلم">
+            </div>
+            <div class="control-group">
+                <label>المرحلة والشعبة:</label>
+                <select id="targetRowSelect">
+                    <option value="all">جميع المراحل والشعب</option>
+                    <option value="1-أ">الأول الابتدائي - أ</option>
+                    <option value="1-ب">الأول الابتدائي - ب</option>
+                    <option value="1-ج">الأول الابتدائي - ج</option>
+                    <option value="2-أ">الثاني الابتدائي - أ</option>
+                    <option value="2-ب">الثاني الابتدائي - ب</option>
+                    <option value="2-ج">الثاني الابتدائي - ج</option>
+                    <option value="3-أ">الثالث الابتدائي - أ</option>
+                    <option value="3-ب">الثالث الابتدائي - ب</option>
+                    <option value="3-ج">الثالث الابتدائي - ج</option>
+                    <option value="4-أ">الرابع الابتدائي - أ</option>
+                    <option value="4-ب">الرابع الابتدائي - ب</option>
+                    <option value="4-ج">الرابع الابتدائي - ج</option>
+                    <option value="5-أ">الخامس الابتدائي - أ</option>
+                    <option value="5-ب">الخامس الابتدائي - ب</option>
+                    <option value="5-ج">الخامس الابتدائي - ج</option>
+                    <option value="6-أ">السادس الابتدائي - أ</option>
+                    <option value="6-ب">السادس الابتدائي - ب</option>
+                    <option value="6-ج">السادس الابتدائي - ج</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>المادة الدراسية:</label>
+                <select id="subjectInput">
+                    <option value="اللغة العربية">اللغة العربية</option>
+                    <option value="الرياضيات">الرياضيات</option>
+                    <option value="اللغة الإنجليزية">اللغة الإنجليزية</option>
+                    <option value="العلوم">العلوم</option>
+                    <option value="التربية الإسلامية">التربية الإسلامية</option>
+                    <option value="الاجتماعيات">الاجتماعيات</option>
+                    <option value="الرياضة">الرياضة</option>
+                    <option value="الفنية">الفنية</option>
+                    <option value="الأخلاقية">الأخلاقية</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>عدد الحصص أسبوعياً:</label>
+                <input type="number" id="lessonsCountInput" min="1" max="5" value="3">
+            </div>
+            <div style="display: flex; gap: 5px; align-items: flex-end; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="autoAssignTeacher()">⚡ توزيع تلقائي وحفظ</button>
+            </div>
+        </div>
+
         <div class="actions-bar">
-            <h2>جدول الحصص المدرسية - المرحلة الابتدائية</h2>
             <div>
                 <button class="btn" onclick="window.print()">🖨️ طباعة</button>
                 <button class="btn btn-whatsapp" onclick="shareAsImage()">💬 إرسال صورة للواتساب</button>
             </div>
+            <button class="btn btn-danger" onclick="clearTable()">🗑️ مسح الجدول</button>
         </div>
 
         <!-- صندوق التنبيهات الذكي -->
@@ -217,255 +304,165 @@
                 </thead>
                 <tbody>
                     <!-- الأول الابتدائي -->
-                    <tr>
+                    <tr data-stage="1" data-section="أ">
                         <td rowspan="3">الأول الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="1" data-section="ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="1" data-section="ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الأخلاقية</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الأخلاقية</td><td contenteditable="true"></td>
                     </tr>
 
                     <!-- الثاني الابتدائي -->
-                    <tr>
+                    <tr data-stage="2" data-section="أ">
                         <td rowspan="3">الثاني الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الفنية</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الفنية</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="2" data-section="ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضة</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضة</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="2" data-section="ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الأخلاقية</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الأخلاقية</td><td contenteditable="true"></td>
                     </tr>
 
                     <!-- الثالث الابتدائي -->
-                    <tr>
+                    <tr data-stage="3" data-section="أ">
                         <td rowspan="3">الثالث الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضة</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضة</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="3" data-section="ب">
                         <td>ب</td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الفنية</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الفنية</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="3" data-section="ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الأخلاقية</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الأخلاقية</td><td contenteditable="true"></td>
                     </tr>
 
                     <!-- الرابع الابتدائي -->
-                    <tr>
+                    <tr data-stage="4" data-section="أ">
                         <td rowspan="3">الرابع الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="4" data-section="ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="4" data-section="ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الفنية</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الفنية</td><td contenteditable="true"></td>
                     </tr>
 
                     <!-- الخامس الابتدائي -->
-                    <tr>
+                    <tr data-stage="5" data-section="أ">
                         <td rowspan="3">الخامس الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="5" data-section="ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="5" data-section="ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضة</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضة</td><td contenteditable="true"></td>
                     </tr>
 
                     <!-- السادس الابتدائي -->
-                    <tr>
+                    <tr data-stage="6" data-section="أ">
                         <td rowspan="3">السادس الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="6" data-section="ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
                     </tr>
-                    <tr>
+                    <tr data-stage="6" data-section="ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true">الفنية</td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true">الفنية</td><td contenteditable="true"></td>
                     </tr>
                 </tbody>
             </table>
@@ -473,17 +470,86 @@
     </div>
 
     <script>
+        // دالة التوزيع الذكي للمعلم
+        function autoAssignTeacher() {
+            const teacherName = document.getElementById('teacherNameInput').value.trim();
+            const targetSelection = document.getElementById('targetRowSelect').value;
+            const subjectName = document.getElementById('subjectInput').value;
+            const lessonsCount = parseInt(document.getElementById('lessonsCountInput').value) || 1;
+
+            if (!teacherName) {
+                alert("يرجى كتابة اسم المعلم أولاً!");
+                return;
+            }
+
+            const table = document.getElementById('schedule-table');
+            const rows = table.querySelectorAll('tbody tr');
+            const teacherCols = [3, 5, 7, 9, 11]; // أعمدة المعلمين
+            const subjectCols = [2, 4, 6, 8, 10]; // أعمدة المواد المقابلة
+
+            let assigned = 0;
+
+            // تحديد الصفوف المستهدفة بناءً على الاختيار
+            let targetRows = [];
+            rows.forEach(row => {
+                const stage = row.getAttribute('data-stage');
+                const section = row.getAttribute('data-section');
+                const rowKey = stage + '-' + section;
+
+                if (targetSelection === 'all' || targetSelection === rowKey) {
+                    targetRows.push(row);
+                }
+            });
+
+            // محاولة توزيع الحصص مع التحقق من عدم تضارب المعلم في نفس الحصة
+            for (let i = 0; i < lessonsCount; i++) {
+                let placed = false;
+
+                // المرور عشوائياً أو بالتتابع على الصفوف والحصص المتاحة
+                for (let row of targetRows) {
+                    if (placed) break;
+
+                    for (let c = 0; c < teacherCols.length; c++) {
+                        const tCol = teacherCols[c];
+                        const sCol = subjectCols[c];
+
+                        const teacherCell = row.cells[tCol];
+                        const subjectCell = row.cells[sCol];
+
+                        // شرط 1: خلية المعلم فارغة
+                        if (teacherCell.textContent.trim() === "") {
+                            
+                            // شرط 2: التحقق من أن المعلم غير مشغول في نفس الحصة في صف آخر
+                            let isBusy = false;
+                            rows.forEach(r => {
+                                if (r.cells[tCol].textContent.trim() === teacherName) {
+                                    isBusy = true;
+                                }
+                            });
+
+                            if (!isBusy) {
+                                // تعيين المادة والمعلم
+                                subjectCell.textContent = subjectName;
+                                teacherCell.textContent = teacherName;
+                                assigned++;
+                                placed = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            checkConflicts();
+            alert(`تم توجيه وتوزيع (${assigned}) حصة بنجاح للمعلم: ${teacherName}`);
+        }
+
         // نظام فحص التضارب الذكي
         function checkConflicts() {
             const table = document.getElementById('schedule-table');
             const rows = table.querySelectorAll('tbody tr');
-            
-            // أعمدة أسماء المعلمين في الجدول هي: الحصص الفردية للمعلمين (أعمدة رقم: 4, 6, 8, 10, 12)
-            // بما أن الأعمدة تبدأ من 0: المرحلة(0)، الشعبة(1)، 1(2)، معلم1(3)، 2(4)، معلم2(5)... إلخ.
-            // إذن أعمدة المعلمين هي: 3, 5, 7, 9, 11
             const teacherCols = [3, 5, 7, 9, 11];
             
-            // تنظيف التنسيقات القديمة
             rows.forEach(row => {
                 teacherCols.forEach(colIdx => {
                     const cell = row.cells[colIdx];
@@ -493,30 +559,25 @@
 
             let hasConflict = false;
 
-            // الفحص لكل عمود حصة على حدة
             teacherCols.forEach(colIdx => {
-                // خريطة لتسجيل أين تم ذكر كل معلم في هذا العمود
                 const teacherMap = {};
 
-                rows.forEach((row, rowIdx) => {
+                rows.forEach((row) => {
                     const cell = row.cells[colIdx];
                     if (!cell) return;
                     
                     const teacherName = cell.textContent.trim();
-                    // نتجاهل الخلايا الفارغة أو الكلمات التوضيحية العامة إذا وجدت
                     if (teacherName === "" || teacherName === "-") return;
 
                     if (!teacherMap[teacherName]) {
                         teacherMap[teacherName] = [];
                     }
-                    teacherMap[teacherName].push({ row: row, cell: cell });
+                    teacherMap[teacherName].push({ cell: cell });
                 });
 
-                // إذا تكرر اسم المعلم في نفس العمود (نفس الحصة لمختلف الصفوف)، فهذا تضارب!
                 for (let teacher in teacherMap) {
                     if (teacherMap[teacher].length > 1) {
                         hasConflict = true;
-                        // تلوين كافة الخلايا المتعارضة لهذا المعلم في هذه الحصة باللون الأحمر
                         teacherMap[teacher].forEach(item => {
                             item.cell.classList.add('conflict-cell');
                         });
@@ -524,41 +585,44 @@
                 }
             });
 
-            // إظهار أو إخفاء صندوق التنبيهات بناءً على حالة التضارب
             const alertBox = document.getElementById('conflict-alert');
-            if (hasConflict) {
-                alertBox.style.display = 'block';
-            } else {
-                alertBox.style.display = 'none';
+            alertBox.style.display = hasConflict ? 'block' : 'none';
+        }
+
+        function clearTable() {
+            if (confirm("هل أنتِ متأكدة من مسح جميع بيانات الجدول؟")) {
+                const editableCells = document.querySelectorAll('td[contenteditable="true"]');
+                editableCells.forEach(cell => {
+                    cell.textContent = "";
+                });
+                checkConflicts();
             }
         }
 
-        // ربط الحدث بكل الخلايا القابلة للتعديل لمراقبة التغييرات لحظياً
         document.addEventListener('DOMContentLoaded', () => {
             const editableCells = document.querySelectorAll('td[contenteditable="true"]');
             editableCells.forEach(cell => {
                 cell.addEventListener('input', checkConflicts);
             });
-            // تشغيل الفحص عند فتح الصفحة أول مرة
             checkConflicts();
         });
 
         function shareAsImage() {
+            const controlPanel = document.querySelector('.control-panel');
             const actionsBar = document.querySelector('.actions-bar');
             const alertBox = document.getElementById('conflict-alert');
             
-            const originalDisplay = actionsBar.style.display;
-            const alertDisplay = alertBox.style.display;
-            
+            controlPanel.style.display = 'none';
             actionsBar.style.display = 'none';
-            alertBox.style.display = 'none'; // إخفاء تنبيه التضارب عند التقاط الصورة الصافية
+            alertBox.style.display = 'none';
 
             html2canvas(document.getElementById('printable-area'), {
                 scale: 2,
                 useCORS: true
             }).then(canvas => {
-                actionsBar.style.display = originalDisplay;
-                alertBox.style.display = alertDisplay;
+                controlPanel.style.display = 'flex';
+                actionsBar.style.display = 'flex';
+                alertBox.style.display = 'block';
 
                 const imageLink = document.createElement('a');
                 imageLink.download = 'جدول_الحصص_مدرسة_الضياء.png';
@@ -569,8 +633,8 @@
                     window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent("إليكم صورة جدول الحصص المدرسية لمدرسة الضياء الابتدائية للبنات."), "_blank");
                 }, 1000);
             }).catch(err => {
-                actionsBar.style.display = originalDisplay;
-                alertBox.style.display = alertDisplay;
+                controlPanel.style.display = 'flex';
+                actionsBar.style.display = 'flex';
                 alert("حدث خطأ أثناء التقاط الصورة، يرجى المحاولة مرة أخرى.");
             });
         }
