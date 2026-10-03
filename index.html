@@ -222,11 +222,11 @@
         .cell-wrapper {
             display: flex;
             align-items: center;
-            gap: 4px;
             justify-content: center;
+            width: 100%;
         }
         .cell-input {
-            flex: 1;
+            width: 100%;
             padding: 4px 6px;
             border: 1px solid transparent;
             border-radius: 4px;
@@ -235,37 +235,11 @@
             background: transparent;
             text-align: center;
             outline: none;
-            width: 100%;
-            min-width: 75px;
+            min-width: 85px;
         }
         .cell-input:focus {
             background: #fff;
             border-color: #3182ce;
-        }
-        .cell-btns {
-            display: flex;
-            gap: 2px;
-        }
-        .btn-cell-save {
-            background: #2b6cb0;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            padding: 2px 4px;
-            font-size: 10px;
-            cursor: pointer;
-        }
-        .btn-cell-del {
-            background: #e53e3e;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            padding: 2px 4px;
-            font-size: 10px;
-            cursor: pointer;
-        }
-        .btn-cell-save:hover, .btn-cell-del:hover {
-            opacity: 0.8;
         }
 
         .conflict-cell {
@@ -276,7 +250,7 @@
         }
 
         @media print {
-            .control-panel, .actions-bar, #conflict-alert, .cell-btns {
+            .control-panel, .actions-bar, #conflict-alert {
                 display: none;
             }
             body {
@@ -441,19 +415,11 @@
                         tableHTML += `<td>
                             <div class="cell-wrapper">
                                 <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="saveDataAndCheck()">
-                                <div class="cell-btns">
-                                    <button class="btn-cell-save" onclick="saveCell(this)" title="حفظ">💾</button>
-                                    <button class="btn-cell-del" onclick="clearCell(this)" title="حذف">❌</button>
-                                </div>
                             </div>
                         </td>`;
                         tableHTML += `<td>
                             <div class="cell-wrapper">
                                 <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="saveDataAndCheck()">
-                                <div class="cell-btns">
-                                    <button class="btn-cell-save" onclick="saveCell(this)" title="حفظ">💾</button>
-                                    <button class="btn-cell-del" onclick="clearCell(this)" title="حذف">❌</button>
-                                </div>
                             </div>
                         </td>`;
                     }
@@ -496,23 +462,6 @@
             } else {
                 textSpan.textContent = `تم اختيار (${checked.length})`;
             }
-        }
-
-        function saveCell(btn) {
-            const wrapper = btn.closest('.cell-wrapper');
-            const input = wrapper.querySelector('.cell-input');
-            input.style.backgroundColor = '#d4edda';
-            setTimeout(() => {
-                input.style.backgroundColor = 'transparent';
-            }, 600);
-            saveDataAndCheck();
-        }
-
-        function clearCell(btn) {
-            const wrapper = btn.closest('.cell-wrapper');
-            const input = wrapper.querySelector('.cell-input');
-            input.value = '';
-            saveDataAndCheck();
         }
 
         function saveDataAndCheck() {
@@ -600,7 +549,6 @@
             alert(`تم توزيع وإنجاز (${assignedTotal}) حصة بنجاح للمعلم: ${teacherName}`);
         }
 
-        // ميزة إعادة التوزيع الذكي والعشوائي مع مراعاة المواد الأساسية أولاً
         function smartRandomizeSchedule() {
             if (!confirm("هل أنت متأكدة من إعادة توزيع الجدول عشوائياً مع ضبط المواد الأساسية في الحصص الأولى؟")) {
                 return;
@@ -613,21 +561,14 @@
             const rows = document.querySelectorAll('#schedule-table tbody tr');
 
             rows.forEach(row => {
-                // الحصص الخمسة تبدأ من الفهرس 2 (عمود المادة وعمود المعلم لكل حصة)
-                // الحصة 0 (الأولى)، الحصة 1 (الثانية)، الحصة 2، 3، 4
-                
-                // 1. تخصيص الحصة الأولى والثانية للمواد الأساسية عشوائياً
                 let shuffledPrimary = [...primarySubjects].sort(() => Math.random() - 0.5);
                 
-                // الحصة الأولى (العمود 2)
                 const sub1Input = row.cells[2].querySelector('.cell-input');
                 if(sub1Input) sub1Input.value = shuffledPrimary[0];
 
-                // الحصة الثانية (العمود 4)
                 const sub2Input = row.cells[4].querySelector('.cell-input');
                 if(sub2Input) sub2Input.value = shuffledPrimary[1];
 
-                // 2. تخصيص الحصص الثالثة والرابعة والخامسة (الأعمدة 6، 8، 10) عشوائياً من باقي المواد
                 for (let h = 2; h < 5; h++) {
                     const colIdx = 2 + (h * 2);
                     const subInput = row.cells[colIdx]?.querySelector('.cell-input');
@@ -704,7 +645,6 @@
             controlPanel.style.display = 'none';
             actionsBar.style.display = 'none';
             alertBox.style.display = 'none';
-            document.querySelectorAll('.cell-btns').forEach(el => el.style.display = 'none');
 
             html2canvas(document.getElementById('printable-area'), {
                 scale: 2,
@@ -713,7 +653,6 @@
                 controlPanel.style.display = 'flex';
                 actionsBar.style.display = 'flex';
                 alertBox.style.display = 'block';
-                document.querySelectorAll('.cell-btns').forEach(el => el.style.display = 'flex');
 
                 const imageLink = document.createElement('a');
                 imageLink.download = 'جدول_الحصص_مدرسة_الضياء.png';
@@ -727,7 +666,6 @@
                 controlPanel.style.display = 'flex';
                 actionsBar.style.display = 'flex';
                 alertBox.style.display = 'block';
-                document.querySelectorAll('.cell-btns').forEach(el => el.style.display = 'flex');
                 alert("حدث خطأ أثناء التقاط الصورة، يرجى المحاولة مرة أخرى.");
             });
         }
