@@ -187,7 +187,7 @@
         }
         th, td {
             border: 1px solid #d9e2ec;
-            padding: 8px 4px;
+            padding: 6px 4px;
             font-size: 12px;
         }
         th {
@@ -213,19 +213,55 @@
             z-index: 3;
             background-color: #243b53;
         }
-        td[contenteditable="true"] {
-            background-color: #fefefe;
+        
+        /* تصميم الخلية مع أزرار الحفظ والحذف الخاصة بها */
+        .cell-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            justify-content: center;
+        }
+        .cell-input {
+            flex: 1;
+            padding: 4px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-family: 'Cairo', Tahoma, sans-serif;
+            font-size: 11px;
+            background: transparent;
+            text-align: center;
+            outline: none;
+        }
+        .cell-input:focus {
+            background: #fff;
+            border-color: #3182ce;
+        }
+        .cell-btns {
+            display: flex;
+            gap: 2px;
+        }
+        .btn-cell-save {
+            background: #2b6cb0;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 2px 5px;
+            font-size: 9px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
-        td[contenteditable="true"]:hover {
-            background-color: #e8f0fe;
-            border: 1px dashed #3182ce;
+        .btn-cell-del {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 2px 5px;
+            font-size: 9px;
+            cursor: pointer;
         }
-        td[contenteditable="true"]:focus {
-            background-color: #ffffff;
-            outline: 2px solid #3182ce;
+        .btn-cell-save:hover, .btn-cell-del:hover {
+            opacity: 0.8;
         }
+
         .conflict-cell {
             background-color: #ffc9c9 !important;
             color: #9b2c2c !important;
@@ -234,7 +270,7 @@
         }
 
         @media print {
-            .control-panel, .actions-bar, #conflict-alert {
+            .control-panel, .actions-bar, #conflict-alert, .cell-btns {
                 display: none;
             }
             body {
@@ -243,6 +279,10 @@
             .table-container {
                 box-shadow: none;
                 padding: 0;
+            }
+            .cell-input {
+                border: none !important;
+                background: transparent !important;
             }
             .conflict-cell {
                 background-color: #ffffff !important;
@@ -277,8 +317,6 @@
                         <span id="stagesSelectedText">اختر الشعب...</span> 🔽
                     </div>
                     <div id="stagesDropdownList" class="dropdown-list">
-                        <label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label>
-                        <hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">
                         <!-- يتم حقن المراحل برمجياً هنا -->
                     </div>
                 </div>
@@ -325,7 +363,7 @@
             <button class="btn btn-danger" onclick="clearTable()">🗑️ مسح الجدول</button>
         </div>
 
-        <div id="conflict-alert">⚠️️ تنبيه تضارب: يوجد معلّمون تم إدراجهم في نفس الحصة لأكثر من صف أو شعبة في نفس الوقت! يرجى المراجعة.</div>
+        <div id="conflict-alert">⚠ تنبيه تضارب: يوجد معلّمون تم إدراجهم في نفس الحصة لأكثر من صف أو شعبة في نفس الوقت! يرجى المراجعة.</div>
         
         <div class="table-container">
             <table id="schedule-table">
@@ -346,201 +384,86 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-stage-name="الأول الابتدائي" data-section="أ" data-key="1-أ">
-                        <td rowspan="3">الأول الابتدائي</td>
-                        <td>أ</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الأول الابتدائي" data-section="ب" data-key="1-ب">
-                        <td>ب</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الأول الابتدائي" data-section="ج" data-key="1-ج">
-                        <td>ج</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-
-                    <tr data-stage-name="الثاني الابتدائي" data-section="أ" data-key="2-أ">
-                        <td rowspan="3">الثاني الابتدائي</td>
-                        <td>أ</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الثاني الابتدائي" data-section="ب" data-key="2-ب">
-                        <td>ب</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الثاني الابتدائي" data-section="ج" data-key="2-ج">
-                        <td>ج</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-
-                    <tr data-stage-name="الثالث الابتدائي" data-section="أ" data-key="3-أ">
-                        <td rowspan="3">الثالث الابتدائي</td>
-                        <td>أ</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الثالث الابتدائي" data-section="ب" data-key="3-ب">
-                        <td>ب</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الثالث الابتدائي" data-section="ج" data-key="3-ج">
-                        <td>ج</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-
-                    <tr data-stage-name="الرابع الابتدائي" data-section="أ" data-key="4-أ">
-                        <td rowspan="3">الرابع الابتدائي</td>
-                        <td>أ</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الرابع الابتدائي" data-section="ب" data-key="4-ب">
-                        <td>ب</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الرابع الابتدائي" data-section="ج" data-key="4-ج">
-                        <td>ج</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-
-                    <tr data-stage-name="الخامس الابتدائي" data-section="أ" data-key="5-أ">
-                        <td rowspan="3">الخامس الابتدائي</td>
-                        <td>أ</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الخامس الابتدائي" data-section="ب" data-key="5-ب">
-                        <td>ب</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="الخامس الابتدائي" data-section="ج" data-key="5-ج">
-                        <td>ج</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-
-                    <tr data-stage-name="السادس الابتدائي" data-section="أ" data-key="6-أ">
-                        <td rowspan="3">السادس الابتدائي</td>
-                        <td>أ</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="السادس الابتدائي" data-section="ب" data-key="6-ب">
-                        <td>ب</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
-                    <tr data-stage-name="السادس الابتدائي" data-section="ج" data-key="6-ج">
-                        <td>ج</td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                        <td contenteditable="true"></td><td contenteditable="true"></td>
-                    </tr>
+                    <!-- الصفوف الـ 18 -->
+                    <!-- سيتم توليد خلايا الحصص مع أزرار الحفظ والحذف برمجياً أو هيكلياً لضمان سهولة الإدارة -->
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // تعبئة قائمة الشعب والمراحل تلقائياً بناءً على الجدول
+        const stagesData = [
+            { name: "الأول الابتدائي", sections: ['أ', 'ب', 'ج'] },
+            { name: "الثاني الابتدائي", sections: ['أ', 'ب', 'ج'] },
+            { name: "الثالث الابتدائي", sections: ['أ', 'ب', 'ج'] },
+            { name: "الرابع الابتدائي", sections: ['أ', 'ب', 'ج'] },
+            { name: "الخامس الابتدائي", sections: ['أ', 'ب', 'ج'] },
+            { name: "السادس الابتدائي", sections: ['أ', 'ب', 'ج'] }
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
-            const rows = document.querySelectorAll('#schedule-table tbody tr');
-            const stagesListContainer = document.getElementById('stagesDropdownList');
-            
-            let stagesHTML = `<label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label><hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">`;
+            buildTableAndDropdowns();
 
-            rows.forEach(row => {
-                const sName = row.getAttribute('data-stage-name');
-                const sec = row.getAttribute('data-section');
-                const key = row.getAttribute('data-key');
-                stagesHTML += `<label><input type="checkbox" class="stage-chk" value="${key}" onchange="updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...')"> ${sName} - شعبة ${sec}</label>`;
-            });
-
-            stagesListContainer.innerHTML = stagesHTML;
-
-            // ربط أحداث تغيير الاختيارات لتحديث النصوص
-            document.querySelectorAll('.subject-chk').forEach(chk => {
-                chk.addEventListener('change', () => updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...'));
-            });
-
-            // إغلاق القوائم المنسدلة عند النقر خارجها
             window.addEventListener('click', (e) => {
                 if (!e.target.closest('.dropdown-check-box')) {
                     document.querySelectorAll('.dropdown-list').forEach(el => el.style.display = 'none');
                 }
             });
-
-            const editableCells = document.querySelectorAll('td[contenteditable="true"]');
-            editableCells.forEach(cell => {
-                cell.addEventListener('input', checkConflicts);
-            });
             checkConflicts();
         });
+
+        function buildTableAndDropdowns() {
+            const tbody = document.querySelector('#schedule-table tbody');
+            const stagesListContainer = document.getElementById('stagesDropdownList');
+            
+            let stagesHTML = `<label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label><hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">`;
+            let tableHTML = '';
+
+            stagesData.forEach(stage => {
+                stage.sections.forEach((sec, idx) => {
+                    const key = `${stage.name}-${sec}`;
+                    stagesHTML += `<label><input type="checkbox" class="stage-chk" value="${key}" onchange="updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...')"> ${stage.name} - شعبة ${sec}</label>`;
+
+                    tableHTML += `<tr data-stage-name="${stage.name}" data-section="${sec}" data-key="${key}">`;
+                    if(idx === 0) {
+                        tableHTML += `<td rowspan="${stage.sections.length}">${stage.name}</td>`;
+                    }
+                    tableHTML += `<td>${sec}</td>`;
+
+                    // 5 حصص (مادة + معلم لكل حصة)
+                    for(let i=0; i<5; i++) {
+                        // خلية المادة
+                        tableHTML += `<td>
+                            <div class="cell-wrapper">
+                                <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="checkConflicts()">
+                                <div class="cell-btns">
+                                    <button class="btn-cell-save" onclick="saveCell(this)" title="حفظ">💾</button>
+                                    <button class="btn-cell-del" onclick="clearCell(this)" title="حذف">❌</button>
+                                </div>
+                            </div>
+                        </td>`;
+                        // خلية المعلم
+                        tableHTML += `<td>
+                            <div class="cell-wrapper">
+                                <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="checkConflicts()">
+                                <div class="cell-btns">
+                                    <button class="btn-cell-save" onclick="saveCell(this)" title="حفظ">💾</button>
+                                    <button class="btn-cell-del" onclick="clearCell(this)" title="حذف">❌</button>
+                                </div>
+                            </div>
+                        </td>`;
+                    }
+                    tableHTML += `</tr>`;
+                });
+            });
+
+            tbody.innerHTML = tableHTML;
+            stagesListContainer.innerHTML = stagesHTML;
+
+            document.querySelectorAll('.subject-chk').forEach(chk => {
+                chk.addEventListener('change', () => updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...'));
+            });
+        }
 
         function toggleDropdown(listId) {
             const list = document.getElementById(listId);
@@ -571,7 +494,26 @@
             }
         }
 
-        // دالة التوزيع الذكي للمعلم مع دعم اختيار عدة مراحل ومعدة مواد
+        // حفظ الحقل الفردي
+        function saveCell(btn) {
+            const wrapper = btn.closest('.cell-wrapper');
+            const input = wrapper.querySelector('.cell-input');
+            input.style.backgroundColor = '#d4edda';
+            setTimeout(() => {
+                input.style.backgroundColor = 'transparent';
+            }, 600);
+            checkConflicts();
+        }
+
+        // حذف الحقل الفردي
+        function clearCell(btn) {
+            const wrapper = btn.closest('.cell-wrapper');
+            const input = wrapper.querySelector('.cell-input');
+            input.value = '';
+            checkConflicts();
+        }
+
+        // توزيع تلقائي للمعلم
         function autoAssignTeacher() {
             const teacherName = document.getElementById('teacherNameInput').value.trim();
             const lessonsCount = parseInt(document.getElementById('lessonsCountInput').value) || 1;
@@ -592,17 +534,10 @@
                 return;
             }
 
-            const table = document.getElementById('schedule-table');
-            const rows = table.querySelectorAll('tbody tr');
-            const teacherCols = [3, 5, 7, 9, 11]; // أعمدة المعلمين
-            const subjectCols = [2, 4, 6, 8, 10]; // أعمدة المواد
-
+            const rows = document.querySelectorAll('#schedule-table tbody tr');
             let assignedTotal = 0;
-
-            // فلترة الصفوف المستهدفة
             let targetRows = Array.from(rows).filter(row => selectedStages.includes(row.getAttribute('data-key')));
 
-            // توزيع الحصص المطلوبة لكل مادة من المواد المختارة على الشعب المختارة
             selectedSubjects.forEach(subjectName => {
                 for (let i = 0; i < lessonsCount; i++) {
                     let placed = false;
@@ -610,27 +545,26 @@
                     for (let row of targetRows) {
                         if (placed) break;
 
-                        for (let c = 0; c < teacherCols.length; c++) {
-                            const tCol = teacherCols[c];
-                            const sCol = subjectCols[c];
+                        // الحقول تبدأ من العمود الثالث (الفهرس 2 للمادة، 3 للمعلم وهكذا)
+                        // أعمدة المدخلات داخل الـ tr تتوزع كالتالي: [مادة0, معلم0, مادة1, معلم1, ...]
+                        // عدد الخلايا في الصف التي تحتوي على أدوات: الخلايا تبدأ من الفهرس 2 (بعد عمود المرحلة والشعبة)
+                        for (let c = 2; c < row.cells.length; c += 2) {
+                            const subInput = row.cells[c].querySelector('.cell-input');
+                            const teacherInput = row.cells[c+1].querySelector('.cell-input');
 
-                            const teacherCell = row.cells[tCol];
-                            const subjectCell = row.cells[sCol];
-
-                            // شرط: خلية المعلم فارغة ومادة الحصة مطابقة للمادة أو فارغة
-                            if (teacherCell.textContent.trim() === "") {
-                                
-                                // التحقق من عدم تضارب المعلم في نفس الحصة بصف آخر
+                            if (teacherInput.value.trim() === "") {
+                                // فحص تضارب المعلم
                                 let isBusy = false;
                                 rows.forEach(r => {
-                                    if (r.cells[tCol].textContent.trim() === teacherName) {
+                                    const tIn = r.cells[c+1].querySelector('.cell-input');
+                                    if (tIn && tIn.value.trim() === teacherName) {
                                         isBusy = true;
                                     }
                                 });
 
                                 if (!isBusy) {
-                                    subjectCell.textContent = subjectName;
-                                    teacherCell.textContent = teacherName;
+                                    subInput.value = subjectName;
+                                    teacherInput.value = teacherName;
                                     assignedTotal++;
                                     placed = true;
                                     break;
@@ -647,44 +581,45 @@
 
         // نظام فحص التضارب الذكي
         function checkConflicts() {
-            const table = document.getElementById('schedule-table');
-            const rows = table.querySelectorAll('tbody tr');
-            const teacherCols = [3, 5, 7, 9, 11];
+            const rows = document.querySelectorAll('#schedule-table tbody tr');
             
+            // إزالة التنبيهات السابقة
             rows.forEach(row => {
-                teacherCols.forEach(colIdx => {
-                    const cell = row.cells[colIdx];
-                    if (cell) cell.classList.remove('conflict-cell');
-                });
+                for (let c = 3; c < row.cells.length; c += 2) {
+                    const teacherInput = row.cells[c].querySelector('.cell-input');
+                    if(teacherInput) teacherInput.classList.remove('conflict-cell');
+                }
             });
 
             let hasConflict = false;
+            const maxCols = 5; // عدد الحصص
 
-            teacherCols.forEach(colIdx => {
+            for (let i = 0; i < maxCols; i++) {
+                const teacherColIdx = 3 + (i * 2);
                 const teacherMap = {};
 
-                rows.forEach((row) => {
-                    const cell = row.cells[colIdx];
-                    if (!cell) return;
-                    
-                    const teacherName = cell.textContent.trim();
+                rows.forEach(row => {
+                    const teacherInput = row.cells[teacherColIdx]?.querySelector('.cell-input');
+                    if (!teacherInput) return;
+
+                    const teacherName = teacherInput.value.trim();
                     if (teacherName === "" || teacherName === "-") return;
 
                     if (!teacherMap[teacherName]) {
                         teacherMap[teacherName] = [];
                     }
-                    teacherMap[teacherName].push({ cell: cell });
+                    teacherMap[teacherName].push(teacherInput);
                 });
 
                 for (let teacher in teacherMap) {
                     if (teacherMap[teacher].length > 1) {
                         hasConflict = true;
-                        teacherMap[teacher].forEach(item => {
-                            item.cell.classList.add('conflict-cell');
+                        teacherMap[teacher].forEach(input => {
+                            input.classList.add('conflict-cell');
                         });
                     }
                 }
-            });
+            }
 
             const alertBox = document.getElementById('conflict-alert');
             alertBox.style.display = hasConflict ? 'block' : 'none';
@@ -692,9 +627,8 @@
 
         function clearTable() {
             if (confirm("هل أنتِ متأكدة من مسح جميع بيانات الجدول؟")) {
-                const editableCells = document.querySelectorAll('td[contenteditable="true"]');
-                editableCells.forEach(cell => {
-                    cell.textContent = "";
+                document.querySelectorAll('.cell-input').forEach(input => {
+                    input.value = "";
                 });
                 checkConflicts();
             }
@@ -708,6 +642,7 @@
             controlPanel.style.display = 'none';
             actionsBar.style.display = 'none';
             alertBox.style.display = 'none';
+            document.querySelectorAll('.cell-btns').forEach(el => el.style.display = 'none');
 
             html2canvas(document.getElementById('printable-area'), {
                 scale: 2,
@@ -716,6 +651,7 @@
                 controlPanel.style.display = 'flex';
                 actionsBar.style.display = 'flex';
                 alertBox.style.display = 'block';
+                document.querySelectorAll('.cell-btns').forEach(el => el.style.display = 'flex');
 
                 const imageLink = document.createElement('a');
                 imageLink.download = 'جدول_الحصص_مدرسة_الضياء.png';
@@ -728,6 +664,8 @@
             }).catch(err => {
                 controlPanel.style.display = 'flex';
                 actionsBar.style.display = 'flex';
+                alertBox.style.display = 'block';
+                document.querySelectorAll('.cell-btns').forEach(el => el.style.display = 'flex');
                 alert("حدث خطأ أثناء التقاط الصورة، يرجى المحاولة مرة أخرى.");
             });
         }
