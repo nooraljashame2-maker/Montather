@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جداول الحصص المدرسية - دراسة</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f4f8;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             direction: rtl;
+            text-align: right;
         }
         h2 {
             text-align: center;
             color: #102a43;
             margin-bottom: 20px;
-            font-size: 24px;
+            font-size: 22px;
         }
         .table-container {
             width: 100%;
@@ -24,24 +28,25 @@
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
-            padding: 15px;
+            padding: 10px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: center;
-            min-width: 1000px;
+            direction: rtl;
+            min-width: 1100px;
         }
         th, td {
             border: 1px solid #d9e2ec;
-            padding: 10px 8px;
+            padding: 10px 6px;
             font-size: 13px;
         }
         th {
             background-color: #334e68;
             color: #ffffff;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
         }
         tr:nth-child(even) {
             background-color: #f4f8fb;
@@ -49,7 +54,8 @@
         tr:nth-child(odd) {
             background-color: #ffffff;
         }
-        td:first-child, td:nth-child(2) {
+        /* تثبيت أعمدة المرحلة والشعبة في اليمين تماماً */
+        td:nth-child(1), td:nth-child(2), th:nth-child(1), th:nth-child(2) {
             background-color: #e3ecf5;
             font-weight: bold;
             color: #102a43;
