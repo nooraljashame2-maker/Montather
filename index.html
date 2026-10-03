@@ -7,13 +7,13 @@
     <style>
         * {
             box-sizing: border-box;
+            direction: rtl !important;
         }
         body {
             font-family: 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f4f8;
             margin: 0;
-            padding: 15px;
-            direction: rtl;
+            padding: 10px;
             text-align: right;
         }
         .header-container {
@@ -21,17 +21,17 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            padding: 0 10px;
+            padding: 0 5px;
             flex-wrap: wrap;
             gap: 10px;
         }
         .school-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #102a43;
         }
         .designer-name {
-            font-size: 16px;
+            font-size: 15px;
             font-style: italic;
             font-weight: bold;
             color: #d32f2f;
@@ -42,7 +42,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
-            padding: 0 10px;
+            padding: 0 5px;
             flex-wrap: wrap;
             gap: 10px;
         }
@@ -50,33 +50,26 @@
             background-color: #334e68;
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 6px;
             cursor: pointer;
             font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: background-color 0.2s;
             text-decoration: none;
-        }
-        .btn:hover {
-            background-color: #243b53;
         }
         .btn-whatsapp {
             background-color: #25d366;
-        }
-        .btn-whatsapp:hover {
-            background-color: #1ebd56;
         }
         h2 {
             text-align: center;
             color: #102a43;
             margin-top: 0;
             margin-bottom: 15px;
-            font-size: 22px;
+            font-size: 20px;
         }
         .table-container {
             width: 100%;
@@ -84,25 +77,23 @@
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
-            padding: 10px;
+            padding: 5px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: center;
-            direction: rtl;
             min-width: 1100px;
         }
         th, td {
             border: 1px solid #d9e2ec;
-            padding: 10px 6px;
-            font-size: 13px;
+            padding: 8px 4px;
+            font-size: 12px;
         }
         th {
             background-color: #334e68;
             color: #ffffff;
             font-weight: bold;
-            font-size: 13px;
         }
         tr:nth-child(even) {
             background-color: #f4f8fb;
@@ -110,16 +101,22 @@
         tr:nth-child(odd) {
             background-color: #ffffff;
         }
-        /* تثبيت أعمدة المرحلة والشعبة في اليمين تماماً */
+        /* تثبيت أعمدة المرحلة والشعبة في اليمين تماماً وبوضوح */
         td:nth-child(1), td:nth-child(2), th:nth-child(1), th:nth-child(2) {
             background-color: #e3ecf5;
             font-weight: bold;
             color: #102a43;
+            position: sticky;
+            right: 0;
+            z-index: 2;
+        }
+        th:nth-child(1), th:nth-child(2) {
+            z-index: 3;
+            background-color: #243b53;
         }
         td[contenteditable="true"] {
             background-color: #fefefe;
             cursor: pointer;
-            transition: all 0.2s ease;
         }
         td[contenteditable="true"]:hover {
             background-color: #e8f0fe;
@@ -128,10 +125,8 @@
         td[contenteditable="true"]:focus {
             background-color: #ffffff;
             outline: 2px solid #3182ce;
-            border-style: solid;
         }
 
-        /* إخفاء الأزرار عند الطباعة */
         @media print {
             .actions-bar {
                 display: none;
@@ -156,8 +151,8 @@
     <div class="actions-bar">
         <h2>جدول الحصص المدرسية - المرحلة الابتدائية</h2>
         <div>
-            <button class="btn" onclick="window.print()">🖨️ طباعة الجدول</button>
-            <a id="whatsappBtn" class="btn btn-whatsapp" href="#" target="_blank">💬 مشاركة عبر واتساب</a>
+            <button class="btn" onclick="window.print()">🖨️ طباعة</button>
+            <a id="whatsappBtn" class="btn btn-whatsapp" href="#" target="_blank">💬 مشاركة واتساب</a>
         </div>
     </div>
     
@@ -436,8 +431,7 @@
     </div>
 
     <script>
-        // إعداد رابط مشاركة واتساب تلقائياً برابط الصفحة الحالي
-        document.getElementById('whatsappBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent("مرحباً، إليكم جدول الحصص المدرسية لمدرسة الضياء الابتدائية للبنات: " + window.location.href);
+        document.getElementById('whatsappBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent("جدول الحصص المدرسية - مدرسة الضياء الابتدائية للبنات 2026-2027: " + window.location.href);
     </script>
 
 </body>
