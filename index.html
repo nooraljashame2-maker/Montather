@@ -39,7 +39,7 @@
             color: #d32f2f;
             font-family: 'Times New Roman', Times, serif, Tahoma;
         }
-        /* لوحة التحكم الذكية للتوزيع */
+        /* لوحة التحكم الذكية المتعددة */
         .control-panel {
             background: #ffffff;
             border-radius: 12px;
@@ -48,8 +48,8 @@
             box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
+            gap: 15px;
+            align-items: flex-start;
             justify-content: space-between;
         }
         .control-group {
@@ -57,20 +57,64 @@
             flex-direction: column;
             gap: 4px;
             flex: 1;
-            min-width: 140px;
+            min-width: 200px;
         }
         .control-group label {
             font-size: 12px;
             font-weight: bold;
             color: #334e68;
         }
-        .control-group input, .control-group select {
+        .control-group input[type="text"], .control-group input[type="number"] {
             padding: 7px;
             border: 1px solid #d9e2ec;
             border-radius: 6px;
             font-family: 'Cairo', Tahoma, sans-serif;
             font-size: 12px;
             background-color: #f8fafc;
+        }
+        /* قوائم الاختيار المتعدد المنسدلة */
+        .dropdown-check-box {
+            position: relative;
+            border: 1px solid #d9e2ec;
+            border-radius: 6px;
+            background-color: #f8fafc;
+            font-size: 12px;
+        }
+        .dropdown-selected {
+            padding: 7px 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #334e68;
+        }
+        .dropdown-list {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: 0;
+            background: #ffffff;
+            border: 1px solid #d9e2ec;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-height: 180px;
+            overflow-y: auto;
+            z-index: 100;
+            padding: 5px 10px;
+        }
+        .dropdown-list label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 0;
+            cursor: pointer;
+            font-weight: normal;
+            color: #243b53;
+        }
+        .dropdown-list label:hover {
+            background-color: #f0f4f8;
         }
         .actions-bar {
             display: flex;
@@ -115,7 +159,6 @@
             margin-bottom: 10px;
             font-size: 20px;
         }
-        /* صندوق تنبيهات التضارب الذكي */
         #conflict-alert {
             display: none;
             background-color: #ffe3e3;
@@ -158,7 +201,6 @@
         tr:nth-child(odd) {
             background-color: #ffffff;
         }
-        /* تثبيت أعمدة المرحلة والشعبة في اليمين تماماً وبوضوح */
         td:nth-child(1), td:nth-child(2), th:nth-child(1), th:nth-child(2) {
             background-color: #e3ecf5;
             font-weight: bold;
@@ -220,55 +262,57 @@
 
         <h2>جدول الحصص المدرسية - المرحلة الابتدائية</h2>
 
-        <!-- لوحة التحكم الذكية للإدخال والتوزيع التلقائي -->
+        <!-- لوحة التحكم الذكية للاختيار المتعدد -->
         <div class="control-panel">
             <div class="control-group">
                 <label>اسم المعلم:</label>
                 <input type="text" id="teacherNameInput" placeholder="أدخل اسم المعلم">
             </div>
+
+            <!-- اختيار المراحل والشعب المتعددة -->
             <div class="control-group">
-                <label>المرحلة والشعبة:</label>
-                <select id="targetRowSelect">
-                    <option value="all">جميع المراحل والشعب</option>
-                    <option value="1-أ">الأول الابتدائي - أ</option>
-                    <option value="1-ب">الأول الابتدائي - ب</option>
-                    <option value="1-ج">الأول الابتدائي - ج</option>
-                    <option value="2-أ">الثاني الابتدائي - أ</option>
-                    <option value="2-ب">الثاني الابتدائي - ب</option>
-                    <option value="2-ج">الثاني الابتدائي - ج</option>
-                    <option value="3-أ">الثالث الابتدائي - أ</option>
-                    <option value="3-ب">الثالث الابتدائي - ب</option>
-                    <option value="3-ج">الثالث الابتدائي - ج</option>
-                    <option value="4-أ">الرابع الابتدائي - أ</option>
-                    <option value="4-ب">الرابع الابتدائي - ب</option>
-                    <option value="4-ج">الرابع الابتدائي - ج</option>
-                    <option value="5-أ">الخامس الابتدائي - أ</option>
-                    <option value="5-ب">الخامس الابتدائي - ب</option>
-                    <option value="5-ج">الخامس الابتدائي - ج</option>
-                    <option value="6-أ">السادس الابتدائي - أ</option>
-                    <option value="6-ب">السادس الابتدائي - ب</option>
-                    <option value="6-ج">السادس الابتدائي - ج</option>
-                </select>
+                <label>المراحل والشعب المستهدفة:</label>
+                <div class="dropdown-check-box">
+                    <div class="dropdown-selected" onclick="toggleDropdown('stagesDropdownList')">
+                        <span id="stagesSelectedText">اختر الشعب...</span> 🔽
+                    </div>
+                    <div id="stagesDropdownList" class="dropdown-list">
+                        <label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label>
+                        <hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">
+                        <!-- يتم حقن المراحل برمجياً هنا -->
+                    </div>
+                </div>
             </div>
+
+            <!-- اختيار المواد المتعددة -->
             <div class="control-group">
-                <label>المادة الدراسية:</label>
-                <select id="subjectInput">
-                    <option value="اللغة العربية">اللغة العربية</option>
-                    <option value="الرياضيات">الرياضيات</option>
-                    <option value="اللغة الإنجليزية">اللغة الإنجليزية</option>
-                    <option value="العلوم">العلوم</option>
-                    <option value="التربية الإسلامية">التربية الإسلامية</option>
-                    <option value="الاجتماعيات">الاجتماعيات</option>
-                    <option value="الرياضة">الرياضة</option>
-                    <option value="الفنية">الفنية</option>
-                    <option value="الأخلاقية">الأخلاقية</option>
-                </select>
+                <label>المواد الدراسية:</label>
+                <div class="dropdown-check-box">
+                    <div class="dropdown-selected" onclick="toggleDropdown('subjectsDropdownList')">
+                        <span id="subjectsSelectedText">اختر المواد...</span> 🔽
+                    </div>
+                    <div id="subjectsDropdownList" class="dropdown-list">
+                        <label><input type="checkbox" id="selectAllSubjects" onclick="toggleSelectAll(this, 'subject-chk')"> <b>تحديد الكل</b></label>
+                        <hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">
+                        <label><input type="checkbox" class="subject-chk" value="اللغة العربية"> اللغة العربية</label>
+                        <label><input type="checkbox" class="subject-chk" value="الرياضيات"> الرياضيات</label>
+                        <label><input type="checkbox" class="subject-chk" value="اللغة الإنجليزية"> اللغة الإنجليزية</label>
+                        <label><input type="checkbox" class="subject-chk" value="العلوم"> العلوم</label>
+                        <label><input type="checkbox" class="subject-chk" value="التربية الإسلامية"> التربية الإسلامية</label>
+                        <label><input type="checkbox" class="subject-chk" value="الاجتماعيات"> الاجتماعيات</label>
+                        <label><input type="checkbox" class="subject-chk" value="الرياضة"> الرياضة</label>
+                        <label><input type="checkbox" class="subject-chk" value="الفنية"> الفنية</label>
+                        <label><input type="checkbox" class="subject-chk" value="الأخلاقية"> الأخلاقية</label>
+                    </div>
+                </div>
             </div>
-            <div class="control-group">
-                <label>عدد الحصص أسبوعياً:</label>
-                <input type="number" id="lessonsCountInput" min="1" max="5" value="3">
+
+            <div class="control-group" style="max-width: 120px;">
+                <label>عدد الحصص:</label>
+                <input type="number" id="lessonsCountInput" min="1" max="10" value="3">
             </div>
-            <div style="display: flex; gap: 5px; align-items: flex-end; margin-top: 20px;">
+
+            <div style="display: flex; align-items: flex-end; margin-top: 20px;">
                 <button class="btn btn-primary" onclick="autoAssignTeacher()">⚡ توزيع تلقائي وحفظ</button>
             </div>
         </div>
@@ -281,8 +325,7 @@
             <button class="btn btn-danger" onclick="clearTable()">🗑️ مسح الجدول</button>
         </div>
 
-        <!-- صندوق التنبيهات الذكي -->
-        <div id="conflict-alert">⚠️ تنبيه تضارب: يوجد معلّمون تم إدراجهم في نفس الحصة لأكثر من صف أو شعبة في نفس الوقت! يرجى المراجعة.</div>
+        <div id="conflict-alert">⚠️️ تنبيه تضارب: يوجد معلّمون تم إدراجهم في نفس الحصة لأكثر من صف أو شعبة في نفس الوقت! يرجى المراجعة.</div>
         
         <div class="table-container">
             <table id="schedule-table">
@@ -303,166 +346,160 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- الأول الابتدائي -->
-                    <tr data-stage="1" data-section="أ">
+                    <tr data-stage-name="الأول الابتدائي" data-section="أ" data-key="1-أ">
                         <td rowspan="3">الأول الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="1" data-section="ب">
+                    <tr data-stage-name="الأول الابتدائي" data-section="ب" data-key="1-ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="1" data-section="ج">
+                    <tr data-stage-name="الأول الابتدائي" data-section="ج" data-key="1-ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الأخلاقية</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
 
-                    <!-- الثاني الابتدائي -->
-                    <tr data-stage="2" data-section="أ">
+                    <tr data-stage-name="الثاني الابتدائي" data-section="أ" data-key="2-أ">
                         <td rowspan="3">الثاني الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الفنية</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="2" data-section="ب">
+                    <tr data-stage-name="الثاني الابتدائي" data-section="ب" data-key="2-ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضة</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="2" data-section="ج">
+                    <tr data-stage-name="الثاني الابتدائي" data-section="ج" data-key="2-ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الأخلاقية</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
 
-                    <!-- الثالث الابتدائي -->
-                    <tr data-stage="3" data-section="أ">
+                    <tr data-stage-name="الثالث الابتدائي" data-section="أ" data-key="3-أ">
                         <td rowspan="3">الثالث الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضة</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="3" data-section="ب">
+                    <tr data-stage-name="الثالث الابتدائي" data-section="ب" data-key="3-ب">
                         <td>ب</td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الفنية</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="3" data-section="ج">
+                    <tr data-stage-name="الثالث الابتدائي" data-section="ج" data-key="3-ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الأخلاقية</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
 
-                    <!-- الرابع الابتدائي -->
-                    <tr data-stage="4" data-section="أ">
+                    <tr data-stage-name="الرابع الابتدائي" data-section="أ" data-key="4-أ">
                         <td rowspan="3">الرابع الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="4" data-section="ب">
+                    <tr data-stage-name="الرابع الابتدائي" data-section="ب" data-key="4-ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="4" data-section="ج">
+                    <tr data-stage-name="الرابع الابتدائي" data-section="ج" data-key="4-ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الفنية</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
 
-                    <!-- الخامس الابتدائي -->
-                    <tr data-stage="5" data-section="أ">
+                    <tr data-stage-name="الخامس الابتدائي" data-section="أ" data-key="5-أ">
                         <td rowspan="3">الخامس الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="5" data-section="ب">
+                    <tr data-stage-name="الخامس الابتدائي" data-section="ب" data-key="5-ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="5" data-section="ج">
+                    <tr data-stage-name="الخامس الابتدائي" data-section="ج" data-key="5-ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضة</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
 
-                    <!-- السادس الابتدائي -->
-                    <tr data-stage="6" data-section="أ">
+                    <tr data-stage-name="السادس الابتدائي" data-section="أ" data-key="6-أ">
                         <td rowspan="3">السادس الابتدائي</td>
                         <td>أ</td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="6" data-section="ب">
+                    <tr data-stage-name="السادس الابتدائي" data-section="ب" data-key="6-ب">
                         <td>ب</td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">التربية الإسلامية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الاجتماعيات</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
-                    <tr data-stage="6" data-section="ج">
+                    <tr data-stage-name="السادس الابتدائي" data-section="ج" data-key="6-ج">
                         <td>ج</td>
-                        <td contenteditable="true">اللغة الإنجليزية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">اللغة العربية</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الرياضيات</td><td contenteditable="true"></td>
-                        <td contenteditable="true">العلوم</td><td contenteditable="true"></td>
-                        <td contenteditable="true">الفنية</td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
+                        <td contenteditable="true"></td><td contenteditable="true"></td>
                     </tr>
                 </tbody>
             </table>
@@ -470,78 +507,142 @@
     </div>
 
     <script>
-        // دالة التوزيع الذكي للمعلم
+        // تعبئة قائمة الشعب والمراحل تلقائياً بناءً على الجدول
+        document.addEventListener('DOMContentLoaded', () => {
+            const rows = document.querySelectorAll('#schedule-table tbody tr');
+            const stagesListContainer = document.getElementById('stagesDropdownList');
+            
+            let stagesHTML = `<label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label><hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">`;
+
+            rows.forEach(row => {
+                const sName = row.getAttribute('data-stage-name');
+                const sec = row.getAttribute('data-section');
+                const key = row.getAttribute('data-key');
+                stagesHTML += `<label><input type="checkbox" class="stage-chk" value="${key}" onchange="updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...')"> ${sName} - شعبة ${sec}</label>`;
+            });
+
+            stagesListContainer.innerHTML = stagesHTML;
+
+            // ربط أحداث تغيير الاختيارات لتحديث النصوص
+            document.querySelectorAll('.subject-chk').forEach(chk => {
+                chk.addEventListener('change', () => updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...'));
+            });
+
+            // إغلاق القوائم المنسدلة عند النقر خارجها
+            window.addEventListener('click', (e) => {
+                if (!e.target.closest('.dropdown-check-box')) {
+                    document.querySelectorAll('.dropdown-list').forEach(el => el.style.display = 'none');
+                }
+            });
+
+            const editableCells = document.querySelectorAll('td[contenteditable="true"]');
+            editableCells.forEach(cell => {
+                cell.addEventListener('input', checkConflicts);
+            });
+            checkConflicts();
+        });
+
+        function toggleDropdown(listId) {
+            const list = document.getElementById(listId);
+            const isVisible = list.style.display === 'block';
+            document.querySelectorAll('.dropdown-list').forEach(el => el.style.display = 'none');
+            list.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function toggleSelectAll(masterChk, className) {
+            const checkboxes = document.querySelectorAll('.' + className);
+            checkboxes.forEach(chk => chk.checked = masterChk.checked);
+            if(className === 'stage-chk') {
+                updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...');
+            } else {
+                updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...');
+            }
+        }
+
+        function updateSelectedText(chkClass, textSpanId, defaultText) {
+            const checked = document.querySelectorAll('.' + chkClass + ':checked');
+            const textSpan = document.getElementById(textSpanId);
+            if (checked.length === 0) {
+                textSpan.textContent = defaultText;
+            } else if (checked.length === document.querySelectorAll('.' + chkClass).length) {
+                textSpan.textContent = "الكل (محدد)";
+            } else {
+                textSpan.textContent = `تم اختيار (${checked.length})`;
+            }
+        }
+
+        // دالة التوزيع الذكي للمعلم مع دعم اختيار عدة مراحل ومعدة مواد
         function autoAssignTeacher() {
             const teacherName = document.getElementById('teacherNameInput').value.trim();
-            const targetSelection = document.getElementById('targetRowSelect').value;
-            const subjectName = document.getElementById('subjectInput').value;
             const lessonsCount = parseInt(document.getElementById('lessonsCountInput').value) || 1;
+
+            const selectedStages = Array.from(document.querySelectorAll('.stage-chk:checked')).map(el => el.value);
+            const selectedSubjects = Array.from(document.querySelectorAll('.subject-chk:checked')).map(el => el.value);
 
             if (!teacherName) {
                 alert("يرجى كتابة اسم المعلم أولاً!");
+                return;
+            }
+            if (selectedStages.length === 0) {
+                alert("يرجى اختيار مرحلة وشعبة واحدة على الأقل!");
+                return;
+            }
+            if (selectedSubjects.length === 0) {
+                alert("يرجى اختيار مادة دراسية واحدة على الأقل!");
                 return;
             }
 
             const table = document.getElementById('schedule-table');
             const rows = table.querySelectorAll('tbody tr');
             const teacherCols = [3, 5, 7, 9, 11]; // أعمدة المعلمين
-            const subjectCols = [2, 4, 6, 8, 10]; // أعمدة المواد المقابلة
+            const subjectCols = [2, 4, 6, 8, 10]; // أعمدة المواد
 
-            let assigned = 0;
+            let assignedTotal = 0;
 
-            // تحديد الصفوف المستهدفة بناءً على الاختيار
-            let targetRows = [];
-            rows.forEach(row => {
-                const stage = row.getAttribute('data-stage');
-                const section = row.getAttribute('data-section');
-                const rowKey = stage + '-' + section;
+            // فلترة الصفوف المستهدفة
+            let targetRows = Array.from(rows).filter(row => selectedStages.includes(row.getAttribute('data-key')));
 
-                if (targetSelection === 'all' || targetSelection === rowKey) {
-                    targetRows.push(row);
-                }
-            });
+            // توزيع الحصص المطلوبة لكل مادة من المواد المختارة على الشعب المختارة
+            selectedSubjects.forEach(subjectName => {
+                for (let i = 0; i < lessonsCount; i++) {
+                    let placed = false;
 
-            // محاولة توزيع الحصص مع التحقق من عدم تضارب المعلم في نفس الحصة
-            for (let i = 0; i < lessonsCount; i++) {
-                let placed = false;
+                    for (let row of targetRows) {
+                        if (placed) break;
 
-                // المرور عشوائياً أو بالتتابع على الصفوف والحصص المتاحة
-                for (let row of targetRows) {
-                    if (placed) break;
+                        for (let c = 0; c < teacherCols.length; c++) {
+                            const tCol = teacherCols[c];
+                            const sCol = subjectCols[c];
 
-                    for (let c = 0; c < teacherCols.length; c++) {
-                        const tCol = teacherCols[c];
-                        const sCol = subjectCols[c];
+                            const teacherCell = row.cells[tCol];
+                            const subjectCell = row.cells[sCol];
 
-                        const teacherCell = row.cells[tCol];
-                        const subjectCell = row.cells[sCol];
+                            // شرط: خلية المعلم فارغة ومادة الحصة مطابقة للمادة أو فارغة
+                            if (teacherCell.textContent.trim() === "") {
+                                
+                                // التحقق من عدم تضارب المعلم في نفس الحصة بصف آخر
+                                let isBusy = false;
+                                rows.forEach(r => {
+                                    if (r.cells[tCol].textContent.trim() === teacherName) {
+                                        isBusy = true;
+                                    }
+                                });
 
-                        // شرط 1: خلية المعلم فارغة
-                        if (teacherCell.textContent.trim() === "") {
-                            
-                            // شرط 2: التحقق من أن المعلم غير مشغول في نفس الحصة في صف آخر
-                            let isBusy = false;
-                            rows.forEach(r => {
-                                if (r.cells[tCol].textContent.trim() === teacherName) {
-                                    isBusy = true;
+                                if (!isBusy) {
+                                    subjectCell.textContent = subjectName;
+                                    teacherCell.textContent = teacherName;
+                                    assignedTotal++;
+                                    placed = true;
+                                    break;
                                 }
-                            });
-
-                            if (!isBusy) {
-                                // تعيين المادة والمعلم
-                                subjectCell.textContent = subjectName;
-                                teacherCell.textContent = teacherName;
-                                assigned++;
-                                placed = true;
-                                break;
                             }
                         }
                     }
                 }
-            }
+            });
 
             checkConflicts();
-            alert(`تم توجيه وتوزيع (${assigned}) حصة بنجاح للمعلم: ${teacherName}`);
+            alert(`تم توزيع وإنجاز (${assignedTotal}) حصة بنجاح للمعلم: ${teacherName}`);
         }
 
         // نظام فحص التضارب الذكي
@@ -598,14 +699,6 @@
                 checkConflicts();
             }
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const editableCells = document.querySelectorAll('td[contenteditable="true"]');
-            editableCells.forEach(cell => {
-                cell.addEventListener('input', checkConflicts);
-            });
-            checkConflicts();
-        });
 
         function shareAsImage() {
             const controlPanel = document.querySelector('.control-panel');
