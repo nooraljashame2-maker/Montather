@@ -30,33 +30,30 @@
             width: 100%;
             border-collapse: collapse;
             text-align: center;
-            min-width: 950px;
+            min-width: 1000px;
         }
         th, td {
             border: 1px solid #d9e2ec;
-            padding: 12px 10px;
-            font-size: 14px;
+            padding: 10px 8px;
+            font-size: 13px;
         }
         th {
             background-color: #334e68;
             color: #ffffff;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 14px;
         }
-        /* تلوين صفوف المراحل بتدرج أزرق فاتح مريح جداً للعين */
         tr:nth-child(even) {
             background-color: #f4f8fb;
         }
         tr:nth-child(odd) {
             background-color: #ffffff;
         }
-        /* تمييز أعمدة المرحلة والشعبة بلون أزرق ناعم مميز */
         td:first-child, td:nth-child(2) {
             background-color: #e3ecf5;
             font-weight: bold;
             color: #102a43;
         }
-        /* خلايا المواد وأسماء المعلمين القابلة للتعديل */
         td[contenteditable="true"] {
             background-color: #fefefe;
             cursor: pointer;
