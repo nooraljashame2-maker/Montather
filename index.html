@@ -22,7 +22,7 @@
     <!-- المحتوى الرئيسي: جدول الحصص الذكي -->
     <main class="container">
         
-        <!-- الترويسة العلوية للجدول (العنوان يمين والاسم يسار) -->
+        <!-- الترويسة العلوية للجدول -->
         <div class="schedule-header-bar">
             <div class="main-title">
                 📅 جدول توزيع الحصص الذكي 2026-2027
@@ -37,7 +37,7 @@
                 <h1>المرحلة الابتدائية (توزيع الحصص)</h1>
                 <p class="subtitle">توزيع ذكي للحصص مع كشف التضارب، الطباعة الفورية، ومشاركة واتساب</p>
             </div>
-            <!-- أزرار التحكم الذكية -->
+            <!-- أزرار التحكم -->
             <div class="action-buttons">
                 <button onclick="window.print()" class="btn print-btn">
                     🖨️ طباعة الجدول
@@ -59,11 +59,11 @@
                     <tr>
                         <th>المرحلة</th>
                         <th>الشعبة</th>
-                        <th>الحصة الأولى (المادة / المعلم)</th>
-                        <th>الحصة الثانية (المادة / المعلم)</th>
-                        <th>الحصة الثالثة (المادة / المعلم)</th>
-                        <th>الحصة الرابعة (المادة / المعلم)</th>
-                        <th>الحصة الخامسة (المادة / المعلم)</th>
+                        <th>الحصة الأولى</th>
+                        <th>الحصة الثانية</th>
+                        <th>الحصة الثالثة</th>
+                        <th>الحصة الرابعة</th>
+                        <th>الحصة الخامسة</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,169 +71,169 @@
                     <tr class="section-divider">
                         <td rowspan="3" class="stage-cell">الأول الابتدائي</td>
                         <td class="section-cell">أ</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">التربية الإسلامية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr>
                         <td class="section-cell">ب</td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">التربية الإسلامية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr class="grade-end-row">
                         <td class="section-cell">ج</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الأخلاقية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الأخلاقية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
 
                     <!-- الثاني الابتدائي -->
                     <tr class="section-divider">
                         <td rowspan="3" class="stage-cell">الثاني الابتدائي</td>
                         <td class="section-cell">أ</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الفنية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الفنية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr>
                         <td class="section-cell">ب</td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضة</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضة</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr class="grade-end-row">
                         <td class="section-cell">ج</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الأخلاقية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">التربية الإسلامية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الأخلاقية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
 
                     <!-- الثالث الابتدائي -->
                     <tr class="section-divider">
                         <td rowspan="3" class="stage-cell">الثالث الابتدائي</td>
                         <td class="section-cell">أ</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضة</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضة</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr>
                         <td class="section-cell">ب</td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الفنية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">التربية الإسلامية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الفنية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr class="grade-end-row">
                         <td class="section-cell">ج</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الأخلاقية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الأخلاقية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
 
                     <!-- الرابع الابتدائي -->
                     <tr class="section-divider">
                         <td rowspan="3" class="stage-cell">الرابع الابتدائي</td>
                         <td class="section-cell">أ</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الاجتماعيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr>
                         <td class="section-cell">ب</td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">التربية الإسلامية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الاجتماعيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr class="grade-end-row">
                         <td class="section-cell">ج</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الفنية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الفنية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
 
                     <!-- الخامس الابتدائي -->
                     <tr class="section-divider">
                         <td rowspan="3" class="stage-cell">الخامس الابتدائي</td>
                         <td class="section-cell">أ</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الاجتماعيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr>
                         <td class="section-cell">ب</td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">التربية الإسلامية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الاجتماعيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr class="grade-end-row">
                         <td class="section-cell">ج</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضة</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضة</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
 
                     <!-- السادس الابتدائي -->
                     <tr class="section-divider">
                         <td rowspan="3" class="stage-cell">السادس الابتدائي</td>
                         <td class="section-cell">أ</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الاجتماعيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr>
                         <td class="section-cell">ب</td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">التربية الإسلامية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الاجتماعيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                     <tr class="grade-end-row">
                         <td class="section-cell">ج</td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
-                        <td class="lesson-cell"><span class="sub-name">الفنية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة الإنجليزية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">اللغة العربية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الرياضيات</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">العلوم</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><div contenteditable="true" class="sub-box" placeholder="اسم المادة">الفنية</div><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </main>
 
-    <!-- سكربت التحكم والتضارب والواتساب -->
+    <!-- سكربت فحص التضارب -->
     <script>
         const teacherBoxes = document.querySelectorAll('.teacher-box');
         const alertBox = document.getElementById('alert-box');
@@ -249,7 +249,6 @@
             let teacherSchedules = {};
             let hasConflict = false;
 
-            // تجميع الحصص حسب المعلم ورقم الحصة (العمود)
             document.querySelectorAll('#scheduleTable tbody tr').forEach(row => {
                 let cells = row.querySelectorAll('.lesson-cell');
                 cells.forEach((cell, periodIndex) => {
@@ -280,7 +279,7 @@
         }
 
         function shareViaWhatsApp() {
-            let message = encodeURIComponent("السلام عليكم، تم تحديث ونشر جدول الحصص المدرسي الذكي (توزيع الحصص والمعلمين) عبر تطبيق درستي.");
+            let message = encodeURIComponent("السلام عليكم، تم تحديث جدول الحصص المدرسي الذكي (المواد والمعلمين) عبر تطبيق درستي.");
             window.open("https://api.whatsapp.com/send?text=" + message, "_blank");
         }
     </script>
