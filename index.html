@@ -144,6 +144,9 @@
         .btn-primary {
             background-color: #2b6cb0;
         }
+        .btn-warning {
+            background-color: #dd6b20;
+        }
         .btn-whatsapp {
             background-color: #25d366;
         }
@@ -216,7 +219,6 @@
             background-color: #243b53;
         }
         
-        /* تكبير الحقول داخل الجدول لتكون أريح للقراءة والكتابة */
         .cell-wrapper {
             display: flex;
             align-items: center;
@@ -354,8 +356,9 @@
                 <input type="number" id="lessonsCountInput" min="1" max="10" value="3">
             </div>
 
-            <div style="display: flex; align-items: flex-end; margin-top: 18px;">
+            <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 18px;">
                 <button class="btn btn-primary" onclick="autoAssignTeacher()">⚡ توزيع وحفظ</button>
+                <button class="btn btn-warning" onclick="smartRandomizeSchedule()">🔀 إعادة توزيع ذكي وعشوائي</button>
             </div>
         </div>
 
@@ -517,14 +520,12 @@
             checkConflicts();
         }
 
-        // حفظ البيانات في الذاكرة المحلية (Local Storage)
         function saveToLocalStorage() {
             const inputs = document.querySelectorAll('.cell-input');
             const data = Array.from(inputs).map(input => input.value);
             localStorage.setItem('schedule_data_noor', JSON.stringify(data));
         }
 
-        // استرجاع البيانات المحفوظة عند فتح البرنامج
         function loadSavedData() {
             const saved = localStorage.getItem('schedule_data_noor');
             if (saved) {
@@ -597,6 +598,48 @@
 
             saveDataAndCheck();
             alert(`تم توزيع وإنجاز (${assignedTotal}) حصة بنجاح للمعلم: ${teacherName}`);
+        }
+
+        // ميزة إعادة التوزيع الذكي والعشوائي مع مراعاة المواد الأساسية أولاً
+        function smartRandomizeSchedule() {
+            if (!confirm("هل أنت متأكدة من إعادة توزيع الجدول عشوائياً مع ضبط المواد الأساسية في الحصص الأولى؟")) {
+                return;
+            }
+
+            const primarySubjects = ["اللغة العربية", "الرياضيات", "اللغة الإنجليزية", "التربية الإسلامية"];
+            const otherSubjects = ["العلوم", "الاجتماعيات", "الرياضة", "الفنية", "الأخلاقية"];
+            const allAvailableSubjects = [...primarySubjects, ...otherSubjects];
+
+            const rows = document.querySelectorAll('#schedule-table tbody tr');
+
+            rows.forEach(row => {
+                // الحصص الخمسة تبدأ من الفهرس 2 (عمود المادة وعمود المعلم لكل حصة)
+                // الحصة 0 (الأولى)، الحصة 1 (الثانية)، الحصة 2، 3، 4
+                
+                // 1. تخصيص الحصة الأولى والثانية للمواد الأساسية عشوائياً
+                let shuffledPrimary = [...primarySubjects].sort(() => Math.random() - 0.5);
+                
+                // الحصة الأولى (العمود 2)
+                const sub1Input = row.cells[2].querySelector('.cell-input');
+                if(sub1Input) sub1Input.value = shuffledPrimary[0];
+
+                // الحصة الثانية (العمود 4)
+                const sub2Input = row.cells[4].querySelector('.cell-input');
+                if(sub2Input) sub2Input.value = shuffledPrimary[1];
+
+                // 2. تخصيص الحصص الثالثة والرابعة والخامسة (الأعمدة 6، 8، 10) عشوائياً من باقي المواد
+                for (let h = 2; h < 5; h++) {
+                    const colIdx = 2 + (h * 2);
+                    const subInput = row.cells[colIdx]?.querySelector('.cell-input');
+                    if (subInput) {
+                        const randomSub = allAvailableSubjects[Math.floor(Math.random() * allAvailableSubjects.length)];
+                        subInput.value = randomSub;
+                    }
+                }
+            });
+
+            saveDataAndCheck();
+            alert("تمت إعادة توزيع المواد الأساسية والعشوائية في الجدول بنجاح!");
         }
 
         function checkConflicts() {
