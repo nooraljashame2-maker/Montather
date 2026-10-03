@@ -59,44 +59,175 @@
                     <tr>
                         <th>المرحلة</th>
                         <th>الشعبة</th>
-                        <th>اسم المعلم</th>
-                        <th>الحصة الأولى</th>
-                        <th>الحصة الثانية</th>
-                        <th>الحصة الثالثة</th>
-                        <th>الحصة الرابعة</th>
-                        <th>الحصة الخامسة</th>
+                        <th>الحصة الأولى (المادة / المعلم)</th>
+                        <th>الحصة الثانية (المادة / المعلم)</th>
+                        <th>الحصة الثالثة (المادة / المعلم)</th>
+                        <th>الحصة الرابعة (المادة / المعلم)</th>
+                        <th>الحصة الخامسة (المادة / المعلم)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- الأول الابتدائي -->
-                    <tr><td rowspan="3" class="stage-cell">الأول الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="other-sub">العلوم</td></tr>
-                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="other-sub">العلوم</td></tr>
-                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الأخلاقية</td></tr>
+                    <tr class="section-divider">
+                        <td rowspan="3" class="stage-cell">الأول الابتدائي</td>
+                        <td class="section-cell">أ</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="section-cell">ب</td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr class="grade-end-row">
+                        <td class="section-cell">ج</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الأخلاقية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
 
                     <!-- الثاني الابتدائي -->
-                    <tr><td rowspan="3" class="stage-cell">الثاني الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="other-sub">الفنية</td></tr>
-                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="other-sub">الرياضة</td></tr>
-                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">التربية الإسلامية</td><td class="other-sub">الأخلاقية</td></tr>
+                    <tr class="section-divider">
+                        <td rowspan="3" class="stage-cell">الثاني الابتدائي</td>
+                        <td class="section-cell">أ</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الفنية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="section-cell">ب</td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضة</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr class="grade-end-row">
+                        <td class="section-cell">ج</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الأخلاقية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
 
                     <!-- الثالث الابتدائي -->
-                    <tr><td rowspan="3" class="stage-cell">الثالث الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="other-sub">الرياضة</td></tr>
-                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="other-sub">الفنية</td></tr>
-                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الأخلاقية</td></tr>
+                    <tr class="section-divider">
+                        <td rowspan="3" class="stage-cell">الثالث الابتدائي</td>
+                        <td class="section-cell">أ</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضة</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="section-cell">ب</td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الفنية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr class="grade-end-row">
+                        <td class="section-cell">ج</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الأخلاقية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
 
                     <!-- الرابع الابتدائي -->
-                    <tr><td rowspan="3" class="stage-cell">الرابع الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="social-sub">الاجتماعيات</td></tr>
-                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="social-sub">الاجتماعيات</td></tr>
-                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الفنية</td></tr>
+                    <tr class="section-divider">
+                        <td rowspan="3" class="stage-cell">الرابع الابتدائي</td>
+                        <td class="section-cell">أ</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="section-cell">ب</td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr class="grade-end-row">
+                        <td class="section-cell">ج</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الفنية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
 
                     <!-- الخامس الابتدائي -->
-                    <tr><td rowspan="3" class="stage-cell">الخامس الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="social-sub">الاجتماعيات</td></tr>
-                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="social-sub">الاجتماعيات</td></tr>
-                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الرياضة</td></tr>
+                    <tr class="section-divider">
+                        <td rowspan="3" class="stage-cell">الخامس الابتدائي</td>
+                        <td class="section-cell">أ</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="section-cell">ب</td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr class="grade-end-row">
+                        <td class="section-cell">ج</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضة</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
 
                     <!-- السادس الابتدائي -->
-                    <tr><td rowspan="3" class="stage-cell">السادس الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="social-sub">الاجتماعيات</td></tr>
-                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="social-sub">الاجتماعيات</td></tr>
-                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الفنية</td></tr>
+                    <tr class="section-divider">
+                        <td rowspan="3" class="stage-cell">السادس الابتدائي</td>
+                        <td class="section-cell">أ</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="section-cell">ب</td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">التربية الإسلامية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الاجتماعيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
+                    <tr class="grade-end-row">
+                        <td class="section-cell">ج</td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة الإنجليزية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">اللغة العربية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الرياضيات</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">العلوم</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                        <td class="lesson-cell"><span class="sub-name">الفنية</span><div contenteditable="true" class="teacher-box" placeholder="اسم المعلم"></div></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -104,41 +235,41 @@
 
     <!-- سكربت التحكم والتضارب والواتساب -->
     <script>
-        const teacherInputs = document.querySelectorAll('.teacher-input');
+        const teacherBoxes = document.querySelectorAll('.teacher-box');
         const alertBox = document.getElementById('alert-box');
 
-        teacherInputs.forEach(input => {
-            input.addEventListener('input', checkConflicts);
+        teacherBoxes.forEach(box => {
+            box.addEventListener('input', checkConflicts);
         });
 
         function checkConflicts() {
-            teacherInputs.forEach(inp => inp.classList.remove('conflict-error'));
+            teacherBoxes.forEach(b => b.classList.remove('conflict-error'));
             alertBox.style.display = 'none';
 
             let teacherSchedules = {};
             let hasConflict = false;
 
-            teacherInputs.forEach(input => {
-                let teacherName = input.innerText.trim();
-                if (teacherName === "") return;
+            // تجميع الحصص حسب المعلم ورقم الحصة (العمود)
+            document.querySelectorAll('#scheduleTable tbody tr').forEach(row => {
+                let cells = row.querySelectorAll('.lesson-cell');
+                cells.forEach((cell, periodIndex) => {
+                    let box = cell.querySelector('.teacher-box');
+                    let teacherName = box.innerText.trim();
+                    if (teacherName === "") return;
 
-                let row = input.parentElement;
-                let cells = row.querySelectorAll('td');
-                for (let i = 3; i < cells.length; i++) {
-                    let periodIndex = i;
                     let key = teacherName + "_" + periodIndex;
                     if (!teacherSchedules[key]) {
                         teacherSchedules[key] = [];
                     }
-                    teacherSchedules[key].push(input);
-                }
+                    teacherSchedules[key].push(box);
+                });
             });
 
             for (let key in teacherSchedules) {
                 if (teacherSchedules[key].length > 1) {
                     hasConflict = true;
-                    teacherSchedules[key].forEach(inp => {
-                        inp.classList.add('conflict-error');
+                    teacherSchedules[key].forEach(box => {
+                        box.classList.add('conflict-error');
                     });
                 }
             }
@@ -149,7 +280,7 @@
         }
 
         function shareViaWhatsApp() {
-            let message = encodeURIComponent("السلام عليكم، تم تحديث ونشر جدول الحصص المدرسية للمرحلة الابتدائية عبر تطبيق درستي. يرجى الاطلاع على الجداول وأسماء المعلمين.");
+            let message = encodeURIComponent("السلام عليكم، تم تحديث ونشر جدول الحصص المدرسي الذكي (توزيع الحصص والمعلمين) عبر تطبيق درستي.");
             window.open("https://api.whatsapp.com/send?text=" + message, "_blank");
         }
     </script>
