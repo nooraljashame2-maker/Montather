@@ -286,7 +286,7 @@
         <div class="control-panel">
             <div class="control-group">
                 <label>اسم المعلم:</label>
-                <input type="text" id="teacherNameInput" placeholder="أدخل اسم المعلم">
+                <input type="text" id="teacherNameInput" placeholder="أدخل اسم المعلم" oninput="saveToLocalStorage()" onblur="saveToLocalStorage()">
             </div>
 
             <!-- اختيار المراحل والشعب المتعددة -->
@@ -327,7 +327,7 @@
 
             <div class="control-group" style="max-width: 110px;">
                 <label>عدد الحصص:</label>
-                <input type="number" id="lessonsCountInput" min="1" max="10" value="3">
+                <input type="number" id="lessonsCountInput" min="1" max="10" value="3" oninput="saveToLocalStorage()" onblur="saveToLocalStorage()">
             </div>
 
             <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 18px;">
@@ -403,7 +403,7 @@
             stagesData.forEach(stage => {
                 stage.sections.forEach((sec, idx) => {
                     const key = `${stage.name}-${sec}`;
-                    stagesHTML += `<label><input type="checkbox" class="stage-chk" value="${key}" onchange="updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...')"> ${stage.name} - شعبة ${sec}</label>`;
+                    stagesHTML += `<label><input type="checkbox" class="stage-chk" value="${key}" onchange="updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...'); saveToLocalStorage();"> ${stage.name} - شعبة ${sec}</label>`;
 
                     tableHTML += `<tr data-stage-name="${stage.name}" data-section="${sec}" data-key="${key}">`;
                     if(idx === 0) {
@@ -431,7 +431,10 @@
             stagesListContainer.innerHTML = stagesHTML;
 
             document.querySelectorAll('.subject-chk').forEach(chk => {
-                chk.addEventListener('change', () => updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...'));
+                chk.addEventListener('change', () => {
+                    updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...');
+                    saveToLocalStorage();
+                });
             });
         }
 
@@ -450,6 +453,7 @@
             } else {
                 updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...');
             }
+            saveToLocalStorage();
         }
 
         function updateSelectedText(chkClass, textSpanId, defaultText) {
@@ -471,20 +475,65 @@
 
         function saveToLocalStorage() {
             const inputs = document.querySelectorAll('.cell-input');
-            const data = Array.from(inputs).map(input => input.value);
-            localStorage.setItem('schedule_data_noor', JSON.stringify(data));
+            const cellsData = Array.from(inputs).map(input => input.value);
+            
+            const teacherName = document.getElementById('teacherNameInput').value;
+            const lessonsCount = document.getElementById('lessonsCountInput').value;
+            
+            const stages = Array.from(document.querySelectorAll('.stage-chk')).map(chk => chk.checked);
+            const subjects = Array.from(document.querySelectorAll('.subject-chk')).map(chk => chk.checked);
+
+            const appState = {
+                cellsData,
+                teacherName,
+                lessonsCount,
+                stages,
+                subjects
+            };
+
+            localStorage.setItem('schedule_full_state_noor', JSON.stringify(appState));
         }
 
         function loadSavedData() {
-            const saved = localStorage.getItem('schedule_data_noor');
+            const saved = localStorage.getItem('schedule_full_state_noor');
             if (saved) {
-                const data = JSON.parse(saved);
-                const inputs = document.querySelectorAll('.cell-input');
-                inputs.forEach((input, index) => {
-                    if (data[index] !== undefined) {
-                        input.value = data[index];
+                try {
+                    const appState = JSON.parse(saved);
+                    
+                    if (appState.cellsData) {
+                        const inputs = document.querySelectorAll('.cell-input');
+                        inputs.forEach((input, index) => {
+                            if (appState.cellsData[index] !== undefined) {
+                                input.value = appState.cellsData[index];
+                            }
+                        });
                     }
-                });
+
+                    if (appState.teacherName !== undefined) {
+                        document.getElementById('teacherNameInput').value = appState.teacherName;
+                    }
+                    if (appState.lessonsCount !== undefined) {
+                        document.getElementById('lessonsCountInput').value = appState.lessonsCount;
+                    }
+
+                    if (appState.stages) {
+                        const stageChks = document.querySelectorAll('.stage-chk');
+                        stageChks.forEach((chk, idx) => {
+                            if (appState.stages[idx] !== undefined) chk.checked = appState.stages[idx];
+                        });
+                        updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...');
+                    }
+
+                    if (appState.subjects) {
+                        const subjectChks = document.querySelectorAll('.subject-chk');
+                        subjectChks.forEach((chk, idx) => {
+                            if (appState.subjects[idx] !== undefined) chk.checked = appState.subjects[idx];
+                        });
+                        updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...');
+                    }
+                } catch(e) {
+                    console.error(e);
+                }
             }
         }
 
@@ -632,7 +681,8 @@
                 document.querySelectorAll('.cell-input').forEach(input => {
                     input.value = "";
                 });
-                localStorage.removeItem('schedule_data_noor');
+                document.getElementById('teacherNameInput').value = "";
+                localStorage.removeItem('schedule_full_state_noor');
                 checkConflicts();
             }
         }
