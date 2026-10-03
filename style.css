@@ -38,28 +38,131 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 30px auto;
     padding: 0 15px;
 }
 
+/* تنسيق شريط عنوان الجدول والاسم المزخرف أعلى الجدول */
+.schedule-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1a73e8, #4285f4);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(26, 115, 232, 0.2);
+}
+
+.main-title {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.designer-signature {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
 h1 {
     color: #1a73e8;
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 5px;
 }
 
 .subtitle {
     color: #666;
-    margin-bottom: 25px;
+    margin: 0;
+    font-size: 13px;
+}
+
+/* تنسيق الأزرار الذكية */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: bold;
     font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.print-btn {
+    background-color: #f1f3f4;
+    color: #333;
+}
+
+.print-btn:hover {
+    background-color: #e2e6ea;
+}
+
+.whatsapp-btn {
+    background-color: #25d366;
+    color: white;
+}
+
+.whatsapp-btn:hover {
+    background-color: #1ebd56;
+}
+
+/* تنبيه التضارب */
+.conflict-alert {
+    background-color: #fce8e6;
+    color: #c5221f;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    border: 1px solid #fadcda;
+}
+
+.teacher-input.conflict-error {
+    background-color: #fce8e6 !important;
+    color: #c5221f !important;
+    border: 2px dashed #c5221f;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
 }
 
 .table-responsive {
     overflow-x: auto;
     background: white;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    padding: 5px;
 }
 
 .schedule-table {
@@ -70,8 +173,8 @@ h1 {
 }
 
 .schedule-table th, .schedule-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #eee;
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
     font-size: 14px;
 }
 
@@ -81,12 +184,68 @@ h1 {
     font-weight: bold;
 }
 
-.schedule-table tbody tr:hover {
-    background-color: #f8fbff;
-}
-
-.schedule-table td:first-child {
+.stage-cell {
     font-weight: bold;
     color: #1a73e8;
-    background-color: #f1f5fb;
+    background-color: #e8f0fe !important;
+}
+
+.section-cell {
+    font-weight: bold;
+    background-color: #f1f3f4;
+}
+
+.teacher-input {
+    background-color: #fffde7 !important;
+    color: #b78103;
+    font-weight: 500;
+    cursor: text;
+    min-width: 120px;
+}
+
+.teacher-input:focus {
+    outline: 2px solid #1a73e8;
+    background-color: #fff !important;
+}
+
+.core-sub {
+    background-color: #f6f9fc;
+}
+
+.other-sub {
+    background-color: #fff;
+}
+
+.social-sub {
+    background-color: #e6f4ea;
+    color: #137333;
+    font-weight: 500;
+}
+
+.schedule-table tbody tr:hover {
+    background-color: #f1f3f4;
+}
+
+/* إعدادات الطباعة */
+@media print {
+    .top-bar, .action-buttons, .conflict-alert {
+        display: none !important;
+    }
+    body {
+        background-color: white;
+    }
+    .container {
+        margin: 0;
+        max-width: 100%;
+        padding: 0;
+    }
+    .schedule-header-bar {
+        background: #1a73e8 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .table-responsive {
+        box-shadow: none;
+        padding: 0;
+    }
 }
