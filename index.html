@@ -286,7 +286,7 @@
         <div class="control-panel">
             <div class="control-group">
                 <label>اسم المعلم:</label>
-                <input type="text" id="teacherNameInput" placeholder="أدخل اسم المعلم" oninput="saveToLocalStorage()" onblur="saveToLocalStorage()">
+                <input type="text" id="teacherNameInput" placeholder="أدخل اسم المعلم" oninput="saveToLocalStorage()" onchange="saveToLocalStorage()">
             </div>
 
             <!-- اختيار المراحل والشعب المتعددة -->
@@ -327,7 +327,7 @@
 
             <div class="control-group" style="max-width: 110px;">
                 <label>عدد الحصص:</label>
-                <input type="number" id="lessonsCountInput" min="1" max="10" value="3" oninput="saveToLocalStorage()" onblur="saveToLocalStorage()">
+                <input type="number" id="lessonsCountInput" min="1" max="10" value="3" oninput="saveToLocalStorage()" onchange="saveToLocalStorage()">
             </div>
 
             <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 18px;">
@@ -381,16 +381,21 @@
             { name: "السادس الابتدائي", sections: ['أ', 'ب', 'ج'] }
         ];
 
-        document.addEventListener('DOMContentLoaded', () => {
+        // تنفيذ بناء الجدول واسترجاع البيانات فور تحميل الصفحة مباشرة
+        (function() {
             buildTableAndDropdowns();
             loadSavedData();
+        })();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSavedData();
+            checkConflicts();
 
             window.addEventListener('click', (e) => {
                 if (!e.target.closest('.dropdown-check-box')) {
                     document.querySelectorAll('.dropdown-list').forEach(el => el.style.display = 'none');
                 }
             });
-            checkConflicts();
         });
 
         function buildTableAndDropdowns() {
@@ -414,12 +419,12 @@
                     for(let i=0; i<5; i++) {
                         tableHTML += `<td>
                             <div class="cell-wrapper">
-                                <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="saveDataAndCheck()" onblur="saveDataAndCheck()">
+                                <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="saveDataAndCheck()" onchange="saveDataAndCheck()">
                             </div>
                         </td>`;
                         tableHTML += `<td>
                             <div class="cell-wrapper">
-                                <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="saveDataAndCheck()" onblur="saveDataAndCheck()">
+                                <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="saveDataAndCheck()" onchange="saveDataAndCheck()">
                             </div>
                         </td>`;
                     }
@@ -491,11 +496,11 @@
                 subjects
             };
 
-            localStorage.setItem('schedule_full_state_noor', JSON.stringify(appState));
+            localStorage.setItem('schedule_full_state_noor_v2', JSON.stringify(appState));
         }
 
         function loadSavedData() {
-            const saved = localStorage.getItem('schedule_full_state_noor');
+            const saved = localStorage.getItem('schedule_full_state_noor_v2');
             if (saved) {
                 try {
                     const appState = JSON.parse(saved);
@@ -682,18 +687,18 @@
                     input.value = "";
                 });
                 document.getElementById('teacherNameInput').value = "";
-                localStorage.removeItem('schedule_full_state_noor');
+                localStorage.removeItem('schedule_full_state_noor_v2');
                 checkConflicts();
             }
         }
 
         function shareAsImage() {
             const controlPanel = document.querySelector('.control-panel');
-            const actionsBar = document.querySelector('.actions-bar');
+            const actions_bar = document.querySelector('.actions-bar');
             const alertBox = document.getElementById('conflict-alert');
             
             controlPanel.style.display = 'none';
-            actionsBar.style.display = 'none';
+            actions_bar.style.display = 'none';
             alertBox.style.display = 'none';
 
             html2canvas(document.getElementById('printable-area'), {
@@ -701,7 +706,7 @@
                 useCORS: true
             }).then(canvas => {
                 controlPanel.style.display = 'flex';
-                actionsBar.style.display = 'flex';
+                actions_bar.style.display = 'flex';
                 alertBox.style.display = 'block';
 
                 const imageLink = document.createElement('a');
@@ -714,7 +719,7 @@
                 }, 1000);
             }).catch(err => {
                 controlPanel.style.display = 'flex';
-                actionsBar.style.display = 'flex';
+                actions_bar.style.display = 'flex';
                 alertBox.style.display = 'block';
                 alert("حدث خطأ أثناء التقاط الصورة، يرجى المحاولة مرة أخرى.");
             });
