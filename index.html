@@ -15,73 +15,73 @@
             font-family: 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f4f8;
             margin: 0;
-            padding: 8px;
+            padding: 10px;
             text-align: right;
         }
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
-            padding: 0 4px;
+            margin-bottom: 10px;
+            padding: 0 5px;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
         .school-name {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             color: #102a43;
         }
         .designer-name {
-            font-size: 14px;
+            font-size: 15px;
             font-style: italic;
             font-weight: bold;
             color: #d32f2f;
             font-family: 'Times New Roman', Times, serif, Tahoma;
         }
-        /* لوحة التحكم المصغرة */
+        /* لوحة التحكم */
         .control-panel {
             background: #ffffff;
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 10px;
-            box-shadow: 0 3px 10px rgba(16, 42, 67, 0.08);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             align-items: flex-start;
             justify-content: space-between;
         }
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 4px;
             flex: 1;
-            min-width: 170px;
+            min-width: 180px;
         }
         .control-group label {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             color: #334e68;
         }
         .control-group input[type="text"], .control-group input[type="number"] {
-            padding: 5px;
+            padding: 6px;
             border: 1px solid #d9e2ec;
-            border-radius: 5px;
+            border-radius: 6px;
             font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 11px;
+            font-size: 12px;
             background-color: #f8fafc;
         }
-        /* قوائم الاختيار المتعدد المصغرة */
+        /* قوائم الاختيار المتعدد المنسدلة */
         .dropdown-check-box {
             position: relative;
             border: 1px solid #d9e2ec;
-            border-radius: 5px;
+            border-radius: 6px;
             background-color: #f8fafc;
-            font-size: 11px;
+            font-size: 12px;
         }
         .dropdown-selected {
-            padding: 5px 8px;
+            padding: 6px 10px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -97,21 +97,21 @@
             left: 0;
             background: #ffffff;
             border: 1px solid #d9e2ec;
-            border-radius: 5px;
+            border-radius: 6px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            max-height: 160px;
+            max-height: 180px;
             overflow-y: auto;
             z-index: 100;
-            padding: 4px 8px;
+            padding: 5px 10px;
         }
         .dropdown-list label {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 3px 0;
+            gap: 8px;
+            padding: 4px 0;
             cursor: pointer;
             font-weight: normal;
-            font-size: 11px;
+            font-size: 12px;
             color: #243b53;
         }
         .dropdown-list label:hover {
@@ -121,24 +121,24 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            padding: 0 4px;
+            margin-bottom: 12px;
+            padding: 0 5px;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
         .btn {
             background-color: #334e68;
             color: white;
             border: none;
-            padding: 6px 10px;
-            border-radius: 5px;
+            padding: 7px 12px;
+            border-radius: 6px;
             cursor: pointer;
             font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             text-decoration: none;
         }
         .btn-primary {
@@ -157,45 +157,45 @@
             text-align: center;
             color: #102a43;
             margin-top: 0;
-            margin-bottom: 8px;
-            font-size: 16px;
+            margin-bottom: 10px;
+            font-size: 18px;
         }
         #conflict-alert {
             display: none;
             background-color: #ffe3e3;
             color: #c92a2a;
             border: 1px solid #ff8787;
-            padding: 8px 10px;
+            padding: 8px 12px;
             border-radius: 6px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 12px;
             text-align: center;
         }
         .table-container {
             width: 100%;
             overflow-x: auto;
             background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(16, 42, 67, 0.08);
-            padding: 4px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
+            padding: 5px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: center;
-            min-width: 950px;
+            min-width: 1050px;
         }
         th, td {
             border: 1px solid #d9e2ec;
-            padding: 3px 2px;
-            font-size: 11px;
+            padding: 5px 4px;
+            font-size: 12px;
         }
         th {
             background-color: #334e68;
             color: #ffffff;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 12px;
         }
         tr:nth-child(even) {
             background-color: #f4f8fb;
@@ -216,24 +216,25 @@
             background-color: #243b53;
         }
         
-        /* تنسيق الخلايا المصغرة بدقة */
+        /* تكبير الحقول داخل الجدول لتكون أريح للقراءة والكتابة */
         .cell-wrapper {
             display: flex;
             align-items: center;
-            gap: 2px;
+            gap: 4px;
             justify-content: center;
         }
         .cell-input {
             flex: 1;
-            padding: 2px 3px;
+            padding: 4px 6px;
             border: 1px solid transparent;
-            border-radius: 3px;
+            border-radius: 4px;
             font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 10px;
+            font-size: 12px;
             background: transparent;
             text-align: center;
             outline: none;
             width: 100%;
+            min-width: 75px;
         }
         .cell-input:focus {
             background: #fff;
@@ -241,24 +242,24 @@
         }
         .cell-btns {
             display: flex;
-            gap: 1px;
+            gap: 2px;
         }
         .btn-cell-save {
             background: #2b6cb0;
             color: white;
             border: none;
-            border-radius: 2px;
-            padding: 1px 3px;
-            font-size: 8px;
+            border-radius: 3px;
+            padding: 2px 4px;
+            font-size: 10px;
             cursor: pointer;
         }
         .btn-cell-del {
             background: #e53e3e;
             color: white;
             border: none;
-            border-radius: 2px;
-            padding: 1px 3px;
-            font-size: 8px;
+            border-radius: 3px;
+            padding: 2px 4px;
+            font-size: 10px;
             cursor: pointer;
         }
         .btn-cell-save:hover, .btn-cell-del:hover {
@@ -305,7 +306,7 @@
 
         <h2>جدول الحصص المدرسية - المرحلة الابتدائية</h2>
 
-        <!-- لوحة التحكم الذكية المصغرة -->
+        <!-- لوحة التحكم -->
         <div class="control-panel">
             <div class="control-group">
                 <label>اسم المعلم:</label>
@@ -334,7 +335,7 @@
                     </div>
                     <div id="subjectsDropdownList" class="dropdown-list">
                         <label><input type="checkbox" id="selectAllSubjects" onclick="toggleSelectAll(this, 'subject-chk')"> <b>تحديد الكل</b></label>
-                        <hr style="margin: 3px 0; border: 0; border-top: 1px solid #d9e2ec;">
+                        <hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">
                         <label><input type="checkbox" class="subject-chk" value="اللغة العربية"> اللغة العربية</label>
                         <label><input type="checkbox" class="subject-chk" value="الرياضيات"> الرياضيات</label>
                         <label><input type="checkbox" class="subject-chk" value="اللغة الإنجليزية"> اللغة الإنجليزية</label>
@@ -348,12 +349,12 @@
                 </div>
             </div>
 
-            <div class="control-group" style="max-width: 100px;">
+            <div class="control-group" style="max-width: 110px;">
                 <label>عدد الحصص:</label>
                 <input type="number" id="lessonsCountInput" min="1" max="10" value="3">
             </div>
 
-            <div style="display: flex; align-items: flex-end; margin-top: 15px;">
+            <div style="display: flex; align-items: flex-end; margin-top: 18px;">
                 <button class="btn btn-primary" onclick="autoAssignTeacher()">⚡ توزيع وحفظ</button>
             </div>
         </div>
@@ -405,6 +406,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             buildTableAndDropdowns();
+            loadSavedData();
 
             window.addEventListener('click', (e) => {
                 if (!e.target.closest('.dropdown-check-box')) {
@@ -418,7 +420,7 @@
             const tbody = document.querySelector('#schedule-table tbody');
             const stagesListContainer = document.getElementById('stagesDropdownList');
             
-            let stagesHTML = `<label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label><hr style="margin: 3px 0; border: 0; border-top: 1px solid #d9e2ec;">`;
+            let stagesHTML = `<label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label><hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">`;
             let tableHTML = '';
 
             stagesData.forEach(stage => {
@@ -435,7 +437,7 @@
                     for(let i=0; i<5; i++) {
                         tableHTML += `<td>
                             <div class="cell-wrapper">
-                                <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="checkConflicts()">
+                                <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="saveDataAndCheck()">
                                 <div class="cell-btns">
                                     <button class="btn-cell-save" onclick="saveCell(this)" title="حفظ">💾</button>
                                     <button class="btn-cell-del" onclick="clearCell(this)" title="حذف">❌</button>
@@ -444,7 +446,7 @@
                         </td>`;
                         tableHTML += `<td>
                             <div class="cell-wrapper">
-                                <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="checkConflicts()">
+                                <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="saveDataAndCheck()">
                                 <div class="cell-btns">
                                     <button class="btn-cell-save" onclick="saveCell(this)" title="حفظ">💾</button>
                                     <button class="btn-cell-del" onclick="clearCell(this)" title="حذف">❌</button>
@@ -500,14 +502,40 @@
             setTimeout(() => {
                 input.style.backgroundColor = 'transparent';
             }, 600);
-            checkConflicts();
+            saveDataAndCheck();
         }
 
         function clearCell(btn) {
             const wrapper = btn.closest('.cell-wrapper');
             const input = wrapper.querySelector('.cell-input');
             input.value = '';
+            saveDataAndCheck();
+        }
+
+        function saveDataAndCheck() {
+            saveToLocalStorage();
             checkConflicts();
+        }
+
+        // حفظ البيانات في الذاكرة المحلية (Local Storage)
+        function saveToLocalStorage() {
+            const inputs = document.querySelectorAll('.cell-input');
+            const data = Array.from(inputs).map(input => input.value);
+            localStorage.setItem('schedule_data_noor', JSON.stringify(data));
+        }
+
+        // استرجاع البيانات المحفوظة عند فتح البرنامج
+        function loadSavedData() {
+            const saved = localStorage.getItem('schedule_data_noor');
+            if (saved) {
+                const data = JSON.parse(saved);
+                const inputs = document.querySelectorAll('.cell-input');
+                inputs.forEach((input, index) => {
+                    if (data[index] !== undefined) {
+                        input.value = data[index];
+                    }
+                });
+            }
         }
 
         function autoAssignTeacher() {
@@ -567,8 +595,7 @@
                 }
             });
 
-            checkConflicts();
-            // تم إبقاء اسم المعلم في حقل الإدخال وعدم تفريغه بناءً على طلبك
+            saveDataAndCheck();
             alert(`تم توزيع وإنجاز (${assignedTotal}) حصة بنجاح للمعلم: ${teacherName}`);
         }
 
@@ -621,6 +648,7 @@
                 document.querySelectorAll('.cell-input').forEach(input => {
                     input.value = "";
                 });
+                localStorage.removeItem('schedule_data_noor');
                 checkConflicts();
             }
         }
