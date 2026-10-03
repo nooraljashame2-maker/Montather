@@ -21,15 +21,45 @@
 
     <!-- المحتوى الرئيسي: جدول الحصص الذكي -->
     <main class="container">
-        <h1>جدول الحصص المدرسية (المرحلة الابتدائية)</h1>
-        <p class="subtitle">توزيع ذكي للحصص الدراسية (مع أولوية المواد الأساسية للحصص الأولى)</p>
+        
+        <!-- الترويسة العلوية للجدول (العنوان يمين والاسم يسار) -->
+        <div class="schedule-header-bar">
+            <div class="main-title">
+                📅 جدول توزيع الحصص الذكي 2026-2027
+            </div>
+            <div class="designer-signature">
+                ✨ Noor Rahman ✨
+            </div>
+        </div>
+
+        <div class="header-section">
+            <div>
+                <h1>المرحلة الابتدائية (توزيع الحصص)</h1>
+                <p class="subtitle">توزيع ذكي للحصص مع كشف التضارب، الطباعة الفورية، ومشاركة واتساب</p>
+            </div>
+            <!-- أزرار التحكم الذكية -->
+            <div class="action-buttons">
+                <button onclick="window.print()" class="btn print-btn">
+                    🖨️ طباعة الجدول
+                </button>
+                <button onclick="shareViaWhatsApp()" class="btn whatsapp-btn">
+                    💬 مشاركة عبر واتساب
+                </button>
+            </div>
+        </div>
+
+        <!-- صندوق التنبيهات -->
+        <div id="alert-box" class="conflict-alert" style="display: none;">
+            ⚠️ تنبيه: يوجد تضارب! المعلم المذكور لديه حصة أخرى في نفس هذا الوقت (نفس رقم الحصة).
+        </div>
 
         <div class="table-responsive">
-            <table class="schedule-table">
+            <table class="schedule-table" id="scheduleTable">
                 <thead>
                     <tr>
                         <th>المرحلة</th>
                         <th>الشعبة</th>
+                        <th>اسم المعلم</th>
                         <th>الحصة الأولى</th>
                         <th>الحصة الثانية</th>
                         <th>الحصة الثالثة</th>
@@ -39,38 +69,89 @@
                 </thead>
                 <tbody>
                     <!-- الأول الابتدائي -->
-                    <tr><td rowspan="3">الأول الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>تربية إسلامية</td></tr>
-                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>تربية إسلامية</td><td>علوم</td></tr>
-                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>نشاط</td></tr>
+                    <tr><td rowspan="3" class="stage-cell">الأول الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="other-sub">العلوم</td></tr>
+                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="other-sub">العلوم</td></tr>
+                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الأخلاقية</td></tr>
 
                     <!-- الثاني الابتدائي -->
-                    <tr><td rowspan="3">الثاني الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>اجتماعيات</td></tr>
-                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>اجتماعيات</td><td>علوم</td></tr>
-                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>فنية</td></tr>
+                    <tr><td rowspan="3" class="stage-cell">الثاني الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="other-sub">الفنية</td></tr>
+                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="other-sub">الرياضة</td></tr>
+                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">التربية الإسلامية</td><td class="other-sub">الأخلاقية</td></tr>
 
                     <!-- الثالث الابتدائي -->
-                    <tr><td rowspan="3">الثالث الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>حاسوب</td></tr>
-                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>حاسوب</td><td>علوم</td></tr>
-                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>نشاط</td></tr>
+                    <tr><td rowspan="3" class="stage-cell">الثالث الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="other-sub">الرياضة</td></tr>
+                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="other-sub">الفنية</td></tr>
+                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الأخلاقية</td></tr>
 
                     <!-- الرابع الابتدائي -->
-                    <tr><td rowspan="3">الرابع الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>تربية إسلامية</td></tr>
-                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>تربية إسلامية</td><td>علوم</td></tr>
-                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>اجتماعيات</td></tr>
+                    <tr><td rowspan="3" class="stage-cell">الرابع الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="social-sub">الاجتماعيات</td></tr>
+                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="social-sub">الاجتماعيات</td></tr>
+                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الفنية</td></tr>
 
                     <!-- الخامس الابتدائي -->
-                    <tr><td rowspan="3">الخامس الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>فنية</td></tr>
-                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>فنية</td><td>علوم</td></tr>
-                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>حاسوب</td></tr>
+                    <tr><td rowspan="3" class="stage-cell">الخامس الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="social-sub">الاجتماعيات</td></tr>
+                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="social-sub">الاجتماعيات</td></tr>
+                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الرياضة</td></tr>
 
                     <!-- السادس الابتدائي -->
-                    <tr><td rowspan="3">السادس الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>نشاط</td></tr>
-                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>نشاط</td><td>علوم</td></tr>
-                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>تربية إسلامية</td></tr>
+                    <tr><td rowspan="3" class="stage-cell">السادس الابتدائي</td><td class="section-cell">أ</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">العلوم</td><td class="social-sub">الاجتماعيات</td></tr>
+                    <tr><td class="section-cell">ب</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">الرياضيات</td><td class="core-sub">اللغة العربية</td><td class="core-sub">اللغة الإنجليزية</td><td class="other-sub">التربية الإسلامية</td><td class="social-sub">الاجتماعيات</td></tr>
+                    <tr><td class="section-cell">ج</td><td contenteditable="true" class="teacher-input"></td><td class="core-sub">اللغة الإنجليزية</td><td class="core-sub">اللغة العربية</td><td class="core-sub">الرياضيات</td><td class="other-sub">العلوم</td><td class="other-sub">الفنية</td></tr>
                 </tbody>
             </table>
         </div>
     </main>
 
+    <!-- سكربت التحكم والتضارب والواتساب -->
+    <script>
+        const teacherInputs = document.querySelectorAll('.teacher-input');
+        const alertBox = document.getElementById('alert-box');
+
+        teacherInputs.forEach(input => {
+            input.addEventListener('input', checkConflicts);
+        });
+
+        function checkConflicts() {
+            teacherInputs.forEach(inp => inp.classList.remove('conflict-error'));
+            alertBox.style.display = 'none';
+
+            let teacherSchedules = {};
+            let hasConflict = false;
+
+            teacherInputs.forEach(input => {
+                let teacherName = input.innerText.trim();
+                if (teacherName === "") return;
+
+                let row = input.parentElement;
+                let cells = row.querySelectorAll('td');
+                for (let i = 3; i < cells.length; i++) {
+                    let periodIndex = i;
+                    let key = teacherName + "_" + periodIndex;
+                    if (!teacherSchedules[key]) {
+                        teacherSchedules[key] = [];
+                    }
+                    teacherSchedules[key].push(input);
+                }
+            });
+
+            for (let key in teacherSchedules) {
+                if (teacherSchedules[key].length > 1) {
+                    hasConflict = true;
+                    teacherSchedules[key].forEach(inp => {
+                        inp.classList.add('conflict-error');
+                    });
+                }
+            }
+
+            if (hasConflict) {
+                alertBox.style.display = 'block';
+            }
+        }
+
+        function shareViaWhatsApp() {
+            let message = encodeURIComponent("السلام عليكم، تم تحديث ونشر جدول الحصص المدرسية للمرحلة الابتدائية عبر تطبيق درستي. يرجى الاطلاع على الجداول وأسماء المعلمين.");
+            window.open("https://api.whatsapp.com/send?text=" + message, "_blank");
+        }
+    </script>
 </body>
 </html>
