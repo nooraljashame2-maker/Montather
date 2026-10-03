@@ -15,73 +15,73 @@
             font-family: 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f4f8;
             margin: 0;
-            padding: 10px;
+            padding: 8px;
             text-align: right;
         }
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            padding: 0 5px;
+            margin-bottom: 8px;
+            padding: 0 4px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
         .school-name {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             color: #102a43;
         }
         .designer-name {
-            font-size: 15px;
+            font-size: 14px;
             font-style: italic;
             font-weight: bold;
             color: #d32f2f;
             font-family: 'Times New Roman', Times, serif, Tahoma;
         }
-        /* لوحة التحكم الذكية المتعددة */
+        /* لوحة التحكم المصغرة */
         .control-panel {
             background: #ffffff;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 3px 10px rgba(16, 42, 67, 0.08);
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
             align-items: flex-start;
             justify-content: space-between;
         }
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             flex: 1;
-            min-width: 200px;
+            min-width: 170px;
         }
         .control-group label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             color: #334e68;
         }
         .control-group input[type="text"], .control-group input[type="number"] {
-            padding: 7px;
+            padding: 5px;
             border: 1px solid #d9e2ec;
-            border-radius: 6px;
+            border-radius: 5px;
             font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             background-color: #f8fafc;
         }
-        /* قوائم الاختيار المتعدد المنسدلة */
+        /* قوائم الاختيار المتعدد المصغرة */
         .dropdown-check-box {
             position: relative;
             border: 1px solid #d9e2ec;
-            border-radius: 6px;
+            border-radius: 5px;
             background-color: #f8fafc;
-            font-size: 12px;
+            font-size: 11px;
         }
         .dropdown-selected {
-            padding: 7px 10px;
+            padding: 5px 8px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -97,20 +97,21 @@
             left: 0;
             background: #ffffff;
             border: 1px solid #d9e2ec;
-            border-radius: 6px;
+            border-radius: 5px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            max-height: 180px;
+            max-height: 160px;
             overflow-y: auto;
             z-index: 100;
-            padding: 5px 10px;
+            padding: 4px 8px;
         }
         .dropdown-list label {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 4px 0;
+            gap: 6px;
+            padding: 3px 0;
             cursor: pointer;
             font-weight: normal;
+            font-size: 11px;
             color: #243b53;
         }
         .dropdown-list label:hover {
@@ -120,24 +121,24 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding: 0 5px;
+            margin-bottom: 10px;
+            padding: 0 4px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
         .btn {
             background-color: #334e68;
             color: white;
             border: none;
-            padding: 8px 14px;
-            border-radius: 6px;
+            padding: 6px 10px;
+            border-radius: 5px;
             cursor: pointer;
             font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: bold;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             text-decoration: none;
         }
         .btn-primary {
@@ -156,44 +157,45 @@
             text-align: center;
             color: #102a43;
             margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 20px;
+            margin-bottom: 8px;
+            font-size: 16px;
         }
         #conflict-alert {
             display: none;
             background-color: #ffe3e3;
             color: #c92a2a;
             border: 1px solid #ff8787;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 11px;
             text-align: center;
         }
         .table-container {
             width: 100%;
             overflow-x: auto;
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
-            padding: 5px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(16, 42, 67, 0.08);
+            padding: 4px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: center;
-            min-width: 1100px;
+            min-width: 950px;
         }
         th, td {
             border: 1px solid #d9e2ec;
-            padding: 6px 4px;
-            font-size: 12px;
+            padding: 3px 2px;
+            font-size: 11px;
         }
         th {
             background-color: #334e68;
             color: #ffffff;
             font-weight: bold;
+            font-size: 11px;
         }
         tr:nth-child(even) {
             background-color: #f4f8fb;
@@ -214,23 +216,24 @@
             background-color: #243b53;
         }
         
-        /* تصميم الخلية مع أزرار الحفظ والحذف الخاصة بها */
+        /* تنسيق الخلايا المصغرة بدقة */
         .cell-wrapper {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 2px;
             justify-content: center;
         }
         .cell-input {
             flex: 1;
-            padding: 4px;
+            padding: 2px 3px;
             border: 1px solid transparent;
-            border-radius: 4px;
+            border-radius: 3px;
             font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 11px;
+            font-size: 10px;
             background: transparent;
             text-align: center;
             outline: none;
+            width: 100%;
         }
         .cell-input:focus {
             background: #fff;
@@ -238,24 +241,24 @@
         }
         .cell-btns {
             display: flex;
-            gap: 2px;
+            gap: 1px;
         }
         .btn-cell-save {
             background: #2b6cb0;
             color: white;
             border: none;
-            border-radius: 3px;
-            padding: 2px 5px;
-            font-size: 9px;
+            border-radius: 2px;
+            padding: 1px 3px;
+            font-size: 8px;
             cursor: pointer;
         }
         .btn-cell-del {
             background: #e53e3e;
             color: white;
             border: none;
-            border-radius: 3px;
-            padding: 2px 5px;
-            font-size: 9px;
+            border-radius: 2px;
+            padding: 1px 3px;
+            font-size: 8px;
             cursor: pointer;
         }
         .btn-cell-save:hover, .btn-cell-del:hover {
@@ -302,7 +305,7 @@
 
         <h2>جدول الحصص المدرسية - المرحلة الابتدائية</h2>
 
-        <!-- لوحة التحكم الذكية للاختيار المتعدد -->
+        <!-- لوحة التحكم الذكية المصغرة -->
         <div class="control-panel">
             <div class="control-group">
                 <label>اسم المعلم:</label>
@@ -331,7 +334,7 @@
                     </div>
                     <div id="subjectsDropdownList" class="dropdown-list">
                         <label><input type="checkbox" id="selectAllSubjects" onclick="toggleSelectAll(this, 'subject-chk')"> <b>تحديد الكل</b></label>
-                        <hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">
+                        <hr style="margin: 3px 0; border: 0; border-top: 1px solid #d9e2ec;">
                         <label><input type="checkbox" class="subject-chk" value="اللغة العربية"> اللغة العربية</label>
                         <label><input type="checkbox" class="subject-chk" value="الرياضيات"> الرياضيات</label>
                         <label><input type="checkbox" class="subject-chk" value="اللغة الإنجليزية"> اللغة الإنجليزية</label>
@@ -345,13 +348,13 @@
                 </div>
             </div>
 
-            <div class="control-group" style="max-width: 120px;">
+            <div class="control-group" style="max-width: 100px;">
                 <label>عدد الحصص:</label>
                 <input type="number" id="lessonsCountInput" min="1" max="10" value="3">
             </div>
 
-            <div style="display: flex; align-items: flex-end; margin-top: 20px;">
-                <button class="btn btn-primary" onclick="autoAssignTeacher()">⚡ توزيع تلقائي وحفظ</button>
+            <div style="display: flex; align-items: flex-end; margin-top: 15px;">
+                <button class="btn btn-primary" onclick="autoAssignTeacher()">⚡ توزيع وحفظ</button>
             </div>
         </div>
 
@@ -384,8 +387,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- الصفوف الـ 18 -->
-                    <!-- سيتم توليد خلايا الحصص مع أزرار الحفظ والحذف برمجياً أو هيكلياً لضمان سهولة الإدارة -->
+                    <!-- يتم توليد محتوى الجدول برمجياً -->
                 </tbody>
             </table>
         </div>
@@ -416,7 +418,7 @@
             const tbody = document.querySelector('#schedule-table tbody');
             const stagesListContainer = document.getElementById('stagesDropdownList');
             
-            let stagesHTML = `<label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label><hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">`;
+            let stagesHTML = `<label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label><hr style="margin: 3px 0; border: 0; border-top: 1px solid #d9e2ec;">`;
             let tableHTML = '';
 
             stagesData.forEach(stage => {
@@ -430,9 +432,7 @@
                     }
                     tableHTML += `<td>${sec}</td>`;
 
-                    // 5 حصص (مادة + معلم لكل حصة)
                     for(let i=0; i<5; i++) {
-                        // خلية المادة
                         tableHTML += `<td>
                             <div class="cell-wrapper">
                                 <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="checkConflicts()">
@@ -442,7 +442,6 @@
                                 </div>
                             </div>
                         </td>`;
-                        // خلية المعلم
                         tableHTML += `<td>
                             <div class="cell-wrapper">
                                 <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="checkConflicts()">
@@ -494,7 +493,6 @@
             }
         }
 
-        // حفظ الحقل الفردي
         function saveCell(btn) {
             const wrapper = btn.closest('.cell-wrapper');
             const input = wrapper.querySelector('.cell-input');
@@ -505,7 +503,6 @@
             checkConflicts();
         }
 
-        // حذف الحقل الفردي
         function clearCell(btn) {
             const wrapper = btn.closest('.cell-wrapper');
             const input = wrapper.querySelector('.cell-input');
@@ -513,7 +510,6 @@
             checkConflicts();
         }
 
-        // توزيع تلقائي للمعلم
         function autoAssignTeacher() {
             const teacherName = document.getElementById('teacherNameInput').value.trim();
             const lessonsCount = parseInt(document.getElementById('lessonsCountInput').value) || 1;
@@ -545,15 +541,11 @@
                     for (let row of targetRows) {
                         if (placed) break;
 
-                        // الحقول تبدأ من العمود الثالث (الفهرس 2 للمادة، 3 للمعلم وهكذا)
-                        // أعمدة المدخلات داخل الـ tr تتوزع كالتالي: [مادة0, معلم0, مادة1, معلم1, ...]
-                        // عدد الخلايا في الصف التي تحتوي على أدوات: الخلايا تبدأ من الفهرس 2 (بعد عمود المرحلة والشعبة)
                         for (let c = 2; c < row.cells.length; c += 2) {
                             const subInput = row.cells[c].querySelector('.cell-input');
                             const teacherInput = row.cells[c+1].querySelector('.cell-input');
 
                             if (teacherInput.value.trim() === "") {
-                                // فحص تضارب المعلم
                                 let isBusy = false;
                                 rows.forEach(r => {
                                     const tIn = r.cells[c+1].querySelector('.cell-input');
@@ -576,14 +568,13 @@
             });
 
             checkConflicts();
+            // تم إبقاء اسم المعلم في حقل الإدخال وعدم تفريغه بناءً على طلبك
             alert(`تم توزيع وإنجاز (${assignedTotal}) حصة بنجاح للمعلم: ${teacherName}`);
         }
 
-        // نظام فحص التضارب الذكي
         function checkConflicts() {
             const rows = document.querySelectorAll('#schedule-table tbody tr');
             
-            // إزالة التنبيهات السابقة
             rows.forEach(row => {
                 for (let c = 3; c < row.cells.length; c += 2) {
                     const teacherInput = row.cells[c].querySelector('.cell-input');
@@ -592,7 +583,7 @@
             });
 
             let hasConflict = false;
-            const maxCols = 5; // عدد الحصص
+            const maxCols = 5;
 
             for (let i = 0; i < maxCols; i++) {
                 const teacherColIdx = 3 + (i * 2);
