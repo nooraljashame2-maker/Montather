@@ -38,7 +38,7 @@ body {
 }
 
 .container {
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 30px auto;
     padding: 0 15px;
 }
@@ -144,10 +144,10 @@ h1 {
     border: 1px solid #fadcda;
 }
 
-.teacher-input.conflict-error {
+.teacher-box.conflict-error {
     background-color: #fce8e6 !important;
     color: #c5221f !important;
-    border: 2px dashed #c5221f;
+    border: 2px dashed #c5221f !important;
     animation: pulse 1s infinite;
 }
 
@@ -173,9 +173,9 @@ h1 {
 }
 
 .schedule-table th, .schedule-table td {
-    padding: 12px 14px;
-    border: 1px solid #e0e0e0;
-    font-size: 14px;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    font-size: 13px;
 }
 
 .schedule-table th {
@@ -188,6 +188,7 @@ h1 {
     font-weight: bold;
     color: #1a73e8;
     background-color: #e8f0fe !important;
+    border-left: 2px solid #b0c4de;
 }
 
 .section-cell {
@@ -195,35 +196,56 @@ h1 {
     background-color: #f1f3f4;
 }
 
-.teacher-input {
-    background-color: #fffde7 !important;
-    color: #b78103;
-    font-weight: 500;
-    cursor: text;
-    min-width: 120px;
+/* الخط الأحمر الفاصل بين حصص الشعب لكل مرحلة */
+.schedule-table tr.grade-end-row td {
+    border-bottom: 3px solid #ea4335 !important;
 }
 
-.teacher-input:focus {
+/* تنسيق خلايا الحصص (مربعات منظمة) */
+.lesson-cell {
+    background-color: #fff;
+    padding: 8px !important;
+    vertical-align: middle;
+}
+
+.sub-name {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    background: #f8f9fa;
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+.teacher-box {
+    background-color: #fffde7;
+    color: #b78103;
+    font-weight: 600;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px dashed #fbc02d;
+    cursor: text;
+    min-height: 20px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.teacher-box:empty:before {
+    content: attr(placeholder);
+    color: #bbb;
+    font-weight: normal;
+}
+
+.teacher-box:focus {
     outline: 2px solid #1a73e8;
     background-color: #fff !important;
-}
-
-.core-sub {
-    background-color: #f6f9fc;
-}
-
-.other-sub {
-    background-color: #fff;
-}
-
-.social-sub {
-    background-color: #e6f4ea;
-    color: #137333;
-    font-weight: 500;
+    border-style: solid;
 }
 
 .schedule-table tbody tr:hover {
-    background-color: #f1f3f4;
+    background-color: #fafafa;
 }
 
 /* إعدادات الطباعة */
@@ -247,5 +269,9 @@ h1 {
     .table-responsive {
         box-shadow: none;
         padding: 0;
+    }
+    .teacher-box {
+        border: 1px solid #ccc !important;
+        background-color: #fff !important;
     }
 }
