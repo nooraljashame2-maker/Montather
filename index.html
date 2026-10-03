@@ -2,13 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>دراستي - منهج التربية الإسلامية</title>
-    <link rel="stylesheet" href="style.css"> <!-- استبدليه باسم ملف الـ CSS لديكِ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جداول الحصص المدرسية - دراستي</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- الشريط العلوي -->
-    header class="top-bar">
+    <header class="top-bar">
         <div class="logo-area">
             <div class="logo-icon">📚</div>
             <div>
@@ -18,123 +19,58 @@
         </div>
     </header>
 
-    <div class="app-layout">
-        <!-- القائمة الجانبية -->
-        <aside class="sidebar">
-            <div class="sidebar-menu">
-                <a href="#" class="menu-item active">الرئيسية</a>
-                <a href="#" class="menu-item">المواد الدراسية</a>
-                <a href="#" class="menu-item">واجباتي</a>
-                <a href="#" class="menu-item">الاختبارات</a>
-            </div>
-        </aside>
+    <!-- المحتوى الرئيسي: جدول الحصص الذكي -->
+    <main class="container">
+        <h1>جدول الحصص المدرسية (المرحلة الابتدائية)</h1>
+        <p class="subtitle">توزيع ذكي للحصص الدراسية (مع أولوية المواد الأساسية للحصص الأولى)</p>
 
-        <!-- المحتوى الرئيسي -->
-        <main class="main-content">
-            <h2 style="margin-bottom: 20px; color: #0b3c5d;">منهج مادة التربية الإسلامية - الصف الثاني متوسط</h2>
+        <div class="table-responsive">
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>المرحلة</th>
+                        <th>الشعبة</th>
+                        <th>الحصة الأولى</th>
+                        <th>الحصة الثانية</th>
+                        <th>الحصة الثالثة</th>
+                        <th>الحصة الرابعة</th>
+                        <th>الحصة الخامسة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- الأول الابتدائي -->
+                    <tr><td rowspan="3">الأول الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>تربية إسلامية</td></tr>
+                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>تربية إسلامية</td><td>علوم</td></tr>
+                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>نشاط</td></tr>
 
-            <!-- الأيقونات الست (كل أيقونة ترتبط بـ نافذة خاصة بها) -->
-            <div class="subjects-grid">
-                <a href="#book-modal" class="subject-box">
-                    <span>📖</span>
-                    <span>عرض الكتاب</span>
-                </a>
-                <a href="#summary-modal" class="subject-box">
-                    <span>📑</span>
-                    <span>شرح الوحدة</span>
-                </a>
-                <a href="#questions-modal" class="subject-box">
-                    <span>❓</span>
-                    <span>أسئلة الفصل</span>
-                </a>
-                <a href="#exams-modal" class="subject-box">
-                    <span>⭐</span>
-                    <span>مرشحات الامتحان</span>
-                </a>
-                <a href="#notes-modal" class="subject-box">
-                    <span>💡</span>
-                    <span>إضاءات وملاحظات</span>
-                </a>
-                <a href="#answers-modal" class="subject-box">
-                    <span>✅</span>
-                    <span>حل التمرينات</span>
-                </a>
-            </div>
-        </main>
-    </div>
+                    <!-- الثاني الابتدائي -->
+                    <tr><td rowspan="3">الثاني الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>اجتماعيات</td></tr>
+                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>اجتماعيات</td><td>علوم</td></tr>
+                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>فنية</td></tr>
 
-    <!-- النوافذ المنبثقة الست (كل نافذة بمحتواها المستقل والمضبوط) -->
+                    <!-- الثالث الابتدائي -->
+                    <tr><td rowspan="3">الثالث الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>حاسوب</td></tr>
+                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>حاسوب</td><td>علوم</td></tr>
+                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>نشاط</td></tr>
 
-    <!-- 1. نافذة عرض الكتاب -->
-    <div id="book-modal" class="modal">
-        <div class="modal-content">
-            <h3>عرض كتاب مادة التربية الإسلامية</h3>
-            <p>✔ الكتاب محمل وجاهز. يمكنك استعراضه بالكامل والوصول إلى صفحات المادة بكل سلاسة من هنا.</p>
-            <a href="#" class="close-modal-link">إغلاق</a>
+                    <!-- الرابع الابتدائي -->
+                    <tr><td rowspan="3">الرابع الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>تربية إسلامية</td></tr>
+                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>تربية إسلامية</td><td>علوم</td></tr>
+                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>اجتماعيات</td></tr>
+
+                    <!-- الخامس الابتدائي -->
+                    <tr><td rowspan="3">الخامس الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>فنية</td></tr>
+                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>فنية</td><td>علوم</td></tr>
+                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>حاسوب</td></tr>
+
+                    <!-- السادس الابتدائي -->
+                    <tr><td rowspan="3">السادس الابتدائي</td><td>أ</td><td>اللغة العربية</td><td>الرياضيات</td><td>اللغة الإنجليزية</td><td>علوم</td><td>نشاط</td></tr>
+                    <tr><td>ب</td><td>الرياضيات</td><td>اللغة العربية</td><td>اللغة الإنجليزية</td><td>نشاط</td><td>علوم</td></tr>
+                    <tr><td>ج</td><td>اللغة الإنجليزية</td><td>اللغة العربية</td><td>الرياضيات</td><td>علوم</td><td>تربية إسلامية</td></tr>
+                </tbody>
+            </table>
         </div>
-    </div>
-
-    <!-- 2. نافذة شرح وتلخيص الوحدة -->
-    <div id="summary-modal" class="modal">
-        <div class="modal-content">
-            <h3>شرح وتلخيص الوحدة الأولى</h3>
-            <p>ملخص شامل ومبسط يتناول أهم المفاهيم الأساسية والقواعد العامة في مادة التربية الإسلامية:</p>
-            <ul>
-                <li>التعاريف والاصطلاحات المركزية للوحدة.</li>
-                <li>الخطوات المنهجية المعتمدة لحل التمارين.</li>
-            </ul>
-            <a href="#" class="close-modal-link">إغلاق</a>
-        </div>
-    </div>
-
-    <!-- 3. نافذة أسئلة الفصل -->
-    <div id="questions-modal" class="modal">
-        <div class="modal-content">
-            <h3>أسئلة مهمة تخص الفصل</h3>
-            <p><strong>بنك الأسئلة واختبار الفهم:</strong></p>
-            <ul>
-                <li>س/ ما هي الأهمية الأساسية لدراسة هذا الفصل في التربية الإسلامية؟</li>
-                <li>س/ وضح بالخطوات أو الأمثلة التطبيقية أهم القواعد الواردة؟</li>
-            </ul>
-            <a href="#" class="close-modal-link">إغلاق</a>
-        </div>
-    </div>
-
-    <!-- 4. نافذة مرشحات الامتحان -->
-    <div id="exams-modal" class="modal">
-        <div class="modal-content">
-            <h3>أسئلة مرشحة للامتحان</h3>
-            <p style="background: #fff3cd; padding: 8px; border-radius: 5px; color: #856404;">هذه الأسئلة تم اختيارها بدقة لتطابق نمط الأسئلة الوزارية والمدرسية:</p>
-            <ul>
-                <li>التركيز على المسائل والتعاريف المتكررة في امتحانات السنوات السابقة.</li>
-                <li>الأسهل والأكثر ترشيحاً للحصول على الدرجة الكاملة (100).</li>
-            </ul>
-            <a href="#" class="close-modal-link">إغلاق</a>
-        </div>
-    </div>
-
-    <!-- 5. نافذة الإضاءات والملاحظات -->
-    <div id="notes-modal" class="modal">
-        <div class="modal-content">
-            <h3>إضاءات وملاحظات ذهبية</h3>
-            <p>أبرز النقاط المركزية التي يركز عليها المنهج الدراسي:</p>
-            <ul>
-                <li>احرص على فهم التطبيقات العملية للدرس.</li>
-                <li>الانتباه إلى الفروقات الأساسية بين القواعد أو العناصر المذكورة في المادة.</li>
-            </ul>
-            <a href="#" class="close-modal-link">إغلاق</a>
-        </div>
-    </div>
-
-    <!-- 6. نافذة حل التمرينات -->
-    <div id="answers-modal" class="modal">
-        <div class="modal-content">
-            <h3>حل أسئلة وتمرينات الفصل</h3>
-            <p><strong>الحلول النموذجية المعتمدة:</strong></p>
-            <p>إجابات تفصيلية وواضحة لجميع أسئلة وأنشطة نهاية الفصل الدراسي مع الشرح والخطوات التدريجية للحل.</p>
-            <a href="#" class="close-modal-link">إغلاق</a>
-        </div>
-    </div>
+    </main>
 
 </body>
 </html>
