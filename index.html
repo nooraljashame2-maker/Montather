@@ -8,6 +8,8 @@
     <!-- استيراد الخطوط والأيقونات -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- مكتبة قراءة ملفات PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 </head>
 <body>
 
@@ -22,7 +24,7 @@
         </div>
         <div class="score-board">
             <span id="stars-count"><i class="fa-solid fa-star text-gold"></i> <span class="num">12</span> نجوم</span>
-            <button class="btn-add-lesson" onclick="openAddLessonModal()"><i class="fa-solid fa-plus-circle"></i> إضافة درس</button>
+            <button class="btn-add-lesson" onclick="openAddLessonModal()"><i class="fa-solid fa-plus-circle"></i> إضافة درس يدوياً</button>
         </div>
     </header>
 
@@ -32,21 +34,20 @@
         <section class="subjects-section">
             <h2><i class="fa-solid fa-book-open"></i> مواد الصف الثالث الابتدائي</h2>
             <div class="subjects-grid" id="subjects-grid">
-                <!-- المواد الأساسية -->
                 <div class="subject-card arabic" onclick="openSubject('القراءة العربية', 'arabic')">
                     <div class="icon-box"><i class="fa-solid fa-book-bookmark"></i></div>
                     <h3>القراءة العربية</h3>
-                    <p>قواعد، محفوظات، ونصوص تفاعلية</p>
+                    <p>رفع وتصفح كتاب القراءة ونطق الكلمات</p>
                 </div>
                 <div class="subject-card math" onclick="openSubject('الرياضيات', 'math')">
                     <div class="icon-box"><i class="fa-solid fa-calculator"></i></div>
                     <h3>الرياضيات</h3>
-                    <p>جدول الضرب، الأرقام والتمارين</p>
+                    <p>تمارين وجدول الضرب والملفات</p>
                 </div>
                 <div class="subject-card science" onclick="openSubject('العلوم', 'science')">
                     <div class="icon-box"><i class="fa-solid fa-flask"></i></div>
                     <h3>العلوم</h3>
-                    <p>الكائنات الحية، النباتات والبيئة</p>
+                    <p>الملخصات والدروس المصورة</p>
                 </div>
                 <div class="subject-card english" onclick="openSubject('اللغة الإنجليزية', 'english')">
                     <div class="icon-box"><i class="fa-solid fa-language"></i></div>
@@ -56,26 +57,34 @@
                 <div class="subject-card islamic" onclick="openSubject('التربية الإسلامية', 'islamic')">
                     <div class="icon-box"><i class="fa-solid fa-mosque"></i></div>
                     <h3>التربية الإسلامية</h3>
-                    <p>القرآن الكريم والحديث الشريف</p>
+                    <p>القرآن الكريم والسور المقررة</p>
                 </div>
             </div>
         </section>
 
-        <!-- منطقة عرض الدروس التفاعلية مع خاصية النطق -->
+        <!-- منطقة عرض الدروس والمواد المرفوعة -->
         <section class="lesson-viewer-section" id="lesson-viewer" style="display: none;">
             <div class="viewer-header">
                 <button class="btn-back" onclick="closeSubject()"><i class="fa-solid fa-arrow-right"></i> عودة للمواد</button>
                 <h2 id="current-subject-title">عنوان المادة</h2>
-                <button class="btn-speak-all" onclick="speakFullLesson()"><i class="fa-solid fa-volume-high"></i> قراءة الدرس كاملاً</button>
+                <div class="header-actions">
+                    <!-- خيار رفع ملف PDF أو نصي للمادة -->
+                    <label class="btn-upload-file">
+                        <i class="fa-solid fa-file-arrow-up"></i> تنزيل/رفع ملف المادة (PDF)
+                        <input type="file" id="file-uploader" accept=".pdf, .txt" onchange="handleFileUpload(event)" style="display: none;">
+                    </label>
+                    <button class="btn-speak-all" onclick="speakFullLesson()"><i class="fa-solid fa-volume-high"></i> قراءة الدرس كاملاً</button>
+                </div>
             </div>
-            
+
+            <!-- قائمة الدروس والملفات المرفوعة -->
             <div class="lessons-list-container" id="lessons-list-container">
-                <!-- سيتم تعبئة الدروس هنا ديناميكياً -->
+                <!-- سيتم عرض الدروس أو الصفحات هنا -->
             </div>
         </section>
     </main>
 
-    <!-- نافذة منبثقة لإضافة درس جديد -->
+    <!-- نافذة إضافة درس يدوياً -->
     <div class="modal" id="add-lesson-modal" style="display: none;">
         <div class="modal-content">
             <span class="close-btn" onclick="closeAddLessonModal()">&times;</span>
@@ -93,34 +102,35 @@
                 </div>
                 <div class="form-group">
                     <label>عنوان الدرس:</label>
-                    <input type="text" id="lesson-title-input" placeholder="مثال: محادثة والحواس الخمس" required>
+                    <input type="text" id="lesson-title-input" placeholder="مثال: الدرس الأول - الحواس الخمس" required>
                 </div>
                 <div class="form-group">
-                    <label>نص الدرس (انقر على أي كلمة لاحقاً لتسمع نطقها):</label>
-                    <textarea id="lesson-content-input" rows="5" placeholder="اكتب نص الدرس هنا بالتفصيل..." required></textarea>
+                    <label>نص الدرس:</label>
+                    <textarea id="lesson-content-input" rows="5" placeholder="اكتب نص الدرس هنا..." required></textarea>
                 </div>
-                <button type="submit" class="btn-save">حفظ الدرس في النظام <i class="fa-solid fa-check"></i></button>
+                <button type="submit" class="btn-save">حفظ الدرس <i class="fa-solid fa-check"></i></button>
             </form>
         </div>
     </div>
 
     <script>
-        // قاعدة بيانات افتراضية ومخزنة محلياً للدروس
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
         let lessonsData = JSON.parse(localStorage.getItem('siraj_lessons')) || {
             arabic: [
-                { title: "الدرس الأول: أداة الاستحمام والنظافة", content: "النظافة من الإيمان يا سراج. يحافظ التلميذ النظيف على كتبه وملابسه وكتب مدرسته يومياً." }
+                { title: "الدرس الأول: النظافة", content: "النظافة من الإيمان يا سراج. يحافظ التلميذ النظيف على كتبه وملابسه وكتب مدرسته يومياً." }
             ],
             math: [
                 { title: "جدول الضرب (2)", content: "اثنان في واحد يساوي اثنان. اثنان في اثنان يساوي أربعة. اثنان في ثلاثة يساوي ستة." }
             ],
             science: [
-                { title: "أجزاء النبات", content: "يتكون النبات من الجذر والسايق والورقة. الجذر يمتص الماء من الأرض ليتغذى النبات." }
+                { title: "أجزاء النبات", content: "يتكون النبات من الجذر والساق والورقة." }
             ],
             english: [
-                { title: "Alphabet & Numbers", content: "Hello Siraj. Apple, Boy, Cat, Dog. One, Two, Three, Four, Five." }
+                { title: "Lesson 1: Greetings", content: "Hello Siraj, Welcome to Grade 3." }
             ],
             islamic: [
-                { title: "سورة الفاتحة", content: "بسم الله الرحمن الرحيم. الحمد لله رب العالمين. الرحمن الرحيم. مالك يوم الدين." }
+                { title: "سورة الفاتحة", content: "بسم الله الرحمن الرحيم. الحمد لله رب العالمين." }
             ]
         };
 
@@ -145,7 +155,7 @@
             const list = lessonsData[key] || [];
 
             if(list.length === 0) {
-                container.innerHTML = '<p class="no-lessons">لا توجد دروس مضافة لهذه المادة بعد. اضغط على (إضافة درس) لإضافة محتوى جديد.</p>';
+                container.innerHTML = '<p class="no-lessons">لا توجد دروس مضافة أو ملفات مرفوعة لهذه المادة بعد. يمكنكِ استخدام زر (تنزيل/رفع ملف المادة PDF) لرفع الكتاب واختيار الدرس.</p>';
                 return;
             }
 
@@ -153,86 +163,92 @@
                 let lessonCard = document.createElement('div');
                 lessonCard.className = 'lesson-card';
                 
-                // تقسيم النص إلى كلمات قابلة للنقر والنطق الفردي
-                let wordsHtml = lesson.content.split(' ').map(word => 
+                let wordsHtml = lesson.content.split(/\s+/).map(word => 
                     `<span class="speakable-word" onclick="speakWord(this, '${key === 'english' ? 'en-US' : 'ar-SA'}')">${word}</span>`
                 ).join(' ');
 
                 lessonCard.innerHTML = `
-                    <h3><i class="fa-solid fa-bookmark"></i> ${lesson.title}</h3>
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-book-open-reader"></i> ${lesson.title}</h3>
+                        <button class="btn-delete" onclick="deleteLesson('${key}', ${index})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
                     <div class="lesson-text-box">${wordsHtml}</div>
                 `;
                 container.appendChild(lessonCard);
             });
         }
 
-        // خاصية نطق كلمة مفردة عند النقر عليها
+        // التعامل مع رفع ملف PDF أو TXT
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.type === "application/pdf") {
+                const fileReader = new FileReader();
+                fileReader.onload = async function() {
+                    const typedarray = new Uint8Array(this.result);
+                    const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                    let fullText = '';
+                    
+                    // استخراج النص من أول 5 صفحات كمثال أو الصفحة المختارة
+                    for (let i = 1; i <= Math.min(pdf.numPages, 10); i++) {
+                        const page = await pdf.getPage(i);
+                        const textContent = await page.getTextContent();
+                        const pageText = textContent.items.map(item => item.str).join(' ');
+                        
+                        if (pageText.trim().length > 0) {
+                            if(!lessonsData[currentActiveKey]) lessonsData[currentActiveKey] = [];
+                            lessonsData[currentActiveKey].push({
+                                title: `ملف ${file.name} - الجزء/الصفحة (${i})`,
+                                content: pageText
+                            });
+                        }
+                    }
+                    localStorage.setItem('siraj_lessons', JSON.stringify(lessonsData));
+                    alert('تم قراءة الملف وتجزئته إلى دروس بنجاح! 📚');
+                    renderLessons(currentActiveKey);
+                };
+                fileReader.readAsArrayBuffer(file);
+            } else if (file.type === "text/plain") {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const text = e.target.result;
+                    if(!lessonsData[currentActiveKey]) lessonsData[currentActiveKey] = [];
+                    lessonsData[currentActiveKey].push({
+                        title: file.name.replace('.txt', ''),
+                        content: text
+                    });
+                    localStorage.setItem('siraj_lessons', JSON.stringify(lessonsData));
+                    alert('تم إضافة محتوى الملف بنجاح!');
+                    renderLessons(currentActiveKey);
+                };
+                reader.readAsText(file);
+            }
+        }
+
         function speakWord(element, lang) {
             const wordText = element.innerText;
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // إيقاف أي نطق سابق
+                window.speechSynthesis.cancel();
                 let utterance = new SpeechSynthesisUtterance(wordText);
                 utterance.lang = lang;
-                utterance.rate = 0.9; // سرعة مناسبة للأطفال
+                utterance.rate = 0.85;
                 
-                // تمييز الكلمة بصرياً أثناء النطق
                 element.classList.add('highlight-word');
                 utterance.onend = () => {
                     element.classList.remove('highlight-word');
                 };
                 
                 window.speechSynthesis.speak(utterance);
-            } else {
-                alert('متصفحك لا يدعم خاصية النطق الصوتي.');
             }
         }
 
-        // قراءة الدرس كاملاً
         function speakFullLesson() {
             const container = document.getElementById('lesson-viewer');
             let textElements = container.querySelectorAll('.speakable-word');
             let fullText = Array.from(textElements).map(el => el.innerText).join(' ');
 
-            if ('speechSynthesis' in window) {
+            if ('speechSynthesis' in window && fullText) {
                 window.speechSynthesis.cancel();
                 let utterance = new SpeechSynthesisUtterance(fullText);
-                utterance.lang = currentActiveKey === 'english' ? 'en-US' : 'ar-SA';
-                utterance.rate = 0.85;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
-        // إدارة النوافذ المنبثقة لإضافة الدروس
-        function openAddLessonModal() {
-            document.getElementById('add-lesson-modal').style.display = 'flex';
-        }
-
-        function closeAddLessonModal() {
-            document.getElementById('add-lesson-modal').style.display = 'none';
-        }
-
-        function saveNewLesson(event) {
-            event.preventDefault();
-            const subjectKey = document.getElementById('lesson-subject-select').value;
-            const title = document.getElementById('lesson-title-input').value;
-            const content = document.getElementById('lesson-content-input').value;
-
-            if(!lessonsData[subjectKey]) {
-                lessonsData[subjectKey] = [];
-            }
-
-            lessonsData[subjectKey].push({ title, content });
-            localStorage.setItem('siraj_lessons', JSON.stringify(lessonsData));
-
-            alert('تم حفظ الدرس بنجاح يا أم سراج! 🌟');
-            closeAddLessonModal();
-            document.getElementById('add-lesson-form').reset();
-
-            // إذا كانت المادة مفتوحة حالياً، قم بتحديث العرض
-            if(document.getElementById('lesson-viewer').style.display === 'block' && currentActiveKey === subjectKey) {
-                renderLessons(subjectKey);
-            }
-        }
-    </script>
-</body>
-</html>
+                utterance.
