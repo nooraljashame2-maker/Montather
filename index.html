@@ -3,728 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جداول الحصص المدرسية - دراسة</title>
-    <!-- مكتبة التقاط الصور -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            direction: rtl !important;
-        }
-        body {
-            font-family: 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-            margin: 0;
-            padding: 10px;
-            text-align: right;
-        }
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 0 5px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .school-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #102a43;
-        }
-        .designer-name {
-            font-size: 15px;
-            font-style: italic;
-            font-weight: bold;
-            color: #d32f2f;
-            font-family: 'Times New Roman', Times, serif, Tahoma;
-        }
-        /* لوحة التحكم */
-        .control-panel {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: flex-start;
-            justify-content: space-between;
-        }
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            flex: 1;
-            min-width: 180px;
-        }
-        .control-group label {
-            font-size: 12px;
-            font-weight: bold;
-            color: #334e68;
-        }
-        .control-group input[type="text"], .control-group input[type="number"] {
-            padding: 6px;
-            border: 1px solid #d9e2ec;
-            border-radius: 6px;
-            font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 12px;
-            background-color: #f8fafc;
-        }
-        /* قوائم الاختيار المتعدد المنسدلة */
-        .dropdown-check-box {
-            position: relative;
-            border: 1px solid #d9e2ec;
-            border-radius: 6px;
-            background-color: #f8fafc;
-            font-size: 12px;
-        }
-        .dropdown-selected {
-            padding: 6px 10px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-            color: #334e68;
-        }
-        .dropdown-list {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            left: 0;
-            background: #ffffff;
-            border: 1px solid #d9e2ec;
-            border-radius: 6px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            max-height: 180px;
-            overflow-y: auto;
-            z-index: 100;
-            padding: 5px 10px;
-        }
-        .dropdown-list label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 0;
-            cursor: pointer;
-            font-weight: normal;
-            font-size: 12px;
-            color: #243b53;
-        }
-        .dropdown-list label:hover {
-            background-color: #f0f4f8;
-        }
-        .actions-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            padding: 0 5px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .btn {
-            background-color: #334e68;
-            color: white;
-            border: none;
-            padding: 7px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-        }
-        .btn-primary {
-            background-color: #2b6cb0;
-        }
-        .btn-warning {
-            background-color: #dd6b20;
-        }
-        .btn-whatsapp {
-            background-color: #25d366;
-        }
-        .btn-danger {
-            background-color: #e53e3e;
-        }
-        .btn:hover {
-            opacity: 0.9;
-        }
-        h2 {
-            text-align: center;
-            color: #102a43;
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-        #conflict-alert {
-            display: none;
-            background-color: #ffe3e3;
-            color: #c92a2a;
-            border: 1px solid #ff8787;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 12px;
-            font-weight: bold;
-            font-size: 12px;
-            text-align: center;
-        }
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(16, 42, 67, 0.08);
-            padding: 5px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-            min-width: 1050px;
-        }
-        th, td {
-            border: 1px solid #d9e2ec;
-            padding: 5px 4px;
-            font-size: 12px;
-        }
-        th {
-            background-color: #334e68;
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 12px;
-        }
-        tr:nth-child(even) {
-            background-color: #f4f8fb;
-        }
-        tr:nth-child(odd) {
-            background-color: #ffffff;
-        }
-        td:nth-child(1), td:nth-child(2), th:nth-child(1), th:nth-child(2) {
-            background-color: #e3ecf5;
-            font-weight: bold;
-            color: #102a43;
-            position: sticky;
-            right: 0;
-            z-index: 2;
-        }
-        th:nth-child(1), th:nth-child(2) {
-            z-index: 3;
-            background-color: #243b53;
-        }
-        
-        .cell-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        .cell-input {
-            width: 100%;
-            padding: 4px 6px;
-            border: 1px solid transparent;
-            border-radius: 4px;
-            font-family: 'Cairo', Tahoma, sans-serif;
-            font-size: 12px;
-            background: transparent;
-            text-align: center;
-            outline: none;
-            min-width: 85px;
-        }
-        .cell-input:focus {
-            background: #fff;
-            border-color: #3182ce;
-        }
-
-        .conflict-cell {
-            background-color: #ffc9c9 !important;
-            color: #9b2c2c !important;
-            border: 2px solid #e03131 !important;
-            font-weight: bold;
-        }
-
-        @media print {
-            .control-panel, .actions-bar, #conflict-alert {
-                display: none;
-            }
-            body {
-                background-color: #ffffff;
-            }
-            .table-container {
-                box-shadow: none;
-                padding: 0;
-            }
-            .cell-input {
-                border: none !important;
-                background: transparent !important;
-            }
-            .conflict-cell {
-                background-color: #ffffff !important;
-                color: #000000 !important;
-                border: 1px solid #d9e2ec !important;
-            }
-        }
-    </style>
+    <title>تطبيق سراج التعليمي - الصف الثالث الابتدائي</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- استيراد الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div id="printable-area">
-        <div class="header-container">
-            <div class="school-name">مدرسة الضياء الابتدائية للبنات 2026-2027</div>
-            <div class="designer-name">Noor Rahman</div>
-        </div>
-
-        <h2>جدول الحصص المدرسية - المرحلة الابتدائية</h2>
-
-        <!-- لوحة التحكم -->
-        <div class="control-panel">
-            <div class="control-group">
-                <label>اسم المعلم:</label>
-                <input type="text" id="teacherNameInput" placeholder="أدخل اسم المعلم" oninput="saveToLocalStorage()" onchange="saveToLocalStorage()">
-            </div>
-
-            <!-- اختيار المراحل والشعب المتعددة -->
-            <div class="control-group">
-                <label>المراحل والشعب المستهدفة:</label>
-                <div class="dropdown-check-box">
-                    <div class="dropdown-selected" onclick="toggleDropdown('stagesDropdownList')">
-                        <span id="stagesSelectedText">اختر الشعب...</span> 🔽
-                    </div>
-                    <div id="stagesDropdownList" class="dropdown-list">
-                        <!-- يتم حقن المراحل برمجياً هنا -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- اختيار المواد المتعددة -->
-            <div class="control-group">
-                <label>المواد الدراسية:</label>
-                <div class="dropdown-check-box">
-                    <div class="dropdown-selected" onclick="toggleDropdown('subjectsDropdownList')">
-                        <span id="subjectsSelectedText">اختر المواد...</span> 🔽
-                    </div>
-                    <div id="subjectsDropdownList" class="dropdown-list">
-                        <label><input type="checkbox" id="selectAllSubjects" onclick="toggleSelectAll(this, 'subject-chk')"> <b>تحديد الكل</b></label>
-                        <hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">
-                        <label><input type="checkbox" class="subject-chk" value="اللغة العربية"> اللغة العربية</label>
-                        <label><input type="checkbox" class="subject-chk" value="الرياضيات"> الرياضيات</label>
-                        <label><input type="checkbox" class="subject-chk" value="اللغة الإنجليزية"> اللغة الإنجليزية</label>
-                        <label><input type="checkbox" class="subject-chk" value="العلوم"> العلوم</label>
-                        <label><input type="checkbox" class="subject-chk" value="التربية الإسلامية"> التربية الإسلامية</label>
-                        <label><input type="checkbox" class="subject-chk" value="الاجتماعيات"> الاجتماعيات</label>
-                        <label><input type="checkbox" class="subject-chk" value="الرياضة"> الرياضة</label>
-                        <label><input type="checkbox" class="subject-chk" value="الفنية"> الفنية</label>
-                        <label><input type="checkbox" class="subject-chk" value="الأخلاقية"> الأخلاقية</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="control-group" style="max-width: 110px;">
-                <label>عدد الحصص:</label>
-                <input type="number" id="lessonsCountInput" min="1" max="10" value="3" oninput="saveToLocalStorage()" onchange="saveToLocalStorage()">
-            </div>
-
-            <div style="display: flex; align-items: flex-end; gap: 8px; margin-top: 18px;">
-                <button class="btn btn-primary" onclick="autoAssignTeacher()">⚡ توزيع وحفظ</button>
-                <button class="btn btn-warning" onclick="smartRandomizeSchedule()">🔀 إعادة توزيع ذكي وعشوائي</button>
-            </div>
-        </div>
-
-        <div class="actions-bar">
+    <!-- رأس التطبيق -->
+    <header class="app-header">
+        <div class="user-welcome">
+            <div class="avatar"><i class="fa-solid fa-graduation-cap"></i></div>
             <div>
-                <button class="btn" onclick="window.print()">🖨️ طباعة</button>
-                <button class="btn btn-whatsapp" onclick="shareAsImage()">💬 إرسال صورة للواتساب</button>
+                <h1>أهلاً بك يا بطلنا سراج! 🌟</h1>
+                <p>الصف الثالث الابتدائي - رحلة التعلم المتفوقة</p>
             </div>
-            <button class="btn btn-danger" onclick="clearTable()">🗑️ مسح الجدول</button>
         </div>
+        <div class="score-board">
+            <span id="stars-count"><i class="fa-solid fa-star text-gold"></i> <span class="num">12</span> نجوم</span>
+            <button class="btn-add-lesson" onclick="openAddLessonModal()"><i class="fa-solid fa-plus-circle"></i> إضافة درس</button>
+        </div>
+    </header>
 
-        <div id="conflict-alert">⚠ تنبيه تضارب: يوجد معلّمون تم إدراجهم في نفس الحصة لأكثر من صف أو شعبة في نفس الوقت! يرجى المراجعة.</div>
-        
-        <div class="table-container">
-            <table id="schedule-table">
-                <thead>
-                    <tr>
-                        <th>المرحلة</th>
-                        <th>الشعبة</th>
-                        <th>الحصة الأولى</th>
-                        <th>معلم الأولى</th>
-                        <th>الحصة الثانية</th>
-                        <th>معلم الثانية</th>
-                        <th>الحصة الثالثة</th>
-                        <th>معلم الثالثة</th>
-                        <th>الحصة الرابعة</th>
-                        <th>معلم الرابعة</th>
-                        <th>الحصة الخامسة</th>
-                        <th>معلم الخامسة</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- يتم توليد محتوى الجدول برمجياً -->
-                </tbody>
-            </table>
+    <!-- المحتوى الرئيسي -->
+    <main class="container">
+        <!-- قسم المواد الدراسية -->
+        <section class="subjects-section">
+            <h2><i class="fa-solid fa-book-open"></i> مواد الصف الثالث الابتدائي</h2>
+            <div class="subjects-grid" id="subjects-grid">
+                <!-- المواد الأساسية -->
+                <div class="subject-card arabic" onclick="openSubject('القراءة العربية', 'arabic')">
+                    <div class="icon-box"><i class="fa-solid fa-book-bookmark"></i></div>
+                    <h3>القراءة العربية</h3>
+                    <p>قواعد، محفوظات، ونصوص تفاعلية</p>
+                </div>
+                <div class="subject-card math" onclick="openSubject('الرياضيات', 'math')">
+                    <div class="icon-box"><i class="fa-solid fa-calculator"></i></div>
+                    <h3>الرياضيات</h3>
+                    <p>جدول الضرب، الأرقام والتمارين</p>
+                </div>
+                <div class="subject-card science" onclick="openSubject('العلوم', 'science')">
+                    <div class="icon-box"><i class="fa-solid fa-flask"></i></div>
+                    <h3>العلوم</h3>
+                    <p>الكائنات الحية، النباتات والبيئة</p>
+                </div>
+                <div class="subject-card english" onclick="openSubject('اللغة الإنجليزية', 'english')">
+                    <div class="icon-box"><i class="fa-solid fa-language"></i></div>
+                    <h3>English</h3>
+                    <p>الحروف، الكلمات والمحادثة</p>
+                </div>
+                <div class="subject-card islamic" onclick="openSubject('التربية الإسلامية', 'islamic')">
+                    <div class="icon-box"><i class="fa-solid fa-mosque"></i></div>
+                    <h3>التربية الإسلامية</h3>
+                    <p>القرآن الكريم والحديث الشريف</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- منطقة عرض الدروس التفاعلية مع خاصية النطق -->
+        <section class="lesson-viewer-section" id="lesson-viewer" style="display: none;">
+            <div class="viewer-header">
+                <button class="btn-back" onclick="closeSubject()"><i class="fa-solid fa-arrow-right"></i> عودة للمواد</button>
+                <h2 id="current-subject-title">عنوان المادة</h2>
+                <button class="btn-speak-all" onclick="speakFullLesson()"><i class="fa-solid fa-volume-high"></i> قراءة الدرس كاملاً</button>
+            </div>
+            
+            <div class="lessons-list-container" id="lessons-list-container">
+                <!-- سيتم تعبئة الدروس هنا ديناميكياً -->
+            </div>
+        </section>
+    </main>
+
+    <!-- نافذة منبثقة لإضافة درس جديد -->
+    <div class="modal" id="add-lesson-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAddLessonModal()">&times;</span>
+            <h2><i class="fa-solid fa-pen-to-square"></i> إضافة درس جديد لسراج</h2>
+            <form id="add-lesson-form" onsubmit="saveNewLesson(event)">
+                <div class="form-group">
+                    <label>اختر المادة:</label>
+                    <select id="lesson-subject-select" required>
+                        <option value="arabic">القراءة العربية</option>
+                        <option value="math">الرياضيات</option>
+                        <option value="science">العلوم</option>
+                        <option value="english">اللغة الإنجليزية</option>
+                        <option value="islamic">التربية الإسلامية</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>عنوان الدرس:</label>
+                    <input type="text" id="lesson-title-input" placeholder="مثال: محادثة والحواس الخمس" required>
+                </div>
+                <div class="form-group">
+                    <label>نص الدرس (انقر على أي كلمة لاحقاً لتسمع نطقها):</label>
+                    <textarea id="lesson-content-input" rows="5" placeholder="اكتب نص الدرس هنا بالتفصيل..." required></textarea>
+                </div>
+                <button type="submit" class="btn-save">حفظ الدرس في النظام <i class="fa-solid fa-check"></i></button>
+            </form>
         </div>
     </div>
 
     <script>
-        const stagesData = [
-            { name: "الأول الابتدائي", sections: ['أ', 'ب', 'ج'] },
-            { name: "الثاني الابتدائي", sections: ['أ', 'ب', 'ج'] },
-            { name: "الثالث الابتدائي", sections: ['أ', 'ب', 'ج'] },
-            { name: "الرابع الابتدائي", sections: ['أ', 'ب', 'ج'] },
-            { name: "الخامس الابتدائي", sections: ['أ', 'ب', 'ج'] },
-            { name: "السادس الابتدائي", sections: ['أ', 'ب', 'ج'] }
-        ];
+        // قاعدة بيانات افتراضية ومخزنة محلياً للدروس
+        let lessonsData = JSON.parse(localStorage.getItem('siraj_lessons')) || {
+            arabic: [
+                { title: "الدرس الأول: أداة الاستحمام والنظافة", content: "النظافة من الإيمان يا سراج. يحافظ التلميذ النظيف على كتبه وملابسه وكتب مدرسته يومياً." }
+            ],
+            math: [
+                { title: "جدول الضرب (2)", content: "اثنان في واحد يساوي اثنان. اثنان في اثنان يساوي أربعة. اثنان في ثلاثة يساوي ستة." }
+            ],
+            science: [
+                { title: "أجزاء النبات", content: "يتكون النبات من الجذر والسايق والورقة. الجذر يمتص الماء من الأرض ليتغذى النبات." }
+            ],
+            english: [
+                { title: "Alphabet & Numbers", content: "Hello Siraj. Apple, Boy, Cat, Dog. One, Two, Three, Four, Five." }
+            ],
+            islamic: [
+                { title: "سورة الفاتحة", content: "بسم الله الرحمن الرحيم. الحمد لله رب العالمين. الرحمن الرحيم. مالك يوم الدين." }
+            ]
+        };
 
-        // تنفيذ بناء الجدول واسترجاع البيانات فور تحميل الصفحة مباشرة
-        (function() {
-            buildTableAndDropdowns();
-            loadSavedData();
-        })();
+        let currentActiveKey = '';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadSavedData();
-            checkConflicts();
-
-            window.addEventListener('click', (e) => {
-                if (!e.target.closest('.dropdown-check-box')) {
-                    document.querySelectorAll('.dropdown-list').forEach(el => el.style.display = 'none');
-                }
-            });
-        });
-
-        function buildTableAndDropdowns() {
-            const tbody = document.querySelector('#schedule-table tbody');
-            const stagesListContainer = document.getElementById('stagesDropdownList');
-            
-            let stagesHTML = `<label><input type="checkbox" id="selectAllStages" onclick="toggleSelectAll(this, 'stage-chk')"> <b>تحديد الكل</b></label><hr style="margin: 4px 0; border: 0; border-top: 1px solid #d9e2ec;">`;
-            let tableHTML = '';
-
-            stagesData.forEach(stage => {
-                stage.sections.forEach((sec, idx) => {
-                    const key = `${stage.name}-${sec}`;
-                    stagesHTML += `<label><input type="checkbox" class="stage-chk" value="${key}" onchange="updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...'); saveToLocalStorage();"> ${stage.name} - شعبة ${sec}</label>`;
-
-                    tableHTML += `<tr data-stage-name="${stage.name}" data-section="${sec}" data-key="${key}">`;
-                    if(idx === 0) {
-                        tableHTML += `<td rowspan="${stage.sections.length}">${stage.name}</td>`;
-                    }
-                    tableHTML += `<td>${sec}</td>`;
-
-                    for(let i=0; i<5; i++) {
-                        tableHTML += `<td>
-                            <div class="cell-wrapper">
-                                <input type="text" class="cell-input sub-input" placeholder="مادة" oninput="saveDataAndCheck()" onchange="saveDataAndCheck()">
-                            </div>
-                        </td>`;
-                        tableHTML += `<td>
-                            <div class="cell-wrapper">
-                                <input type="text" class="cell-input teacher-input" placeholder="معلم" oninput="saveDataAndCheck()" onchange="saveDataAndCheck()">
-                            </div>
-                        </td>`;
-                    }
-                    tableHTML += `</tr>`;
-                });
-            });
-
-            tbody.innerHTML = tableHTML;
-            stagesListContainer.innerHTML = stagesHTML;
-
-            document.querySelectorAll('.subject-chk').forEach(chk => {
-                chk.addEventListener('change', () => {
-                    updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...');
-                    saveToLocalStorage();
-                });
-            });
+        function openSubject(subjectName, key) {
+            currentActiveKey = key;
+            document.getElementById('current-subject-title').innerText = subjectName;
+            document.querySelector('.subjects-section').style.display = 'none';
+            document.getElementById('lesson-viewer').style.display = 'block';
+            renderLessons(key);
         }
 
-        function toggleDropdown(listId) {
-            const list = document.getElementById(listId);
-            const isVisible = list.style.display === 'block';
-            document.querySelectorAll('.dropdown-list').forEach(el => el.style.display = 'none');
-            list.style.display = isVisible ? 'none' : 'block';
+        function closeSubject() {
+            document.getElementById('lesson-viewer').style.display = 'none';
+            document.querySelector('.subjects-section').style.display = 'block';
         }
 
-        function toggleSelectAll(masterChk, className) {
-            const checkboxes = document.querySelectorAll('.' + className);
-            checkboxes.forEach(chk => chk.checked = masterChk.checked);
-            if(className === 'stage-chk') {
-                updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...');
-            } else {
-                updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...');
-            }
-            saveToLocalStorage();
-        }
+        function renderLessons(key) {
+            const container = document.getElementById('lessons-list-container');
+            container.innerHTML = '';
+            const list = lessonsData[key] || [];
 
-        function updateSelectedText(chkClass, textSpanId, defaultText) {
-            const checked = document.querySelectorAll('.' + chkClass + ':checked');
-            const textSpan = document.getElementById(textSpanId);
-            if (checked.length === 0) {
-                textSpan.textContent = defaultText;
-            } else if (checked.length === document.querySelectorAll('.' + chkClass).length) {
-                textSpan.textContent = "الكل (محدد)";
-            } else {
-                textSpan.textContent = `تم اختيار (${checked.length})`;
-            }
-        }
-
-        function saveDataAndCheck() {
-            saveToLocalStorage();
-            checkConflicts();
-        }
-
-        function saveToLocalStorage() {
-            const inputs = document.querySelectorAll('.cell-input');
-            const cellsData = Array.from(inputs).map(input => input.value);
-            
-            const teacherName = document.getElementById('teacherNameInput').value;
-            const lessonsCount = document.getElementById('lessonsCountInput').value;
-            
-            const stages = Array.from(document.querySelectorAll('.stage-chk')).map(chk => chk.checked);
-            const subjects = Array.from(document.querySelectorAll('.subject-chk')).map(chk => chk.checked);
-
-            const appState = {
-                cellsData,
-                teacherName,
-                lessonsCount,
-                stages,
-                subjects
-            };
-
-            localStorage.setItem('schedule_full_state_noor_v2', JSON.stringify(appState));
-        }
-
-        function loadSavedData() {
-            const saved = localStorage.getItem('schedule_full_state_noor_v2');
-            if (saved) {
-                try {
-                    const appState = JSON.parse(saved);
-                    
-                    if (appState.cellsData) {
-                        const inputs = document.querySelectorAll('.cell-input');
-                        inputs.forEach((input, index) => {
-                            if (appState.cellsData[index] !== undefined) {
-                                input.value = appState.cellsData[index];
-                            }
-                        });
-                    }
-
-                    if (appState.teacherName !== undefined) {
-                        document.getElementById('teacherNameInput').value = appState.teacherName;
-                    }
-                    if (appState.lessonsCount !== undefined) {
-                        document.getElementById('lessonsCountInput').value = appState.lessonsCount;
-                    }
-
-                    if (appState.stages) {
-                        const stageChks = document.querySelectorAll('.stage-chk');
-                        stageChks.forEach((chk, idx) => {
-                            if (appState.stages[idx] !== undefined) chk.checked = appState.stages[idx];
-                        });
-                        updateSelectedText('stage-chk', 'stagesSelectedText', 'اختر الشعب...');
-                    }
-
-                    if (appState.subjects) {
-                        const subjectChks = document.querySelectorAll('.subject-chk');
-                        subjectChks.forEach((chk, idx) => {
-                            if (appState.subjects[idx] !== undefined) chk.checked = appState.subjects[idx];
-                        });
-                        updateSelectedText('subject-chk', 'subjectsSelectedText', 'اختر المواد...');
-                    }
-                } catch(e) {
-                    console.error(e);
-                }
-            }
-        }
-
-        function autoAssignTeacher() {
-            const teacherName = document.getElementById('teacherNameInput').value.trim();
-            const lessonsCount = parseInt(document.getElementById('lessonsCountInput').value) || 1;
-
-            const selectedStages = Array.from(document.querySelectorAll('.stage-chk:checked')).map(el => el.value);
-            const selectedSubjects = Array.from(document.querySelectorAll('.subject-chk:checked')).map(el => el.value);
-
-            if (!teacherName) {
-                alert("يرجى كتابة اسم المعلم أولاً!");
-                return;
-            }
-            if (selectedStages.length === 0) {
-                alert("يرجى اختيار مرحلة وشعبة واحدة على الأقل!");
-                return;
-            }
-            if (selectedSubjects.length === 0) {
-                alert("يرجى اختيار مادة دراسية واحدة على الأقل!");
+            if(list.length === 0) {
+                container.innerHTML = '<p class="no-lessons">لا توجد دروس مضافة لهذه المادة بعد. اضغط على (إضافة درس) لإضافة محتوى جديد.</p>';
                 return;
             }
 
-            const rows = document.querySelectorAll('#schedule-table tbody tr');
-            let assignedTotal = 0;
-            let targetRows = Array.from(rows).filter(row => selectedStages.includes(row.getAttribute('data-key')));
-
-            selectedSubjects.forEach(subjectName => {
-                for (let i = 0; i < lessonsCount; i++) {
-                    let placed = false;
-
-                    for (let row of targetRows) {
-                        if (placed) break;
-
-                        for (let c = 2; c < row.cells.length; c += 2) {
-                            const subInput = row.cells[c].querySelector('.cell-input');
-                            const teacherInput = row.cells[c+1].querySelector('.cell-input');
-
-                            if (teacherInput.value.trim() === "") {
-                                let isBusy = false;
-                                rows.forEach(r => {
-                                    const tIn = r.cells[c+1].querySelector('.cell-input');
-                                    if (tIn && tIn.value.trim() === teacherName) {
-                                        isBusy = true;
-                                    }
-                                });
-
-                                if (!isBusy) {
-                                    subInput.value = subjectName;
-                                    teacherInput.value = teacherName;
-                                    assignedTotal++;
-                                    placed = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            saveDataAndCheck();
-            alert(`تم توزيع وإنجاز (${assignedTotal}) حصة بنجاح للمعلم: ${teacherName}`);
-        }
-
-        function smartRandomizeSchedule() {
-            if (!confirm("هل أنت متأكدة من إعادة توزيع الجدول عشوائياً مع ضبط المواد الأساسية في الحصص الأولى؟")) {
-                return;
-            }
-
-            const primarySubjects = ["اللغة العربية", "الرياضيات", "اللغة الإنجليزية", "التربية الإسلامية"];
-            const otherSubjects = ["العلوم", "الاجتماعيات", "الرياضة", "الفنية", "الأخلاقية"];
-            const allAvailableSubjects = [...primarySubjects, ...otherSubjects];
-
-            const rows = document.querySelectorAll('#schedule-table tbody tr');
-
-            rows.forEach(row => {
-                let shuffledPrimary = [...primarySubjects].sort(() => Math.random() - 0.5);
+            list.forEach((lesson, index) => {
+                let lessonCard = document.createElement('div');
+                lessonCard.className = 'lesson-card';
                 
-                const sub1Input = row.cells[2].querySelector('.cell-input');
-                if(sub1Input) sub1Input.value = shuffledPrimary[0];
+                // تقسيم النص إلى كلمات قابلة للنقر والنطق الفردي
+                let wordsHtml = lesson.content.split(' ').map(word => 
+                    `<span class="speakable-word" onclick="speakWord(this, '${key === 'english' ? 'en-US' : 'ar-SA'}')">${word}</span>`
+                ).join(' ');
 
-                const sub2Input = row.cells[4].querySelector('.cell-input');
-                if(sub2Input) sub2Input.value = shuffledPrimary[1];
-
-                for (let h = 2; h < 5; h++) {
-                    const colIdx = 2 + (h * 2);
-                    const subInput = row.cells[colIdx]?.querySelector('.cell-input');
-                    if (subInput) {
-                        const randomSub = allAvailableSubjects[Math.floor(Math.random() * allAvailableSubjects.length)];
-                        subInput.value = randomSub;
-                    }
-                }
+                lessonCard.innerHTML = `
+                    <h3><i class="fa-solid fa-bookmark"></i> ${lesson.title}</h3>
+                    <div class="lesson-text-box">${wordsHtml}</div>
+                `;
+                container.appendChild(lessonCard);
             });
-
-            saveDataAndCheck();
-            alert("تمت إعادة توزيع المواد الأساسية والعشوائية في الجدول بنجاح!");
         }
 
-        function checkConflicts() {
-            const rows = document.querySelectorAll('#schedule-table tbody tr');
-            
-            rows.forEach(row => {
-                for (let c = 3; c < row.cells.length; c += 2) {
-                    const teacherInput = row.cells[c].querySelector('.cell-input');
-                    if(teacherInput) teacherInput.classList.remove('conflict-cell');
-                }
-            });
-
-            let hasConflict = false;
-            const maxCols = 5;
-
-            for (let i = 0; i < maxCols; i++) {
-                const teacherColIdx = 3 + (i * 2);
-                const teacherMap = {};
-
-                rows.forEach(row => {
-                    const teacherInput = row.cells[teacherColIdx]?.querySelector('.cell-input');
-                    if (!teacherInput) return;
-
-                    const teacherName = teacherInput.value.trim();
-                    if (teacherName === "" || teacherName === "-") return;
-
-                    if (!teacherMap[teacherName]) {
-                        teacherMap[teacherName] = [];
-                    }
-                    teacherMap[teacherName].push(teacherInput);
-                });
-
-                for (let teacher in teacherMap) {
-                    if (teacherMap[teacher].length > 1) {
-                        hasConflict = true;
-                        teacherMap[teacher].forEach(input => {
-                            input.classList.add('conflict-cell');
-                        });
-                    }
-                }
-            }
-
-            const alertBox = document.getElementById('conflict-alert');
-            alertBox.style.display = hasConflict ? 'block' : 'none';
-        }
-
-        function clearTable() {
-            if (confirm("هل أنتِ متأكدة من مسح جميع بيانات الجدول؟")) {
-                document.querySelectorAll('.cell-input').forEach(input => {
-                    input.value = "";
-                });
-                document.getElementById('teacherNameInput').value = "";
-                localStorage.removeItem('schedule_full_state_noor_v2');
-                checkConflicts();
+        // خاصية نطق كلمة مفردة عند النقر عليها
+        function speakWord(element, lang) {
+            const wordText = element.innerText;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // إيقاف أي نطق سابق
+                let utterance = new SpeechSynthesisUtterance(wordText);
+                utterance.lang = lang;
+                utterance.rate = 0.9; // سرعة مناسبة للأطفال
+                
+                // تمييز الكلمة بصرياً أثناء النطق
+                element.classList.add('highlight-word');
+                utterance.onend = () => {
+                    element.classList.remove('highlight-word');
+                };
+                
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('متصفحك لا يدعم خاصية النطق الصوتي.');
             }
         }
 
-        function shareAsImage() {
-            const controlPanel = document.querySelector('.control-panel');
-            const actions_bar = document.querySelector('.actions-bar');
-            const alertBox = document.getElementById('conflict-alert');
-            
-            controlPanel.style.display = 'none';
-            actions_bar.style.display = 'none';
-            alertBox.style.display = 'none';
+        // قراءة الدرس كاملاً
+        function speakFullLesson() {
+            const container = document.getElementById('lesson-viewer');
+            let textElements = container.querySelectorAll('.speakable-word');
+            let fullText = Array.from(textElements).map(el => el.innerText).join(' ');
 
-            html2canvas(document.getElementById('printable-area'), {
-                scale: 2,
-                useCORS: true
-            }).then(canvas => {
-                controlPanel.style.display = 'flex';
-                actions_bar.style.display = 'flex';
-                alertBox.style.display = 'block';
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let utterance = new SpeechSynthesisUtterance(fullText);
+                utterance.lang = currentActiveKey === 'english' ? 'en-US' : 'ar-SA';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
 
-                const imageLink = document.createElement('a');
-                imageLink.download = 'جدول_الحصص_مدرسة_الضياء.png';
-                imageLink.href = canvas.toDataURL('image/png');
-                imageLink.click();
+        // إدارة النوافذ المنبثقة لإضافة الدروس
+        function openAddLessonModal() {
+            document.getElementById('add-lesson-modal').style.display = 'flex';
+        }
 
-                setTimeout(() => {
-                    window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent("إليكم صورة جدول الحصص المدرسية لمدرسة الضياء الابتدائية للبنات."), "_blank");
-                }, 1000);
-            }).catch(err => {
-                controlPanel.style.display = 'flex';
-                actions_bar.style.display = 'flex';
-                alertBox.style.display = 'block';
-                alert("حدث خطأ أثناء التقاط الصورة، يرجى المحاولة مرة أخرى.");
-            });
+        function closeAddLessonModal() {
+            document.getElementById('add-lesson-modal').style.display = 'none';
+        }
+
+        function saveNewLesson(event) {
+            event.preventDefault();
+            const subjectKey = document.getElementById('lesson-subject-select').value;
+            const title = document.getElementById('lesson-title-input').value;
+            const content = document.getElementById('lesson-content-input').value;
+
+            if(!lessonsData[subjectKey]) {
+                lessonsData[subjectKey] = [];
+            }
+
+            lessonsData[subjectKey].push({ title, content });
+            localStorage.setItem('siraj_lessons', JSON.stringify(lessonsData));
+
+            alert('تم حفظ الدرس بنجاح يا أم سراج! 🌟');
+            closeAddLessonModal();
+            document.getElementById('add-lesson-form').reset();
+
+            // إذا كانت المادة مفتوحة حالياً، قم بتحديث العرض
+            if(document.getElementById('lesson-viewer').style.display === 'block' && currentActiveKey === subjectKey) {
+                renderLessons(subjectKey);
+            }
         }
     </script>
-
 </body>
 </html>
