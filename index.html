@@ -8,7 +8,7 @@
     <!-- الخطوط والأيقونات -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- مكتبة PDF -->
+    <!-- مكتبة قراءة ملفات PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 </head>
 <body>
@@ -33,7 +33,7 @@
         <!-- قسم المواد الدراسية -->
         <section class="subjects-section">
             <h2><i class="fa-solid fa-book-open"></i> مواد الصف الثالث الابتدائي</h2>
-            <p class="subtitle-hint" style="margin-bottom: 20px; color: #666;">اختر المادة لرفع الكتاب أو تصفح الدروس مباشرة:</p>
+            <p class="subtitle-hint" style="margin-bottom: 20px; color: #666;">اختر المادة لرفع الكتاب أو تصفح والبحث في الدروس مباشرة:</p>
             
             <div class="subjects-grid" id="subjects-grid">
                 
@@ -41,7 +41,7 @@
                 <div class="subject-card arabic">
                     <div class="icon-box"><i class="fa-solid fa-book-bookmark"></i></div>
                     <h3>القراءة العربية</h3>
-                    <p>كتاب القراءة ونطق الكلمات</p>
+                    <p>كتاب القراءة ونطق الكلمات بالفصحى</p>
                     <div class="card-actions" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
                         <label class="btn-upload-direct" style="background: #e91e63; color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; font-weight: bold; text-align:center;">
                             <i class="fa-solid fa-file-pdf"></i> رفع كتاب (PDF / نص)
@@ -97,7 +97,7 @@
                 <div class="subject-card islamic">
                     <div class="icon-box"><i class="fa-solid fa-mosque"></i></div>
                     <h3>التربية الإسلامية</h3>
-                    <p>القرآن الكريم والسور</p>
+                    <p>القرآن الكريم والسور المقررة</p>
                     <div class="card-actions" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
                         <label class="btn-upload-direct" style="background: #009688; color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; font-weight: bold; text-align:center;">
                             <i class="fa-solid fa-file-pdf"></i> رفع كتاب (PDF / نص)
@@ -118,11 +118,11 @@
                 <button class="btn-speak-all" onclick="speakFullLesson()"><i class="fa-solid fa-volume-high"></i> قراءة الصفحة كاملاً</button>
             </div>
 
-            <!-- مربع البحث السريع في الدروس -->
+            <!-- شريط البحث المباشر في الدروس -->
             <div class="search-box-container" style="margin-bottom: 20px;">
                 <div style="position: relative; display: flex; align-items: center;">
                     <i class="fa-solid fa-magnifying-glass" style="position: absolute; right: 15px; color: #888; font-size: 1.1rem;"></i>
-                    <input type="text" id="lesson-search-input" onkeyup="filterLessons()" placeholder="اكتب اسم الدرس للوصول إليه مباشرة (مثال: محادثة، الجار قبل الدار...)" style="width: 100%; padding: 12px 45px 12px 15px; border-radius: 15px; border: 2px solid #ddd; font-size: 1rem; outline: none; transition: 0.3s;">
+                    <input type="text" id="lesson-search-input" onkeyup="filterLessons()" placeholder="ابحث باسم الدرس للوصول إليه مباشرة (مثال: الجار قبل الدار، الحواس الخمس...)" style="width: 100%; padding: 12px 45px 12px 15px; border-radius: 15px; border: 2px solid #ddd; font-size: 1rem; outline: none; transition: 0.3s;">
                 </div>
             </div>
 
@@ -134,7 +134,7 @@
     <div class="modal" id="add-lesson-modal" style="display: none;">
         <div class="modal-content">
             <span class="close-btn" onclick="closeAddLessonModal()">&times;</span>
-            <h2><i class="fa-solid fa-pen-to-square"></i> إضافة درس لسراج</h2>
+            <h2><i class="fa-solid fa-pen-to-square"></i> إضافة درس جديد لسراج</h2>
             <form id="add-lesson-form" onsubmit="saveNewLesson(event)">
                 <div class="form-group">
                     <label>اختر المادة:</label>
@@ -147,11 +147,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>عنوان الدرس (مثلاً: الدرس الأول - البلبل والطفل):</label>
+                    <label>عنوان الدرس (مثلاً: الدرس الأول - الجار قبل الدار):</label>
                     <input type="text" id="lesson-title-input" placeholder="اكتب عنوان الدرس..." required>
                 </div>
                 <div class="form-group">
-                    <label>نص الدرس الكامل:</label>
+                    <label>نص الدرس الكامل (يفضل إضافة التشكيل للفضل في النطق الفصيح):</label>
                     <textarea id="lesson-content-input" rows="6" placeholder="اكتب موضوع الدرس هنا بوضوح..." required></textarea>
                 </div>
                 <button type="submit" class="btn-save">حفظ الدرس في جهاز سراج <i class="fa-solid fa-check"></i></button>
@@ -164,16 +164,16 @@
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
         }
 
-        // تحضير الدروس الأساسية الافتراضية لقراءة الصف الثالث الابتدائي
+        // الدروس الافتراضية لقراءة الصف الثالث الابتدائي
         const defaultLessons = {
             arabic: [
                 {
                     title: "الدرس الأول: الجار قبل الدار",
-                    content: "جلسَ عمارٌ مع أبيهِ وأمّهِ وأختِهِ ليلى. قالَ الأبُ: نحنُ نعيشُ في حيٍّ جميلٍ، ولنا جيرانٌ طيبون. يساعدوننا ونساعدهم، والجارُ قبلَ الدارِ."
+                    content: "جَلَسَ عَمَّارٌ مَعَ أَبِيهِ وَأُمِّهِ وَأُخْتِهِ لَيْلَى. قَالَ الأَبُ: نَحْنُ نَعِيشُ فِي حَيٍّ جَمِيلٍ، وَلَنَا جِيرَانٌ طَيِّبُونَ. يُسَاعِدُونَنَا وَنُسَاعِدُهُمْ، وَالْجَارُ قَبْلَ الدَّارِ."
                 },
                 {
                     title: "الدرس الثاني: الحواس الخمس",
-                    content: "قالَ القاسمُ: هذهِ عيني، بالعينِ أرى كلَّ شيءٍ وأميزُ بينَ الألوانِ. وهذهِ أذني، بالأذنِ أسمعُ الأصواتَ والألحانَ."
+                    content: "قَالَ الْقَاسِمُ: هَذِهِ عَيْنِي، بِالْعَيْنِ أَرَى كُلَّ شَيْءٍ وَأُمَيِّزُ بَيْنَ الأَلْوَانِ. وَهَذِهِ أُذُنِي، بِالأُذُنِ أَسْمَعُ الأَصْوَاتَ وَالأَلْحَانَ."
                 }
             ]
         };
@@ -181,12 +181,22 @@
         let lessonsData = JSON.parse(localStorage.getItem('siraj_lessons')) || defaultLessons;
         let currentActiveKey = '';
 
-        // دالة تجميع النصوص المقطعة من الـ PDF
+        // دالة تحديد محرك صوت اللغة العربية الفصحى في الجهاز
+        function getArabicVoice() {
+            if ('speechSynthesis' in window) {
+                let voices = window.speechSynthesis.getVoices();
+                let arVoice = voices.find(v => v.lang.includes('ar-SA') || v.lang.includes('ar'));
+                return arVoice || null;
+            }
+            return null;
+        }
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => { getArabicVoice(); };
+        }
+
         function sanitizeText(rawText) {
-            // معالجة وإعادة تجميع الكلمات المتباعدة
-            let cleaned = rawText.replace(/\s+/g, ' ').trim();
-            // إصلاح ترتيب الأحرف العربية إذا كانت متباعدة
-            return cleaned;
+            return rawText.replace(/\s+/g, ' ').trim();
         }
 
         async function uploadBook(event, key, subjectName) {
@@ -198,7 +208,7 @@
 
             if (file.type === "application/pdf") {
                 try {
-                    alert("جاري قراءة وتجهيز الكتاب، يرجى الانتظار ثوانٍ قليلة... ⏳");
+                    alert("جاري قراءة واستخراج صفحات الكتاب، يرجى الانتظار ثوانٍ... ⏳");
                     const fileReader = new FileReader();
                     fileReader.onload = async function() {
                         const typedarray = new Uint8Array(this.result);
@@ -206,7 +216,6 @@
                         
                         if(!lessonsData[key]) lessonsData[key] = [];
 
-                        // استخراج أول 15 صفحة لتجنب ملء الذاكرة
                         for (let i = 1; i <= Math.min(pdf.numPages, 15); i++) {
                             const page = await pdf.getPage(i);
                             const textContent = await page.getTextContent();
@@ -215,7 +224,7 @@
 
                             if (pageText.length > 5) {
                                 lessonsData[key].push({
-                                    title: `الصفحة (${i}) - ${file.name.replace('.pdf', '')}`,
+                                    title: `صفحة (${i}) - ${file.name.replace('.pdf', '')}`,
                                     content: pageText
                                 });
                             }
@@ -226,7 +235,7 @@
                     };
                     fileReader.readAsArrayBuffer(file);
                 } catch(e) {
-                    alert('حدث خطأ أثناء قراءة الـ PDF. جرب إضافة الدرس يدوياً عبر زر (إضافة درس جديد).');
+                    alert('حدث خطأ أثناء قراءة الـ PDF. يمكنك إضافة الدرس يدوياً عبر زر (إضافة درس جديد).');
                 }
             } else if (file.type === "text/plain") {
                 const reader = new FileReader();
@@ -276,7 +285,7 @@
             }
 
             if(list.length === 0) {
-                container.innerHTML = '<p class="no-lessons" style="text-align:center; padding:30px; font-size: 1.1rem; color: #777;">لا توجد دروس تطابق بحثك. اضغط على (إضافة درس جديد) في الأعلى لكتابة المادة مباشرة وسيحفظها النظام دائماً لسراج!</p>';
+                container.innerHTML = '<p class="no-lessons" style="text-align:center; padding:30px; font-size: 1.1rem; color: #777;">لا توجد دروس تطابق بحثك. اضغطي على زر (إضافة درس جديد) في الأعلى لكتابة المادة مباشرة وسيحفظها النظام دائمًا لسراج!</p>';
                 return;
             }
 
@@ -285,7 +294,6 @@
                 lessonCard.className = 'lesson-card';
                 lessonCard.style.cssText = "background: #fff; border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee;";
                 
-                // تقسيم إلى كلمات مقبولة للنطق
                 let words = lesson.content.split(' ');
                 let wordsHtml = words.map(word => 
                     `<span class="speakable-word" onclick="speakWord(this, '${key === 'english' ? 'en-US' : 'ar-SA'}')">${word}</span>`
@@ -302,25 +310,41 @@
             });
         }
 
-        // دالة البحث المباشر في الأبحاث والدروس
         function filterLessons() {
             const query = document.getElementById('lesson-search-input').value;
             renderLessons(currentActiveKey, query);
         }
 
+        // دالة نطق الكلمة المفردة باللغة العربية الفصحى
         function speakWord(element, lang) {
-            const wordText = element.innerText;
+            const wordText = element.innerText.trim();
+            if (!wordText) return;
+
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
+                
                 let utterance = new SpeechSynthesisUtterance(wordText);
-                utterance.lang = lang;
-                utterance.rate = 0.85;
+                
+                if (lang === 'en-US') {
+                    utterance.lang = 'en-US';
+                } else {
+                    utterance.lang = 'ar-SA'; // العربية الفصحى
+                    let arVoice = getArabicVoice();
+                    if (arVoice) utterance.voice = arVoice;
+                }
+
+                utterance.rate = 0.8;  // سرعة قراءة مناسبة للتعلم
+                utterance.pitch = 1.0; // نبرة فصيحة وطبيعية
+
                 element.classList.add('highlight-word');
                 utterance.onend = () => element.classList.remove('highlight-word');
+                utterance.onerror = () => element.classList.remove('highlight-word');
+
                 window.speechSynthesis.speak(utterance);
             }
         }
 
+        // دالة قراءة الدرس كاملاً بالفصحى
         function speakFullLesson() {
             const container = document.getElementById('lesson-viewer');
             let textElements = container.querySelectorAll('.speakable-word');
@@ -328,9 +352,20 @@
 
             if ('speechSynthesis' in window && fullText) {
                 window.speechSynthesis.cancel();
+                
                 let utterance = new SpeechSynthesisUtterance(fullText);
-                utterance.lang = currentActiveKey === 'english' ? 'en-US' : 'ar-SA';
-                utterance.rate = 0.85;
+                
+                if (currentActiveKey === 'english') {
+                    utterance.lang = 'en-US';
+                } else {
+                    utterance.lang = 'ar-SA';
+                    let arVoice = getArabicVoice();
+                    if (arVoice) utterance.voice = arVoice;
+                }
+
+                utterance.rate = 0.8;
+                utterance.pitch = 1.0;
+
                 window.speechSynthesis.speak(utterance);
             }
         }
@@ -356,7 +391,7 @@
             lessonsData[subjectKey].push({ title, content });
             saveData();
 
-            alert('تم حفظ الدرس بنجاح في تطبيق سراج!');
+            alert('تم حفظ الدرس بنجاح في تطبيق سراج! 🌟');
             closeAddLessonModal();
             document.getElementById('add-lesson-form').reset();
 
