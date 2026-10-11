@@ -19,7 +19,7 @@
             <div class="avatar"><i class="fa-solid fa-graduation-cap"></i></div>
             <div>
                 <h1>أهلاً بك يا بطلنا سراج! 🌟</h1>
-                <p>الصف الثالث الابتدائي - رحلة التعلم المتفوقة</p>
+                <p>الصف الثالث الابتدائي - قراءة الجمل المباشرة بالفصحى</p>
             </div>
         </div>
         <div class="score-board">
@@ -33,7 +33,7 @@
         <!-- قسم المواد الدراسية -->
         <section class="subjects-section">
             <h2><i class="fa-solid fa-book-open"></i> مواد الصف الثالث الابتدائي</h2>
-            <p class="subtitle-hint" style="margin-bottom: 20px; color: #666;">اختر المادة لرفع الكتاب أو تصفح والبحث في الدروس مباشرة:</p>
+            <p class="subtitle-hint" style="margin-bottom: 20px; color: #666;">ارفع كتاب المادة كاملاً أو تصفح الدروس وقراءتها جملة بجملة:</p>
             
             <div class="subjects-grid" id="subjects-grid">
                 
@@ -41,10 +41,10 @@
                 <div class="subject-card arabic">
                     <div class="icon-box"><i class="fa-solid fa-book-bookmark"></i></div>
                     <h3>القراءة العربية</h3>
-                    <p>كتاب القراءة ونطق الكلمات بالفصحى</p>
+                    <p>قراءة الجمل الكاملة بالفصحى</p>
                     <div class="card-actions" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
                         <label class="btn-upload-direct" style="background: #e91e63; color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; font-weight: bold; text-align:center;">
-                            <i class="fa-solid fa-file-pdf"></i> رفع كتاب (PDF / نص)
+                            <i class="fa-solid fa-file-pdf"></i> رفع الكتاب كاملاً (PDF)
                             <input type="file" accept=".pdf, .txt" onchange="uploadBook(event, 'arabic', 'القراءة العربية')" style="display: none;">
                         </label>
                         <button onclick="viewSubject('arabic', 'القراءة العربية')" style="background: #f0f0f0; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight:bold;">عرض الدروس والبحث 🔍</button>
@@ -58,7 +58,7 @@
                     <p>جدول الضرب والتمارين</p>
                     <div class="card-actions" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
                         <label class="btn-upload-direct" style="background: #2196f3; color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; font-weight: bold; text-align:center;">
-                            <i class="fa-solid fa-file-pdf"></i> رفع كتاب (PDF / نص)
+                            <i class="fa-solid fa-file-pdf"></i> رفع الكتاب كاملاً (PDF)
                             <input type="file" accept=".pdf, .txt" onchange="uploadBook(event, 'math', 'الرياضيات')" style="display: none;">
                         </label>
                         <button onclick="viewSubject('math', 'الرياضيات')" style="background: #f0f0f0; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight:bold;">عرض الدروس والبحث 🔍</button>
@@ -72,7 +72,7 @@
                     <p>الكائنات الحية والبيئة</p>
                     <div class="card-actions" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
                         <label class="btn-upload-direct" style="background: #4caf50; color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; font-weight: bold; text-align:center;">
-                            <i class="fa-solid fa-file-pdf"></i> رفع كتاب (PDF / نص)
+                            <i class="fa-solid fa-file-pdf"></i> رفع الكتاب كاملاً (PDF)
                             <input type="file" accept=".pdf, .txt" onchange="uploadBook(event, 'science', 'العلوم')" style="display: none;">
                         </label>
                         <button onclick="viewSubject('science', 'العلوم')" style="background: #f0f0f0; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight:bold;">عرض الدروس والبحث 🔍</button>
@@ -86,7 +86,7 @@
                     <p>الحروف والكلمات</p>
                     <div class="card-actions" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
                         <label class="btn-upload-direct" style="background: #9c27b0; color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; font-weight: bold; text-align:center;">
-                            <i class="fa-solid fa-file-pdf"></i> Upload Book
+                            <i class="fa-solid fa-file-pdf"></i> Upload Full Book
                             <input type="file" accept=".pdf, .txt" onchange="uploadBook(event, 'english', 'اللغة الإنجليزية')" style="display: none;">
                         </label>
                         <button onclick="viewSubject('english', 'اللغة الإنجليزية')" style="background: #f0f0f0; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight:bold;">عرض الدروس والبحث 🔍</button>
@@ -100,7 +100,7 @@
                     <p>القرآن الكريم والسور المقررة</p>
                     <div class="card-actions" style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
                         <label class="btn-upload-direct" style="background: #009688; color: white; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; font-weight: bold; text-align:center;">
-                            <i class="fa-solid fa-file-pdf"></i> رفع كتاب (PDF / نص)
+                            <i class="fa-solid fa-file-pdf"></i> رفع الكتاب كاملاً (PDF)
                             <input type="file" accept=".pdf, .txt" onchange="uploadBook(event, 'islamic', 'التربية الإسلامية')" style="display: none;">
                         </label>
                         <button onclick="viewSubject('islamic', 'التربية الإسلامية')" style="background: #f0f0f0; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight:bold;">عرض الدروس والبحث 🔍</button>
@@ -115,14 +115,14 @@
             <div class="viewer-header">
                 <button class="btn-back" onclick="closeSubject()"><i class="fa-solid fa-arrow-right"></i> عودة للمواد</button>
                 <h2 id="current-subject-title">عنوان المادة</h2>
-                <button class="btn-speak-all" onclick="speakFullLesson()"><i class="fa-solid fa-volume-high"></i> قراءة الصفحة كاملاً</button>
+                <button class="btn-speak-all" onclick="speakFullLesson()"><i class="fa-solid fa-volume-high"></i> قراءة الدرس كاملاً</button>
             </div>
 
             <!-- شريط البحث المباشر في الدروس -->
             <div class="search-box-container" style="margin-bottom: 20px;">
                 <div style="position: relative; display: flex; align-items: center;">
                     <i class="fa-solid fa-magnifying-glass" style="position: absolute; right: 15px; color: #888; font-size: 1.1rem;"></i>
-                    <input type="text" id="lesson-search-input" onkeyup="filterLessons()" placeholder="ابحث باسم الدرس للوصول إليه مباشرة (مثال: الجار قبل الدار، الحواس الخمس...)" style="width: 100%; padding: 12px 45px 12px 15px; border-radius: 15px; border: 2px solid #ddd; font-size: 1rem; outline: none; transition: 0.3s;">
+                    <input type="text" id="lesson-search-input" onkeyup="filterLessons()" placeholder="ابحث باسم الدرس للوصول إليه مباشرة..." style="width: 100%; padding: 12px 45px 12px 15px; border-radius: 15px; border: 2px solid #ddd; font-size: 1rem; outline: none;">
                 </div>
             </div>
 
@@ -147,14 +147,14 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>عنوان الدرس (مثلاً: الدرس الأول - الجار قبل الدار):</label>
+                    <label>عنوان الدرس:</label>
                     <input type="text" id="lesson-title-input" placeholder="اكتب عنوان الدرس..." required>
                 </div>
                 <div class="form-group">
-                    <label>نص الدرس الكامل (يفضل إضافة التشكيل للفضل في النطق الفصيح):</label>
-                    <textarea id="lesson-content-input" rows="6" placeholder="اكتب موضوع الدرس هنا بوضوح..." required></textarea>
+                    <label>نص الدرس (اكتب الجمل مع علامات الترقيم للنطق الصحيح):</label>
+                    <textarea id="lesson-content-input" rows="6" placeholder="اكتب موضوع الدرس هنا..." required></textarea>
                 </div>
-                <button type="submit" class="btn-save">حفظ الدرس في جهاز سراج <i class="fa-solid fa-check"></i></button>
+                <button type="submit" class="btn-save">حفظ الدرس <i class="fa-solid fa-check"></i></button>
             </form>
         </div>
     </div>
@@ -164,16 +164,11 @@
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
         }
 
-        // الدروس الافتراضية لقراءة الصف الثالث الابتدائي
         const defaultLessons = {
             arabic: [
                 {
                     title: "الدرس الأول: الجار قبل الدار",
                     content: "جَلَسَ عَمَّارٌ مَعَ أَبِيهِ وَأُمِّهِ وَأُخْتِهِ لَيْلَى. قَالَ الأَبُ: نَحْنُ نَعِيشُ فِي حَيٍّ جَمِيلٍ، وَلَنَا جِيرَانٌ طَيِّبُونَ. يُسَاعِدُونَنَا وَنُسَاعِدُهُمْ، وَالْجَارُ قَبْلَ الدَّارِ."
-                },
-                {
-                    title: "الدرس الثاني: الحواس الخمس",
-                    content: "قَالَ الْقَاسِمُ: هَذِهِ عَيْنِي، بِالْعَيْنِ أَرَى كُلَّ شَيْءٍ وَأُمَيِّزُ بَيْنَ الأَلْوَانِ. وَهَذِهِ أُذُنِي، بِالأُذُنِ أَسْمَعُ الأَصْوَاتَ وَالأَلْحَانَ."
                 }
             ]
         };
@@ -181,12 +176,10 @@
         let lessonsData = JSON.parse(localStorage.getItem('siraj_lessons')) || defaultLessons;
         let currentActiveKey = '';
 
-        // دالة تحديد محرك صوت اللغة العربية الفصحى في الجهاز
         function getArabicVoice() {
             if ('speechSynthesis' in window) {
                 let voices = window.speechSynthesis.getVoices();
-                let arVoice = voices.find(v => v.lang.includes('ar-SA') || v.lang.includes('ar'));
-                return arVoice || null;
+                return voices.find(v => v.lang.includes('ar-SA') || v.lang.includes('ar')) || null;
             }
             return null;
         }
@@ -195,10 +188,7 @@
             window.speechSynthesis.onvoiceschanged = () => { getArabicVoice(); };
         }
 
-        function sanitizeText(rawText) {
-            return rawText.replace(/\s+/g, ' ').trim();
-        }
-
+        // رفع الملف كاملاً دون تحديد عدد الصفحات
         async function uploadBook(event, key, subjectName) {
             const file = event.target.files[0];
             if (!file) return;
@@ -208,7 +198,7 @@
 
             if (file.type === "application/pdf") {
                 try {
-                    alert("جاري قراءة واستخراج صفحات الكتاب، يرجى الانتظار ثوانٍ... ⏳");
+                    alert("جاري قراءة واستخراج ملف الكتاب كاملاً، يرجى الانتظار... ⏳");
                     const fileReader = new FileReader();
                     fileReader.onload = async function() {
                         const typedarray = new Uint8Array(this.result);
@@ -216,11 +206,11 @@
                         
                         if(!lessonsData[key]) lessonsData[key] = [];
 
-                        for (let i = 1; i <= Math.min(pdf.numPages, 15); i++) {
+                        // رفع كل صفحات الكتاب بالكامل
+                        for (let i = 1; i <= pdf.numPages; i++) {
                             const page = await pdf.getPage(i);
                             const textContent = await page.getTextContent();
-                            let pageText = textContent.items.map(item => item.str).join(' ');
-                            pageText = sanitizeText(pageText);
+                            let pageText = textContent.items.map(item => item.str).join(' ').trim();
 
                             if (pageText.length > 5) {
                                 lessonsData[key].push({
@@ -230,12 +220,12 @@
                             }
                         }
                         saveData();
-                        alert('تم رفع واستخراج صفحات الكتاب بنجاح! 📚');
+                        alert('تم رفع واستخراج الكتاب بالكامل بنجاح! 📚');
                         viewSubject(key, subjectName);
                     };
                     fileReader.readAsArrayBuffer(file);
                 } catch(e) {
-                    alert('حدث خطأ أثناء قراءة الـ PDF. يمكنك إضافة الدرس يدوياً عبر زر (إضافة درس جديد).');
+                    alert('حدث خطأ أثناء قراءة الملف، يرجى التأكد من الملف أو إضافة الدرس يدوياً.');
                 }
             } else if (file.type === "text/plain") {
                 const reader = new FileReader();
@@ -246,7 +236,7 @@
                         content: e.target.result
                     });
                     saveData();
-                    alert('تم رفع الملف بنجاح!');
+                    alert('تم رفع الكتاب بنجاح!');
                     viewSubject(key, subjectName);
                 };
                 reader.readAsText(file);
@@ -257,7 +247,7 @@
             try {
                 localStorage.setItem('siraj_lessons', JSON.stringify(lessonsData));
             } catch(e) {
-                console.log("تجاوز التخزين المحلي");
+                console.log("تجاوز سعة التخزين المحلي");
             }
         }
 
@@ -275,6 +265,7 @@
             document.querySelector('.subjects-section').style.display = 'block';
         }
 
+        // تقسيم النص إلى جمل كاملة بدلاً من كلمات منفصلة
         function renderLessons(key, filterKeyword = '') {
             const container = document.getElementById('lessons-list-container');
             container.innerHTML = '';
@@ -285,7 +276,7 @@
             }
 
             if(list.length === 0) {
-                container.innerHTML = '<p class="no-lessons" style="text-align:center; padding:30px; font-size: 1.1rem; color: #777;">لا توجد دروس تطابق بحثك. اضغطي على زر (إضافة درس جديد) في الأعلى لكتابة المادة مباشرة وسيحفظها النظام دائمًا لسراج!</p>';
+                container.innerHTML = '<p class="no-lessons" style="text-align:center; padding:30px; color:#777;">لا توجد دروس حالياً.</p>';
                 return;
             }
 
@@ -294,17 +285,20 @@
                 lessonCard.className = 'lesson-card';
                 lessonCard.style.cssText = "background: #fff; border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee;";
                 
-                let words = lesson.content.split(' ');
-                let wordsHtml = words.map(word => 
-                    `<span class="speakable-word" onclick="speakWord(this, '${key === 'english' ? 'en-US' : 'ar-SA'}')">${word}</span>`
-                ).join(' ');
+                // تقسيم النص بناءً على النقاط، الفواصل، أو الأسطر للحصول على جمل متناسقة
+                let sentences = lesson.content.split(/(?<=[.؟!،\n])/g);
+                let sentencesHtml = sentences.map(sentence => {
+                    let trimmed = sentence.trim();
+                    if(!trimmed) return '';
+                    return `<span class="speakable-sentence" onclick="speakSentence(this, '${key === 'english' ? 'en-US' : 'ar-SA'}')">${trimmed} </span>`;
+                }).join('');
 
                 lessonCard.innerHTML = `
                     <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom: 2px solid #f0f0f0; padding-bottom: 8px;">
                         <h3 style="color:#2c3e50;"><i class="fa-solid fa-book-open-reader text-gold"></i> ${lesson.title}</h3>
                         <button class="btn-delete" onclick="deleteLesson('${key}', ${index})" style="color:#e74c3c; border:none; background:none; cursor:pointer; font-weight:bold;"><i class="fa-solid fa-trash"></i> حذف</button>
                     </div>
-                    <div class="lesson-text-box" style="font-size: 1.3rem; line-height: 2.2; color: #333;">${wordsHtml}</div>
+                    <div class="lesson-text-box" style="font-size: 1.3rem; line-height: 2.3; color: #333;">${sentencesHtml}</div>
                 `;
                 container.appendChild(lessonCard);
             });
@@ -315,40 +309,50 @@
             renderLessons(currentActiveKey, query);
         }
 
-        // دالة نطق الكلمة المفردة باللغة العربية الفصحى
-        function speakWord(element, lang) {
-            const wordText = element.innerText.trim();
-            if (!wordText) return;
+        // نطق الجملة بالكامل عند النقر عليها
+        function speakSentence(element, lang) {
+            const sentenceText = element.innerText.trim();
+            if (!sentenceText) return;
 
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 
-                let utterance = new SpeechSynthesisUtterance(wordText);
+                let utterance = new SpeechSynthesisUtterance(sentenceText);
                 
                 if (lang === 'en-US') {
                     utterance.lang = 'en-US';
                 } else {
-                    utterance.lang = 'ar-SA'; // العربية الفصحى
+                    utterance.lang = 'ar-SA';
                     let arVoice = getArabicVoice();
                     if (arVoice) utterance.voice = arVoice;
                 }
 
-                utterance.rate = 0.8;  // سرعة قراءة مناسبة للتعلم
-                utterance.pitch = 1.0; // نبرة فصيحة وطبيعية
+                utterance.rate = 0.8;  // سرعة قراءة هادئة ومناسبة
+                utterance.pitch = 1.0;
 
-                element.classList.add('highlight-word');
-                utterance.onend = () => element.classList.remove('highlight-word');
-                utterance.onerror = () => element.classList.remove('highlight-word');
+                // تظليل الجملة بالكامل باللون الأصفر عند النطق
+                element.style.backgroundColor = '#ffeb3b';
+                element.style.borderRadius = '5px';
+                element.style.padding = '2px 6px';
+
+                utterance.onend = () => {
+                    element.style.backgroundColor = 'transparent';
+                    element.style.padding = '0';
+                };
+                utterance.onerror = () => {
+                    element.style.backgroundColor = 'transparent';
+                    element.style.padding = '0';
+                };
 
                 window.speechSynthesis.speak(utterance);
             }
         }
 
-        // دالة قراءة الدرس كاملاً بالفصحى
+        // قراءة كامل النص الموجود بالصفحة مسترسلاً
         function speakFullLesson() {
             const container = document.getElementById('lesson-viewer');
-            let textElements = container.querySelectorAll('.speakable-word');
-            let fullText = Array.from(textElements).map(el => el.innerText).join(' ');
+            let sentenceElements = container.querySelectorAll('.speakable-sentence');
+            let fullText = Array.from(sentenceElements).map(el => el.innerText).join(' ');
 
             if ('speechSynthesis' in window && fullText) {
                 window.speechSynthesis.cancel();
