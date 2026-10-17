@@ -397,7 +397,7 @@
         </div>
     </header>
 
-    <!-- شريط الأقسام العلوي مع أيقونة أسماء الطلاب البارزة -->
+    <!-- شريط الأقسام العلوي -->
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchView('students', event)"><i class="fa-solid fa-users"></i> إدارة الطلاب</button>
         <button class="tab-btn" onclick="switchView('pureNames', event)"><i class="fa-solid fa-id-card" style="color: var(--secondary);"></i> أسماء الطلاب</button>
@@ -460,14 +460,12 @@
                 <tbody id="studentsList"></tbody>
             </table>
 
-            <!-- جدول أسماء الطلاب الصافي فقط (بدون درجات أو حضور) -->
+            <!-- جدول أسماء الطلاب الصافي فقط (بدون صف، شعبة، أو حذف) -->
             <table id="pureNamesTable" style="display: none;">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>اسم الطالب الرباعي</th>
-                        <th>الصف الدراسي</th>
-                        <th>الشعبة</th>
+                        <th style="width: 80px;">#</th>
+                        <th style="text-align: right;">اسم الطالب الرباعي</th>
                     </tr>
                 </thead>
                 <tbody id="pureNamesList"></tbody>
@@ -691,7 +689,7 @@
             attendanceFiltered = filtered.filter(s => s.name.toLowerCase().includes(searchKeyword));
         }
         
-        // جدول الطلاب الرئيسي
+        // جدول الطلاب الرئيسي (لإدارة الطلاب)
         const studentsBody = document.getElementById('studentsList');
         studentsBody.innerHTML = filtered.map((s, idx) => `
             <tr>
@@ -703,16 +701,14 @@
             </tr>
         `).join('') || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
 
-        // جدول أسماء الطلاب الصافي فقط
+        // جدول أسماء الطلاب الصافي فقط (التسلسل والاسم فقط بدون صف أو شعبة أو حذف)
         const pureNamesBody = document.getElementById('pureNamesList');
         pureNamesBody.innerHTML = filtered.map((s, idx) => `
             <tr>
                 <td>${idx + 1}</td>
-                <td><strong>${s.name}</strong></td>
-                <td>${s.grade}</td>
-                <td><span style="background: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 6px; font-weight: bold;">شعبة ${s.section}</span></td>
+                <td style="text-align: right;"><strong>${s.name}</strong></td>
             </tr>
-        `).join('') || '<tr><td colspan="4" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
+        `).join('') || '<tr><td colspan="2" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
 
         // جدول الغياب
         const attendanceBody = document.getElementById('attendanceList');
