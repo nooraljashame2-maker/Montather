@@ -86,9 +86,9 @@
         .tab-btn {
             background: white;
             border: 2px solid transparent;
-            padding: 12px 20px;
+            padding: 12px 18px;
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             color: #4b5563;
             cursor: pointer;
@@ -397,11 +397,12 @@
         </div>
     </header>
 
+    <!-- شريط الأقسام العلوي مع أيقونة أسماء الطلاب البارزة -->
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchView('students', event)"><i class="fa-solid fa-users"></i> قائمة الطلاب</button>
-        <button class="tab-btn" onclick="switchView('pureNames', event)"><i class="fa-solid fa-id-card"></i> أسماء الطلاب</button>
+        <button class="tab-btn active" onclick="switchView('students', event)"><i class="fa-solid fa-users"></i> إدارة الطلاب</button>
+        <button class="tab-btn" onclick="switchView('pureNames', event)"><i class="fa-solid fa-id-card" style="color: var(--secondary);"></i> أسماء الطلاب</button>
         <button class="tab-btn" onclick="switchView('attendance', event)"><i class="fa-solid fa-clipboard-user"></i> سجل الغياب</button>
-        <button class="tab-btn" onclick="switchView('grades', event)"><i class="fa-solid fa-chart-simple"></i> سجل الدرجات (لخامس وسادس)</button>
+        <button class="tab-btn" onclick="switchView('grades', event)"><i class="fa-solid fa-chart-simple"></i> سجل الدرجات (خامس وسادس)</button>
     </div>
 
     <!-- نموذج إضافة طالب ومعلمة المادة -->
@@ -445,7 +446,7 @@
         <div id="alertsContainer" class="alerts-wrapper"></div>
         
         <div class="table-responsive">
-            <!-- جدول الطلاب الرئيسي -->
+            <!-- جدول إدارة الطلاب الرئيسي -->
             <table id="studentsTable">
                 <thead>
                     <tr>
@@ -495,19 +496,7 @@
                 </div>
                 <table id="gradesTable">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>اسم الطالب</th>
-                            <th>الإسلامية<br><small>ش1 / ش2 / ش3</small></th>
-                            <th>العربية<br><small>ش1 / ش2 / ش3</small></th>
-                            <th>الرياضيات<br><small>ش1 / ش2 / ش3</small></th>
-                            <th>الإنكليزية<br><small>ش1 / ش2 / ش3</small></th>
-                            <th>العلوم<br><small>ش1 / ش2 / ش3</small></th>
-                            <th>الأخلاقية<br><small>ش1 / ش2 / ش3</small></th>
-                            <th>الرياضة<br><small>ش1 / ش2 / ش3</small></th>
-                            <th>الفنية<br><small>ش1 / ش2 / ش3</small></th>
-                            <th>الاجتماعيات<br><small>ش1 / ش2 / ش3</small></th>
-                        </tr>
+                        <tr id="gradesHeaderRow"></tr>
                     </thead>
                     <tbody id="gradesList"></tbody>
                 </table>
@@ -525,7 +514,7 @@
     const gradesList = ["الأول الابتدائي", "الثاني الابتدائي", "الثالث الابتدائي", "الرابع الابتدائي", "الخامس الابتدائي", "السادس الابتدائي"];
     const sectionsList = ["أ", "ب", "ج"];
     
-    const subjects = [
+    const baseSubjects = [
         { id: 'islamic', name: 'الإسلامية' },
         { id: 'arabic', name: 'العربية' },
         { id: 'math', name: 'الرياضيات' },
@@ -536,6 +525,13 @@
         { id: 'art', name: 'الفنية' },
         { id: 'social', name: 'الاجتماعيات' }
     ];
+
+    function getSubjectsForGrade(grade) {
+        if (grade === "الرابع الابتدائي" || grade === "الخامس الابتدائي" || grade === "السادس الابتدائي") {
+            return baseSubjects.filter(sub => sub.id !== 'ethics');
+        }
+        return baseSubjects;
+    }
 
     function setHeaderDate() {
         const now = new Date();
@@ -649,6 +645,7 @@
         alertsContainer.innerHTML = '';
 
         const isUpperGrade = (currentGrade === "الخامس الابتدائي" || currentGrade === "السادس الابتدائي");
+        const currentSubjects = getSubjectsForGrade(currentGrade);
 
         filteredStudents.forEach(s => {
             const st = s.stats || { absent: 0 };
@@ -662,7 +659,7 @@
 
             if (isUpperGrade) {
                 let missingSubjects = [];
-                subjects.forEach(sub => {
+                currentSubjects.forEach(sub => {
                     const subData = (s.grades && s.grades[sub.id]) || { m1: '', m2: '', m3: '' };
                     const enteredCount = [subData.m1, subData.m2, subData.m3].filter(v => v !== '' && v !== null && v !== undefined).length;
                     if (enteredCount < 3) {
@@ -765,12 +762,21 @@
             noticeEl.style.display = 'none';
             gradesTableEl.style.display = 'table';
 
+            const activeSubjects = getSubjectsForGrade(currentGrade);
+
+            const headerRow = document.getElementById('gradesHeaderRow');
+            headerRow.innerHTML = `
+                <th>#</th>
+                <th>اسم الطالب</th>
+                ` + activeSubjects.map(sub => `<th>${sub.name}<br><small>ش1 / ش2 / ش3</small></th>`).join('') + `
+            `;
+
             const gradesBody = document.getElementById('gradesList');
             gradesBody.innerHTML = filtered.map((s, idx) => `
                 <tr>
                     <td>${idx + 1}</td>
                     <td><strong>${s.name}</strong></td>
-                    ${subjects.map(sub => {
+                    ${activeSubjects.map(sub => {
                         const subData = (s.grades && s.grades[sub.id]) || { m1: '', m2: '', m3: '' };
                         return `
                             <td>
@@ -786,7 +792,7 @@
                         `;
                     }).join('')}
                 </tr>
-            `).join('') || '<tr><td colspan="11" style="text-align:center;">لا يوجد طلاب.</td></tr>';
+            `).join('') || `<tr><td colspan="${activeSubjects.length + 2}" style="text-align:center;">لا يوجد طلاب.</td></tr>`;
         }
     }
 
