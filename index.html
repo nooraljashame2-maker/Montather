@@ -1,1 +1,588 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المدرسة المتكامل</title>
+    <!-- خط تجوالي الأنيق وأيقونات FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #06b6d4;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* الهيدر وشريط المعلومات */
+        header {
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 18px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .info-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .teacher-box input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #333;
+            outline: none;
+        }
+
+        /* أزرار التنقل الرئيسية */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: white;
+            border: 2px solid transparent;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #4b5563;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-print {
+            margin-right: auto;
+            background: #10b981;
+            color: white;
+        }
+        .btn-print:hover { background: #059669; }
+
+        /* نموذج إضافة طالب */
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+
+        input, select {
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .btn-add {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-add:hover { background: var(--primary-hover); }
+
+        /* شبكة الصفوف والشعب */
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .class-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .class-card:hover, .class-card.active {
+            border-color: var(--secondary);
+            background: #ecfeff;
+            transform: scale(1.02);
+        }
+
+        .class-card h3 {
+            font-size: 1.1rem;
+            color: #1f2937;
+        }
+
+        .class-card span {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        /* الجداول */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: right;
+            border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #374151;
+            font-weight: 700;
+        }
+
+        tr:hover { background: #f9fafb; }
+
+        /* شارات الحالة للغياب */
+        .status-select {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .grade-input {
+            width: 65px;
+            text-align: center;
+            padding: 6px;
+        }
+
+        .btn-delete {
+            color: var(--danger);
+            background: #fee2e2;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-delete:hover { background: var(--danger); color: white; }
+
+        /* الطباعة */
+        @media print {
+            .nav-tabs, .card, .btn-delete, .classes-grid, .btn-print, .teacher-box input {
+                display: none !important;
+            }
+            body { background: white; padding: 0; }
+            .container { max-width: 100%; }
+            header { background: none; color: black; box-shadow: none; padding: 0; }
+            .header-info { background: none; color: black; }
+            .teacher-box::after { content: attr(data-teacher); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- الهيدر والمعلومات -->
+    <header>
+        <div class="header-title">
+            <h1><i class="fa-solid fa-school"></i> نظام إدارة الطلاب والمدرسة</h1>
+            <p>إدارة الحضور، الغياب، والدرجات لكل مرحلة وشعبة</p>
+        </div>
+        <div class="header-info">
+            <div class="info-box"><i class="fa-solid fa-calendar-days"></i> <span id="currentDate"></span></div>
+            <div class="info-box"><i class="fa-solid fa-graduation-cap"></i> السنة الدراسية: <strong>2026/2027</strong></div>
+            <div class="info-box teacher-box">
+                <i class="fa-solid fa-user-tie"></i> معلّمة المادة: 
+                <input type="text" id="teacherName" placeholder="اكتبي اسم المعلمة..." oninput="saveTeacherName()">
+            </div>
+        </div>
+    </header>
+
+    <!-- شريط أزرار الأقسام والطباعة -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchView('students')"><i class="fa-solid fa-users"></i> قائمة الطلاب</button>
+        <button class="tab-btn" onclick="switchView('attendance')"><i class="fa-solid fa-clipboard-user"></i> سجل الغياب</button>
+        <button class="tab-btn" onclick="switchView('grades')"><i class="fa-solid fa-chart-simple"></i> سجل الدرجات</button>
+        <button class="tab-btn btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة الصفحة</button>
+    </div>
+
+    <!-- نموذج إضافة طالب -->
+    <div class="card">
+        <div class="card-title"><i class="fa-solid fa-user-plus"></i> إضافة طالب جديد (توزيع وترتيب أبجدي تلقائي)</div>
+        <div class="form-grid">
+            <input type="text" id="studentName" placeholder="اسم الطالب الرباعي..." autocomplete="off">
+            <select id="gradeSelect">
+                <option value="الأول الابتدائي">الأول الابتدائي</option>
+                <option value="الثاني الابتدائي">الثاني الابتدائي</option>
+                <option value="الثالث الابتدائي">الثالث الابتدائي</option>
+                <option value="الرابع الابتدائي">الرابع الابتدائي</option>
+                <option value="الخامس الابتدائي">الخامس الابتدائي</option>
+                <option value="السادس الابتدائي">السادس الابتدائي</option>
+            </select>
+            <select id="sectionSelect">
+                <option value="أ">شعبة (أ)</option>
+                <option value="ب">شعبة (ب)</option>
+                <option value="ج">شعبة (ج)</option>
+                <option value="د">شعبة (د)</option>
+            </select>
+            <button class="btn-add" onclick="addStudent()"><i class="fa-solid fa-plus"></i> إضافة الطالب</button>
+        </div>
+    </div>
+
+    <!-- بطاقات الشعب والصفوف اختيار الصف -->
+    <div class="classes-grid" id="classesGrid">
+        <!-- يتم إنشاؤها عبر JavaScript -->
+    </div>
+
+    <!-- محتوى الأقسام -->
+    <div class="card">
+        <div class="card-title" id="sectionTitle"><i class="fa-solid fa-list"></i> أسماء الطلاب - الصف الأول الابتدائي (شعبة أ)</div>
+        
+        <div class="table-responsive">
+            <!-- جدول الطلاب -->
+            <table id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>اسم الطالب</th>
+                        <th>الصف</th>
+                        <th>الشعبة</th>
+                        <th>إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsList"></tbody>
+            </table>
+
+            <!-- جدول الغياب -->
+            <table id="attendanceTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>اسم الطالب</th>
+                        <th>الصف والشعبة</th>
+                        <th>حالة الدوام اليوم</th>
+                    </tr>
+                </thead>
+                <tbody id="attendanceList"></tbody>
+            </table>
+
+            <!-- جدول الدرجات -->
+            <table id="gradesTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>اسم الطالب</th>
+                        <th>الإسلامية</th>
+                        <th>العربية</th>
+                        <th>الرياضيات</th>
+                        <th>الإنكليزية</th>
+                        <th>العلوم</th>
+                        <th>الأخلاقية</th>
+                        <th>الرياضة</th>
+                        <th>الفنية</th>
+                        <th>الاجتماعيات</th>
+                    </tr>
+                </thead>
+                <tbody id="gradesList"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // البيانات التخزينية
+    let students = JSON.parse(localStorage.getItem('m_students')) || [];
+    let currentGrade = "الأول الابتدائي";
+    let currentSection = "أ";
+    let currentView = "students";
+
+    const gradesList = ["الأول الابتدائي", "الثاني الابتدائي", "الثالث الابتدائي", "الرابع الابتدائي", "الخامس الابتدائي", "السادس الابتدائي"];
+    const sectionsList = ["أ", "ب", "ج", "د"];
+    const subjects = ["islamic", "arabic", "math", "english", "science", "ethics", "sports", "art", "social"];
+
+    // إعداد التاريخ الحقيقي
+    function setHeaderDate() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDate').textContent = now.toLocaleDateString('ar-IQ', options);
+        document.getElementById('teacherName').value = localStorage.getItem('m_teacher') || '';
+    }
+
+    function saveTeacherName() {
+        localStorage.setItem('m_teacher', document.getElementById('teacherName').value);
+    }
+
+    // إنشاء بطاقات الصفوف والشعب
+    function renderClassCards() {
+        const grid = document.getElementById('classesGrid');
+        grid.innerHTML = '';
+
+        gradesList.forEach(grade => {
+            sectionsList.forEach(section => {
+                const count = students.filter(s => s.grade === grade && s.section === section).length;
+                const card = document.createElement('div');
+                card.className = `class-card ${currentGrade === grade && currentSection === section ? 'active' : ''}`;
+                card.onclick = () => selectClass(grade, section);
+                card.innerHTML = `
+                    <h3>${grade}</h3>
+                    <span>شعبة (${section}) • ${count} طالب</span>
+                `;
+                grid.appendChild(card);
+            });
+        });
+    }
+
+    function selectClass(grade, section) {
+        currentGrade = grade;
+        currentSection = section;
+        renderClassCards();
+        renderData();
+    }
+
+    // إضافة طالب مع الترتيب الأبجدي التلقائي
+    function addStudent() {
+        const nameInput = document.getElementById('studentName');
+        const gradeInput = document.getElementById('gradeSelect');
+        const sectionInput = document.getElementById('sectionSelect');
+
+        const name = nameInput.value.trim();
+        if (!name) {
+            alert('يرجى إدخال اسم الطالب أولاً!');
+            return;
+        }
+
+        const newStudent = {
+            id: Date.now(),
+            name: name,
+            grade: gradeInput.value,
+            section: sectionInput.value,
+            status: 'حاضر',
+            grades: {}
+        };
+
+        students.push(newStudent);
+        
+        // الترتيب الأبجدي العربي تلقائياً
+        students.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+
+        saveData();
+        nameInput.value = '';
+        selectClass(gradeInput.value, sectionInput.value);
+    }
+
+    function deleteStudent(id) {
+        if(confirm('هل أنتِ متأكدة من حذف هذا الطالب؟')) {
+            students = students.filter(s => s.id !== id);
+            saveData();
+            renderClassCards();
+            renderData();
+        }
+    }
+
+    function updateStatus(id, newStatus) {
+        const student = students.find(s => s.id === id);
+        if (student) {
+            student.status = newStatus;
+            saveData();
+        }
+    }
+
+    function updateGrade(id, subject, val) {
+        const student = students.find(s => s.id === id);
+        if (student) {
+            if (!student.grades) student.grades = {};
+            student.grades[subject] = val;
+            saveData();
+        }
+    }
+
+    function saveData() {
+        localStorage.setItem('m_students', JSON.stringify(students));
+    }
+
+    // عرض البيانات حسب القسم المحدد
+    function renderData() {
+        document.getElementById('sectionTitle').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${currentGrade} - شعبة (${currentSection})`;
+        
+        const filtered = students.filter(s => s.grade === currentGrade && s.section === currentSection);
+        
+        // عرض قائمة الطلاب
+        const studentsBody = document.getElementById('studentsList');
+        studentsBody.innerHTML = filtered.map((s, idx) => `
+            <tr>
+                <td>${idx + 1}</td>
+                <td><strong>${s.name}</strong></td>
+                <td>${s.grade}</td>
+                <td><span style="background: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 6px; font-weight: bold;">شعبة ${s.section}</span></td>
+                <td><button class="btn-delete" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i> حذف</button></td>
+            </tr>
+        `).join('') || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
+
+        // عرض سجل الغياب
+        const attendanceBody = document.getElementById('attendanceList');
+        attendanceBody.innerHTML = filtered.map((s, idx) => `
+            <tr>
+                <td>${idx + 1}</td>
+                <td><strong>${s.name}</strong></td>
+                <td>${s.grade} (${s.section})</td>
+                <td>
+                    <select class="status-select" onchange="updateStatus(${s.id}, this.value)" style="background: ${getStatusColor(s.status)}; color: white;">
+                        <option value="حاضر" ${s.status === 'حاضر' ? 'selected' : ''}>حاضر</option>
+                        <option value="غائب" ${s.status === 'غائب' ? 'selected' : ''}>غائب</option>
+                        <option value="مجاز" ${s.status === 'مجاز' ? 'selected' : ''}>مجاز</option>
+                        <option value="متسرب" ${s.status === 'متسرب' ? 'selected' : ''}>متسرب من الدوام</option>
+                    </select>
+                </td>
+            </tr>
+        `).join('') || '<tr><td colspan="4" style="text-align:center;">لا يوجد طلاب.</td></tr>';
+
+        // عرض سجل الدرجات
+        const gradesBody = document.getElementById('gradesList');
+        gradesBody.innerHTML = filtered.map((s, idx) => `
+            <tr>
+                <td>${idx + 1}</td>
+                <td><strong>${s.name}</strong></td>
+                ${subjects.map(sub => `
+                    <td>
+                        <input type="number" class="grade-input" min="0" max="100" 
+                               value="${(s.grades && s.grades[sub]) || ''}" 
+                               onchange="updateGrade(${s.id}, '${sub}', this.value)" placeholder="-">
+                    </td>
+                `).join('')}
+            </tr>
+        `).join('') || '<tr><td colspan="11" style="text-align:center;">لا يوجد طلاب.</td></tr>';
+    }
+
+    function getStatusColor(status) {
+        switch(status) {
+            case 'حاضر': return '#10b981';
+            case 'غائب': return '#ef4444';
+            case 'مجاز': return '#f59e0b';
+            case 'متسرب': return '#8b5cf6';
+            default: return '#10b981';
+        }
+    }
+
+    // التنقل بين الأقسام
+    function switchView(view) {
+        currentView = view;
+        document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+            if(idx < 3) btn.classList.remove('active');
+        });
+
+        document.getElementById('studentsTable').style.display = view === 'students' ? 'table' : 'none';
+        document.getElementById('attendanceTable').style.display = view === 'attendance' ? 'table' : 'none';
+        document.getElementById('gradesTable').style.display = view === 'grades' ? 'table' : 'none';
+
+        if(view === 'students') event.currentTarget.classList.add('active');
+        if(view === 'attendance') event.currentTarget.classList.add('active');
+        if(view === 'grades') event.currentTarget.classList.add('active');
+
+        renderData();
+    }
+
+    // التشغيل عند الفتح
+    setHeaderDate();
+    renderClassCards();
+    renderData();
+</script>
+
+</body>
+</html>
