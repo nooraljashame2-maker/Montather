@@ -106,9 +106,17 @@
         }
 
         .btn-print {
-            margin-right: auto;
             background: #10b981;
             color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
         }
         .btn-print:hover { background: #059669; }
 
@@ -120,13 +128,53 @@
             margin-bottom: 25px;
         }
 
+        .card-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
         .card-title {
             font-size: 1.2rem;
-            margin-bottom: 15px;
             color: var(--primary);
             display: flex;
             align-items: center;
             gap: 8px;
+            margin: 0;
+        }
+
+        /* تصميم شريط التنبيهات الذكي */
+        .alerts-wrapper {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .alert-box {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.93rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .alert-box.danger {
+            background-color: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .alert-box.warning {
+            background-color: #fffbe3;
+            color: #854d0e;
+            border: 1px solid #fde047;
         }
 
         .form-grid {
@@ -200,6 +248,40 @@
             color: #6b7280;
         }
 
+        .attendance-search-box {
+            background: #f0fdf4;
+            border: 1px dashed #86efac;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .attendance-search-box label {
+            font-weight: bold;
+            color: #166534;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stats-badges {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .badge.absent { background-color: #fee2e2; color: #dc2626; }
+        .badge.excused { background-color: #fef3c7; color: #d97706; }
+        .badge.escaped { background-color: #f3e8ff; color: #7c3aed; }
+
         .table-responsive {
             overflow-x: auto;
         }
@@ -233,13 +315,35 @@
         tr:hover { background: #f9fafb; }
 
         .status-select {
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
+            border: none;
+            cursor: pointer;
         }
 
-        /* تصميم حقول درجات الأشهر الثلاثة */
+        .quick-btn-group {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+        }
+
+        .quick-btn {
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+        }
+
+        .quick-btn.present { background-color: var(--success); }
+        .quick-btn.absent { background-color: var(--danger); }
+        .quick-btn.excused { background-color: var(--warning); }
+        .quick-btn.escaped { background-color: var(--purple); }
+
         .subject-group {
             display: flex;
             gap: 3px;
@@ -255,9 +359,9 @@
             border-radius: 6px;
         }
 
-        .grade-input.m1 { background: #f0fdf4; border-color: #86efac; } /* الشهر الأول */
-        .grade-input.m2 { background: #eff6ff; border-color: #93c5fd; } /* الشهر الثاني */
-        .grade-input.m3 { background: #fefce8; border-color: #fde047; } /* الشهر الثالث */
+        .grade-input.m1 { background: #f0fdf4; border-color: #86efac; }
+        .grade-input.m2 { background: #eff6ff; border-color: #93c5fd; }
+        .grade-input.m3 { background: #fefce8; border-color: #fde047; }
 
         .btn-delete {
             color: var(--danger);
@@ -270,7 +374,7 @@
         .btn-delete:hover { background: var(--danger); color: white; }
 
         @media print {
-            .nav-tabs, .card:first-of-type, .btn-delete, .classes-grid, .btn-print {
+            .nav-tabs, .card:first-of-type, .btn-delete, .classes-grid, .btn-print, .attendance-search-box, .alerts-wrapper {
                 display: none !important;
             }
             body { background: white; padding: 0; }
@@ -286,7 +390,7 @@
     <header>
         <div class="header-title">
             <h1><i class="fa-solid fa-school"></i> نظام إدارة الطلاب والمدرسة</h1>
-            <p>إدارة الحضور، الغياب، والدرجات الشهريّة لكل مرحلة وشعبة (أ، ب، ج)</p>
+            <p>إدارة الحضور، الغياب، والدرجات لكل مرحلة وشعبة (أ، ب، ج)</p>
         </div>
         <div class="header-info">
             <div class="info-box"><i class="fa-solid fa-calendar-days"></i> <span id="currentDate"></span></div>
@@ -297,13 +401,12 @@
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchView('students', event)"><i class="fa-solid fa-users"></i> قائمة الطلاب</button>
         <button class="tab-btn" onclick="switchView('attendance', event)"><i class="fa-solid fa-clipboard-user"></i> سجل الغياب</button>
-        <button class="tab-btn" onclick="switchView('grades', event)"><i class="fa-solid fa-chart-simple"></i> سجل الدرجات (أشهر 1، 2، 3)</button>
-        <button class="tab-btn btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة الصفحة</button>
+        <button class="tab-btn" onclick="switchView('grades', event)"><i class="fa-solid fa-chart-simple"></i> سجل الدرجات (لخامس وسادس)</button>
     </div>
 
     <!-- نموذج إضافة طالب ومعلمة المادة -->
     <div class="card">
-        <div class="card-title"><i class="fa-solid fa-user-plus"></i> إضافة طالب جديد ومعلمة المادة (ترتيب أبجدي تلقائي)</div>
+        <div class="card-title"><i class="fa-solid fa-user-plus"></i> إضافة طالب جديد ومعلمة الشعبة (ترتيب أبجدي تلقائي)</div>
         <div class="form-grid">
             <input type="text" id="studentName" placeholder="اسم الطالب الرباعي..." autocomplete="off">
             <select id="gradeSelect">
@@ -327,7 +430,19 @@
     <div class="classes-grid" id="classesGrid"></div>
 
     <div class="card">
-        <div class="card-title" id="sectionTitle"><i class="fa-solid fa-list"></i> أسماء الطلاب</div>
+        <div class="card-header-flex">
+            <div class="card-title" id="sectionTitle"><i class="fa-solid fa-list"></i> أسماء الطلاب</div>
+            <button class="btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة هذا السجل</button>
+        </div>
+
+        <!-- منطقة التنبيهات والرسائل التحذيرية الذكية -->
+        <div id="alertsContainer" class="alerts-wrapper"></div>
+
+        <!-- صندوق البحث السريع المخصص لسجل الغياب -->
+        <div id="attendanceSearchContainer" class="attendance-search-box" style="display: none;">
+            <label for="attendanceSearchInput"><i class="fa-solid fa-magnifying-glass"></i> بحث سريع لتسجيل الحضور والغياب وعرض الإحصائيات:</label>
+            <input type="text" id="attendanceSearchInput" placeholder="اكتبي اسم الطالب للبحث وملاحظة أيّام الغياب والإجازات والتسرب..." oninput="renderData()">
+        </div>
         
         <div class="table-responsive">
             <!-- جدول الطلاب -->
@@ -338,47 +453,52 @@
                         <th>اسم الطالب</th>
                         <th>الصف</th>
                         <th>الشعبة</th>
-                        <th>معلمة المادة</th>
                         <th>إجراءات</th>
                     </tr>
                 </thead>
                 <tbody id="studentsList"></tbody>
             </table>
 
-            <!-- جدول الغياب -->
+            <!-- جدول الغياب الإحصائي الذكي -->
             <table id="attendanceTable" style="display: none;">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>اسم الطالب</th>
                         <th>الصف والشعبة</th>
-                        <th>معلمة المادة</th>
-                        <th>حالة الدوام اليوم</th>
+                        <th>مجموع (غياب / إجازة / تسرب)</th>
+                        <th>تسجيل سريع للحالة</th>
+                        <th>الحالة الحالية اليوم</th>
                     </tr>
                 </thead>
                 <tbody id="attendanceList"></tbody>
             </table>
 
-            <!-- جدول الدرجات الأشهر (ش1 ، ش2 ، ش3) لكل مادة -->
-            <table id="gradesTable" style="display: none;">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>اسم الطالب</th>
-                        <th>المعلمة</th>
-                        <th>الإسلامية<br><small>ش1 / ش2 / ش3</small></th>
-                        <th>العربية<br><small>ش1 / ش2 / ش3</small></th>
-                        <th>الرياضيات<br><small>ش1 / ش2 / ش3</small></th>
-                        <th>الإنكليزية<br><small>ش1 / ش2 / ش3</small></th>
-                        <th>العلوم<br><small>ش1 / ش2 / ش3</small></th>
-                        <th>الأخلاقية<br><small>ش1 / ش2 / ش3</small></th>
-                        <th>الرياضة<br><small>ش1 / ش2 / ش3</small></th>
-                        <th>الفنية<br><small>ش1 / ش2 / ش3</small></th>
-                        <th>الاجتماعيات<br><small>ش1 / ش2 / ش3</small></th>
-                    </tr>
-                </thead>
-                <tbody id="gradesList"></tbody>
-            </table>
+            <!-- جدول الدرجات (للخامس والسادس فقط) -->
+            <div id="gradesContainer" style="display: none;">
+                <div id="primaryNotice" style="display: none; text-align: center; padding: 30px; color: #6b7280; font-size: 1.1rem; background: #f9fafb; border-radius: 10px;">
+                    <i class="fa-solid fa-circle-info" style="color: var(--warning); margin-bottom: 8px; font-size: 1.5rem; display: block;"></i>
+                    الصفوف الأولية (الأول، الثاني، الثالث، والرابع الابتدائي) لا تحتوي على امتحانات شهرية. سجل الدرجات مخصص للصفين (الخامس والسادس الابتدائي) فقط.
+                </div>
+                <table id="gradesTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>اسم الطالب</th>
+                            <th>الإسلامية<br><small>ش1 / ش2 / ش3</small></th>
+                            <th>العربية<br><small>ش1 / ش2 / ش3</small></th>
+                            <th>الرياضيات<br><small>ش1 / ش2 / ش3</small></th>
+                            <th>الإنكليزية<br><small>ش1 / ش2 / ش3</small></th>
+                            <th>العلوم<br><small>ش1 / ش2 / ش3</small></th>
+                            <th>الأخلاقية<br><small>ش1 / ش2 / ش3</small></th>
+                            <th>الرياضة<br><small>ش1 / ش2 / ش3</small></th>
+                            <th>الفنية<br><small>ش1 / ش2 / ش3</small></th>
+                            <th>الاجتماعيات<br><small>ش1 / ش2 / ش3</small></th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesList"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -392,7 +512,6 @@
     const gradesList = ["الأول الابتدائي", "الثاني الابتدائي", "الثالث الابتدائي", "الرابع الابتدائي", "الخامس الابتدائي", "السادس الابتدائي"];
     const sectionsList = ["أ", "ب", "ج"];
     
-    // قائمة المواد الدراسية المطلوبة
     const subjects = [
         { id: 'islamic', name: 'الإسلامية' },
         { id: 'arabic', name: 'العربية' },
@@ -414,6 +533,7 @@
 
     function saveTeacherName() {
         localStorage.setItem('m_teacher', document.getElementById('teacherName').value);
+        renderData();
     }
 
     function renderClassCards() {
@@ -446,7 +566,6 @@
         const nameInput = document.getElementById('studentName');
         const gradeInput = document.getElementById('gradeSelect');
         const sectionInput = document.getElementById('sectionSelect');
-        const teacherInput = document.getElementById('teacherName');
 
         const name = nameInput.value.trim();
         if (!name) {
@@ -459,8 +578,8 @@
             name: name,
             grade: gradeInput.value,
             section: sectionInput.value,
-            teacher: teacherInput.value.trim() || 'غير محدد',
             status: 'حاضر',
+            stats: { absent: 0, excused: 0, escaped: 0 },
             grades: {}
         };
 
@@ -484,12 +603,18 @@
     function updateStatus(id, newStatus) {
         const student = students.find(s => s.id === id);
         if (student) {
+            if (!student.stats) student.stats = { absent: 0, excused: 0, escaped: 0 };
+            
+            if (newStatus === 'غائب' && student.status !== 'غائب') student.stats.absent = (student.stats.absent || 0) + 1;
+            if (newStatus === 'مجاز' && student.status !== 'مجاز') student.stats.excused = (student.stats.excused || 0) + 1;
+            if (newStatus === 'متسرب' && student.status !== 'متسرب') student.stats.escaped = (student.stats.escaped || 0) + 1;
+
             student.status = newStatus;
             saveData();
+            renderData();
         }
     }
 
-    // دالة تحديث درجات الأشهر الثلاثة لكل مادة
     function updateGrade(id, subjectId, monthType, val) {
         const student = students.find(s => s.id === id);
         if (student) {
@@ -498,6 +623,7 @@
             
             student.grades[subjectId][monthType] = val;
             saveData();
+            renderData();
         }
     }
 
@@ -505,10 +631,60 @@
         localStorage.setItem('m_students', JSON.stringify(students));
     }
 
+    function checkSmartAlerts(filteredStudents) {
+        const alertsContainer = document.getElementById('alertsContainer');
+        alertsContainer.innerHTML = '';
+
+        const isUpperGrade = (currentGrade === "الخامس الابتدائي" || currentGrade === "السادس الابتدائي");
+
+        filteredStudents.forEach(s => {
+            const st = s.stats || { absent: 0 };
+            
+            // 1. تنبيه الغياب المتتالي (10 أيام أو أكثر)
+            if (st.absent >= 10) {
+                const alertEl = document.createElement('div');
+                alertEl.className = 'alert-box danger';
+                alertEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ⚠️ تنبيه غياب مكثف: الطالب <strong>(${s.name})</strong> بلغ عدد أيام غيابه المتتالية <strong>${st.absent} أيام</strong>! يرجى رفع تقرير للإدارة.`;
+                alertsContainer.appendChild(alertEl);
+            }
+
+            // 2. تنبيه عدم إدخال أو نقص درجات الامتحانات (للخامس والسادس فقط)
+            if (isUpperGrade) {
+                let missingSubjects = [];
+                subjects.forEach(sub => {
+                    const subData = (s.grades && s.grades[sub.id]) || { m1: '', m2: '', m3: '' };
+                    // فحص إذا كان هناك شهر أو شهرين غير مدخلة
+                    const enteredCount = [subData.m1, subData.m2, subData.m3].filter(v => v !== '' && v !== null && v !== undefined).length;
+                    if (enteredCount < 3) {
+                        missingSubjects.push(sub.name);
+                    }
+                });
+
+                if (missingSubjects.length > 0) {
+                    const alertEl = document.createElement('div');
+                    alertEl.className = 'alert-box warning';
+                    alertEl.innerHTML = `<i class="fa-solid fa-bell"></i> 📝 تنبيه الدرجات: الطالب <strong>(${s.name})</strong> لم يتم إكمال إدخال جميع درجات امتحانات الأشهر له في المادة/المواد: (<strong>${missingSubjects.join('، ')}</strong>).`;
+                    alertsContainer.appendChild(alertEl);
+                }
+            }
+        });
+    }
+
     function renderData() {
-        document.getElementById('sectionTitle').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${currentGrade} - شعبة (${currentSection})`;
+        const teacherName = localStorage.getItem('m_teacher') || 'غير محدد';
+        document.getElementById('sectionTitle').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${currentGrade} - شعبة (${currentSection}) <span style="font-size: 0.95rem; color: #4b5563; font-weight: normal; margin-right: 10px;">| معلمة المادة: <strong>${teacherName}</strong></span>`;
         
-        const filtered = students.filter(s => s.grade === currentGrade && s.section === currentSection);
+        let filtered = students.filter(s => s.grade === currentGrade && s.section === currentSection);
+
+        // فحص وإظهار التنبيهات المدرسية الذكية للشعبة الحالية
+        checkSmartAlerts(filtered);
+
+        // فلترة بالبحث لجدول الغياب
+        const searchKeyword = (document.getElementById('attendanceSearchInput').value || '').trim().toLowerCase();
+        let attendanceFiltered = filtered;
+        if (searchKeyword && currentView === 'attendance') {
+            attendanceFiltered = filtered.filter(s => s.name.toLowerCase().includes(searchKeyword));
+        }
         
         // جدول الطلاب
         const studentsBody = document.getElementById('studentsList');
@@ -518,19 +694,34 @@
                 <td><strong>${s.name}</strong></td>
                 <td>${s.grade}</td>
                 <td><span style="background: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 6px; font-weight: bold;">شعبة ${s.section}</span></td>
-                <td>${s.teacher}</td>
                 <td><button class="btn-delete" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i> حذف</button></td>
             </tr>
-        `).join('') || '<tr><td colspan="6" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
+        `).join('') || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
 
-        // جدول الغياب
+        // جدول الغياب مع أعداد وأيام الغياب والإجازات والتسرب
         const attendanceBody = document.getElementById('attendanceList');
-        attendanceBody.innerHTML = filtered.map((s, idx) => `
+        attendanceBody.innerHTML = attendanceFiltered.map((s, idx) => {
+            const st = s.stats || { absent: 0, excused: 0, escaped: 0 };
+            return `
             <tr>
                 <td>${idx + 1}</td>
                 <td><strong>${s.name}</strong></td>
                 <td>${s.grade} (${s.section})</td>
-                <td>${s.teacher}</td>
+                <td>
+                    <div class="stats-badges">
+                        <span class="badge absent">غائب: ${st.absent || 0} يوم</span>
+                        <span class="badge excused">مجاز: ${st.excused || 0} يوم</span>
+                        <span class="badge escaped">متسرب: ${st.escaped || 0} يوم</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="quick-btn-group">
+                        <button class="quick-btn present" onclick="updateStatus(${s.id}, 'حاضر')">حاضر</button>
+                        <button class="quick-btn absent" onclick="updateStatus(${s.id}, 'غائب')">غائب</button>
+                        <button class="quick-btn excused" onclick="updateStatus(${s.id}, 'مجاز')">مجاز</button>
+                        <button class="quick-btn escaped" onclick="updateStatus(${s.id}, 'متسرب')">متسرب</button>
+                    </div>
+                </td>
                 <td>
                     <select class="status-select" onchange="updateStatus(${s.id}, this.value)" style="background: ${getStatusColor(s.status)}; color: white;">
                         <option value="حاضر" ${s.status === 'حاضر' ? 'selected' : ''}>حاضر</option>
@@ -540,32 +731,44 @@
                     </select>
                 </td>
             </tr>
-        `).join('') || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب.</td></tr>';
+            `;
+        }).join('') || '<tr><td colspan="6" style="text-align:center;">لم يتم العثور على طالب بهذا الاسم.</td></tr>';
 
-        // جدول الدرجات الشهرية الثلاثة (ش1، ش2، ش3)
-        const gradesBody = document.getElementById('gradesList');
-        gradesBody.innerHTML = filtered.map((s, idx) => `
-            <tr>
-                <td>${idx + 1}</td>
-                <td><strong>${s.name}</strong></td>
-                <td>${s.teacher}</td>
-                ${subjects.map(sub => {
-                    const subData = (s.grades && s.grades[sub.id]) || { m1: '', m2: '', m3: '' };
-                    return `
-                        <td>
-                            <div class="subject-group" title="${sub.name}">
-                                <input type="number" class="grade-input m1" min="0" max="100" placeholder="ش1" 
-                                       value="${subData.m1}" oninput="updateGrade(${s.id}, '${sub.id}', 'm1', this.value)">
-                                <input type="number" class="grade-input m2" min="0" max="100" placeholder="ش2" 
-                                       value="${subData.m2}" oninput="updateGrade(${s.id}, '${sub.id}', 'm2', this.value)">
-                                <input type="number" class="grade-input m3" min="0" max="100" placeholder="ش3" 
-                                       value="${subData.m3}" oninput="updateGrade(${s.id}, '${sub.id}', 'm3', this.value)">
-                            </div>
-                        </td>
-                    `;
-                }).join('')}
-            </tr>
-        `).join('') || '<tr><td colspan="12" style="text-align:center;">لا يوجد طلاب.</td></tr>';
+        // التحقق مما إذا كان الصف خامس أو سادس لعرض سجل الدرجات الشهري
+        const isUpperGrade = (currentGrade === "الخامس الابتدائي" || currentGrade === "السادس الابتدائي");
+        const noticeEl = document.getElementById('primaryNotice');
+        const gradesTableEl = document.getElementById('gradesTable');
+
+        if (!isUpperGrade) {
+            noticeEl.style.display = 'block';
+            gradesTableEl.style.display = 'none';
+        } else {
+            noticeEl.style.display = 'none';
+            gradesTableEl.style.display = 'table';
+
+            const gradesBody = document.getElementById('gradesList');
+            gradesBody.innerHTML = filtered.map((s, idx) => `
+                <tr>
+                    <td>${idx + 1}</td>
+                    <td><strong>${s.name}</strong></td>
+                    ${subjects.map(sub => {
+                        const subData = (s.grades && s.grades[sub.id]) || { m1: '', m2: '', m3: '' };
+                        return `
+                            <td>
+                                <div class="subject-group" title="${sub.name}">
+                                    <input type="number" class="grade-input m1" min="0" max="100" placeholder="ش1" 
+                                           value="${subData.m1}" oninput="updateGrade(${s.id}, '${sub.id}', 'm1', this.value)">
+                                    <input type="number" class="grade-input m2" min="0" max="100" placeholder="ش2" 
+                                           value="${subData.m2}" oninput="updateGrade(${s.id}, '${sub.id}', 'm2', this.value)">
+                                    <input type="number" class="grade-input m3" min="0" max="100" placeholder="ش3" 
+                                           value="${subData.m3}" oninput="updateGrade(${s.id}, '${sub.id}', 'm3', this.value)">
+                                </div>
+                            </td>
+                        `;
+                    }).join('')}
+                </tr>
+            `).join('') || '<tr><td colspan="11" style="text-align:center;">لا يوجد طلاب.</td></tr>';
+        }
     }
 
     function getStatusColor(status) {
@@ -580,13 +783,14 @@
 
     function switchView(view, event) {
         currentView = view;
-        document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
-            if(idx < 3) btn.classList.remove('active');
+        document.querySelectorAll('.tab-btn').forEach((btn) => {
+            btn.classList.remove('active');
         });
 
         document.getElementById('studentsTable').style.display = view === 'students' ? 'table' : 'none';
         document.getElementById('attendanceTable').style.display = view === 'attendance' ? 'table' : 'none';
-        document.getElementById('gradesTable').style.display = view === 'grades' ? 'table' : 'none';
+        document.getElementById('attendanceSearchContainer').style.display = view === 'attendance' ? 'block' : 'none';
+        document.getElementById('gradesContainer').style.display = view === 'grades' ? 'block' : 'none';
 
         if(event && event.currentTarget) {
             event.currentTarget.classList.add('active');
