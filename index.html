@@ -372,14 +372,30 @@
         }
         .btn-delete:hover { background: var(--danger); color: white; }
 
+        /* تنسيق خاص بالطباعة: طباعة المحتوى النشط فقط وبشكل مرتب */
         @media print {
-            .nav-tabs, .card:first-of-type, .btn-delete, .classes-grid, .btn-print, .attendance-search-box, .alerts-wrapper {
+            body * {
+                visibility: hidden;
+            }
+            .card, .card * {
+                visibility: visible;
+            }
+            .card {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                background: white;
+            }
+            .nav-tabs, .card-header-flex button, .btn-delete, .classes-grid, .card:first-of-type, .attendance-search-box, .alerts-wrapper {
                 display: none !important;
             }
-            body { background: white; padding: 0; }
-            .container { max-width: 100%; }
-            header { background: none; color: black; box-shadow: none; padding: 0; }
-            .header-info { background: none; color: black; }
+            header {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -460,7 +476,7 @@
                 <tbody id="studentsList"></tbody>
             </table>
 
-            <!-- جدول أسماء الطلاب الصافي فقط (التسلسل والاسم فقط بدون أي تفاصيل أخرى) -->
+            <!-- جدول أسماء الطلاب الصافي فقط -->
             <table id="pureNamesTable" style="display: none;">
                 <thead>
                     <tr>
@@ -630,7 +646,6 @@
             
             student.grades[subjectId][monthType] = val;
             saveData();
-            renderData();
         }
     }
 
@@ -701,7 +716,7 @@
             </tr>
         `).join('') || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
 
-        // جدول أسماء الطلاب الصافي فقط (التسلسل والاسم فقط بدون أي أعمدة إضافية)
+        // جدول أسماء الطلاب الصافي فقط
         const pureNamesBody = document.getElementById('pureNamesList');
         pureNamesBody.innerHTML = filtered.map((s, idx) => `
             <tr>
@@ -746,7 +761,7 @@
             `;
         }).join('') || '<tr><td colspan="6" style="text-align:center;">لم يتم العثور على طالب بهذا الاسم.</td></tr>';
 
-        // سجل الدرجات (للخامس والسادس)
+        // سجل الدرجات (للخامس والسادس) مع إدخال الدرجة كاملة
         const isUpperGrade = (currentGrade === "الخامس الابتدائي" || currentGrade === "السادس الابتدائي");
         const noticeEl = document.getElementById('primaryNotice');
         const gradesTableEl = document.getElementById('gradesTable');
@@ -777,12 +792,12 @@
                         return `
                             <td>
                                 <div class="subject-group" title="${sub.name}">
-                                    <input type="number" class="grade-input m1" min="0" max="100" placeholder="ش1" 
-                                           value="${subData.m1}" oninput="updateGrade(${s.id}, '${sub.id}', 'm1', this.value)">
-                                    <input type="number" class="grade-input m2" min="0" max="100" placeholder="ش2" 
-                                           value="${subData.m2}" oninput="updateGrade(${s.id}, '${sub.id}', 'm2', this.value)">
-                                    <input type="number" class="grade-input m3" min="0" max="100" placeholder="ش3" 
-                                           value="${subData.m3}" oninput="updateGrade(${s.id}, '${sub.id}', 'm3', this.value)">
+                                    <input type="text" class="grade-input m1" placeholder="ش1" 
+                                           value="${subData.m1}" onchange="updateGrade(${s.id}, '${sub.id}', 'm1', this.value)">
+                                    <input type="text" class="grade-input m2" placeholder="ش2" 
+                                           value="${subData.m2}" onchange="updateGrade(${s.id}, '${sub.id}', 'm2', this.value)">
+                                    <input type="text" class="grade-input m3" placeholder="ش3" 
+                                           value="${subData.m3}" onchange="updateGrade(${s.id}, '${sub.id}', 'm3', this.value)">
                                 </div>
                             </td>
                         `;
