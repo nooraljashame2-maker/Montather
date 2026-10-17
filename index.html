@@ -36,7 +36,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -74,16 +74,6 @@
             align-items: center;
             gap: 8px;
             font-size: 0.95rem;
-        }
-
-        .teacher-box input {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            color: #333;
-            outline: none;
         }
 
         .nav-tabs {
@@ -141,11 +131,12 @@
 
         .form-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: 2fr 1.2fr 1fr 1.2fr auto;
             gap: 12px;
+            align-items: center;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .form-grid { grid-template-columns: 1fr; }
         }
 
@@ -155,6 +146,7 @@
             border-radius: 10px;
             outline: none;
             font-size: 0.95rem;
+            width: 100%;
         }
 
         input:focus, select:focus {
@@ -166,10 +158,12 @@
             background: var(--primary);
             color: white;
             border: none;
+            padding: 11px 20px;
             border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
+            white-space: nowrap;
         }
         .btn-add:hover { background: var(--primary-hover); }
 
@@ -219,10 +213,15 @@
         }
 
         th, td {
-            padding: 12px 15px;
-            text-align: right;
+            padding: 12px 8px;
+            text-align: center;
             border-bottom: 1px solid #e5e7eb;
             white-space: nowrap;
+            font-size: 0.88rem;
+        }
+
+        th:nth-child(2), td:nth-child(2) {
+            text-align: right;
         }
 
         th {
@@ -240,11 +239,25 @@
             font-size: 0.85rem;
         }
 
-        .grade-input {
-            width: 65px;
-            text-align: center;
-            padding: 6px;
+        /* تصميم حقول درجات الأشهر الثلاثة */
+        .subject-group {
+            display: flex;
+            gap: 3px;
+            justify-content: center;
         }
+
+        .grade-input {
+            width: 42px;
+            text-align: center;
+            padding: 5px 2px;
+            font-size: 0.82rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+        }
+
+        .grade-input.m1 { background: #f0fdf4; border-color: #86efac; } /* الشهر الأول */
+        .grade-input.m2 { background: #eff6ff; border-color: #93c5fd; } /* الشهر الثاني */
+        .grade-input.m3 { background: #fefce8; border-color: #fde047; } /* الشهر الثالث */
 
         .btn-delete {
             color: var(--danger);
@@ -257,7 +270,7 @@
         .btn-delete:hover { background: var(--danger); color: white; }
 
         @media print {
-            .nav-tabs, .card, .btn-delete, .classes-grid, .btn-print, .teacher-box input {
+            .nav-tabs, .card:first-of-type, .btn-delete, .classes-grid, .btn-print {
                 display: none !important;
             }
             body { background: white; padding: 0; }
@@ -273,27 +286,24 @@
     <header>
         <div class="header-title">
             <h1><i class="fa-solid fa-school"></i> نظام إدارة الطلاب والمدرسة</h1>
-            <p>إدارة الحضور، الغياب، والدرجات لكل مرحلة وشعبة</p>
+            <p>إدارة الحضور، الغياب، والدرجات الشهريّة لكل مرحلة وشعبة (أ، ب، ج)</p>
         </div>
         <div class="header-info">
             <div class="info-box"><i class="fa-solid fa-calendar-days"></i> <span id="currentDate"></span></div>
             <div class="info-box"><i class="fa-solid fa-graduation-cap"></i> السنة الدراسية: <strong>2026/2027</strong></div>
-            <div class="info-box teacher-box">
-                <i class="fa-solid fa-user-tie"></i> معلّمة المادة: 
-                <input type="text" id="teacherName" placeholder="اكتبي اسم المعلمة..." oninput="saveTeacherName()">
-            </div>
         </div>
     </header>
 
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchView('students', event)"><i class="fa-solid fa-users"></i> قائمة الطلاب</button>
         <button class="tab-btn" onclick="switchView('attendance', event)"><i class="fa-solid fa-clipboard-user"></i> سجل الغياب</button>
-        <button class="tab-btn" onclick="switchView('grades', event)"><i class="fa-solid fa-chart-simple"></i> سجل الدرجات</button>
+        <button class="tab-btn" onclick="switchView('grades', event)"><i class="fa-solid fa-chart-simple"></i> سجل الدرجات (أشهر 1، 2، 3)</button>
         <button class="tab-btn btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة الصفحة</button>
     </div>
 
+    <!-- نموذج إضافة طالب ومعلمة المادة -->
     <div class="card">
-        <div class="card-title"><i class="fa-solid fa-user-plus"></i> إضافة طالب جديد (توزيع وترتيب أبجدي تلقائي)</div>
+        <div class="card-title"><i class="fa-solid fa-user-plus"></i> إضافة طالب جديد ومعلمة المادة (ترتيب أبجدي تلقائي)</div>
         <div class="form-grid">
             <input type="text" id="studentName" placeholder="اسم الطالب الرباعي..." autocomplete="off">
             <select id="gradeSelect">
@@ -308,8 +318,8 @@
                 <option value="أ">شعبة (أ)</option>
                 <option value="ب">شعبة (ب)</option>
                 <option value="ج">شعبة (ج)</option>
-                <option value="د">شعبة (د)</option>
             </select>
+            <input type="text" id="teacherName" placeholder="اسم معلمة المادة..." oninput="saveTeacherName()">
             <button class="btn-add" onclick="addStudent()"><i class="fa-solid fa-plus"></i> إضافة الطالب</button>
         </div>
     </div>
@@ -320,6 +330,7 @@
         <div class="card-title" id="sectionTitle"><i class="fa-solid fa-list"></i> أسماء الطلاب</div>
         
         <div class="table-responsive">
+            <!-- جدول الطلاب -->
             <table id="studentsTable">
                 <thead>
                     <tr>
@@ -327,38 +338,43 @@
                         <th>اسم الطالب</th>
                         <th>الصف</th>
                         <th>الشعبة</th>
+                        <th>معلمة المادة</th>
                         <th>إجراءات</th>
                     </tr>
                 </thead>
                 <tbody id="studentsList"></tbody>
             </table>
 
+            <!-- جدول الغياب -->
             <table id="attendanceTable" style="display: none;">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>اسم الطالب</th>
                         <th>الصف والشعبة</th>
+                        <th>معلمة المادة</th>
                         <th>حالة الدوام اليوم</th>
                     </tr>
                 </thead>
                 <tbody id="attendanceList"></tbody>
             </table>
 
+            <!-- جدول الدرجات الأشهر (ش1 ، ش2 ، ش3) لكل مادة -->
             <table id="gradesTable" style="display: none;">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>اسم الطالب</th>
-                        <th>الإسلامية</th>
-                        <th>العربية</th>
-                        <th>الرياضيات</th>
-                        <th>الإنكليزية</th>
-                        <th>العلوم</th>
-                        <th>الأخلاقية</th>
-                        <th>الرياضة</th>
-                        <th>الفنية</th>
-                        <th>الاجتماعيات</th>
+                        <th>المعلمة</th>
+                        <th>الإسلامية<br><small>ش1 / ش2 / ش3</small></th>
+                        <th>العربية<br><small>ش1 / ش2 / ش3</small></th>
+                        <th>الرياضيات<br><small>ش1 / ش2 / ش3</small></th>
+                        <th>الإنكليزية<br><small>ش1 / ش2 / ش3</small></th>
+                        <th>العلوم<br><small>ش1 / ش2 / ش3</small></th>
+                        <th>الأخلاقية<br><small>ش1 / ش2 / ش3</small></th>
+                        <th>الرياضة<br><small>ش1 / ش2 / ش3</small></th>
+                        <th>الفنية<br><small>ش1 / ش2 / ش3</small></th>
+                        <th>الاجتماعيات<br><small>ش1 / ش2 / ش3</small></th>
                     </tr>
                 </thead>
                 <tbody id="gradesList"></tbody>
@@ -374,8 +390,20 @@
     let currentView = "students";
 
     const gradesList = ["الأول الابتدائي", "الثاني الابتدائي", "الثالث الابتدائي", "الرابع الابتدائي", "الخامس الابتدائي", "السادس الابتدائي"];
-    const sectionsList = ["أ", "ب", "ج", "د"];
-    const subjects = ["islamic", "arabic", "math", "english", "science", "ethics", "sports", "art", "social"];
+    const sectionsList = ["أ", "ب", "ج"];
+    
+    // قائمة المواد الدراسية المطلوبة
+    const subjects = [
+        { id: 'islamic', name: 'الإسلامية' },
+        { id: 'arabic', name: 'العربية' },
+        { id: 'math', name: 'الرياضيات' },
+        { id: 'english', name: 'الإنكليزية' },
+        { id: 'science', name: 'العلوم' },
+        { id: 'ethics', name: 'الأخلاقية' },
+        { id: 'sports', name: 'الرياضة' },
+        { id: 'art', name: 'الفنية' },
+        { id: 'social', name: 'الاجتماعيات' }
+    ];
 
     function setHeaderDate() {
         const now = new Date();
@@ -418,6 +446,7 @@
         const nameInput = document.getElementById('studentName');
         const gradeInput = document.getElementById('gradeSelect');
         const sectionInput = document.getElementById('sectionSelect');
+        const teacherInput = document.getElementById('teacherName');
 
         const name = nameInput.value.trim();
         if (!name) {
@@ -430,6 +459,7 @@
             name: name,
             grade: gradeInput.value,
             section: sectionInput.value,
+            teacher: teacherInput.value.trim() || 'غير محدد',
             status: 'حاضر',
             grades: {}
         };
@@ -459,11 +489,14 @@
         }
     }
 
-    function updateGrade(id, subject, val) {
+    // دالة تحديث درجات الأشهر الثلاثة لكل مادة
+    function updateGrade(id, subjectId, monthType, val) {
         const student = students.find(s => s.id === id);
         if (student) {
             if (!student.grades) student.grades = {};
-            student.grades[subject] = val;
+            if (!student.grades[subjectId]) student.grades[subjectId] = { m1: '', m2: '', m3: '' };
+            
+            student.grades[subjectId][monthType] = val;
             saveData();
         }
     }
@@ -477,6 +510,7 @@
         
         const filtered = students.filter(s => s.grade === currentGrade && s.section === currentSection);
         
+        // جدول الطلاب
         const studentsBody = document.getElementById('studentsList');
         studentsBody.innerHTML = filtered.map((s, idx) => `
             <tr>
@@ -484,16 +518,19 @@
                 <td><strong>${s.name}</strong></td>
                 <td>${s.grade}</td>
                 <td><span style="background: #e0f2fe; color: #0369a1; padding: 3px 8px; border-radius: 6px; font-weight: bold;">شعبة ${s.section}</span></td>
+                <td>${s.teacher}</td>
                 <td><button class="btn-delete" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i> حذف</button></td>
             </tr>
-        `).join('') || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
+        `).join('') || '<tr><td colspan="6" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
 
+        // جدول الغياب
         const attendanceBody = document.getElementById('attendanceList');
         attendanceBody.innerHTML = filtered.map((s, idx) => `
             <tr>
                 <td>${idx + 1}</td>
                 <td><strong>${s.name}</strong></td>
                 <td>${s.grade} (${s.section})</td>
+                <td>${s.teacher}</td>
                 <td>
                     <select class="status-select" onchange="updateStatus(${s.id}, this.value)" style="background: ${getStatusColor(s.status)}; color: white;">
                         <option value="حاضر" ${s.status === 'حاضر' ? 'selected' : ''}>حاضر</option>
@@ -503,22 +540,32 @@
                     </select>
                 </td>
             </tr>
-        `).join('') || '<tr><td colspan="4" style="text-align:center;">لا يوجد طلاب.</td></tr>';
+        `).join('') || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب.</td></tr>';
 
+        // جدول الدرجات الشهرية الثلاثة (ش1، ش2، ش3)
         const gradesBody = document.getElementById('gradesList');
         gradesBody.innerHTML = filtered.map((s, idx) => `
             <tr>
                 <td>${idx + 1}</td>
                 <td><strong>${s.name}</strong></td>
-                ${subjects.map(sub => `
-                    <td>
-                        <input type="number" class="grade-input" min="0" max="100" 
-                               value="${(s.grades && s.grades[sub]) || ''}" 
-                               onchange="updateGrade(${s.id}, '${sub}', this.value)" placeholder="-">
-                    </td>
-                `).join('')}
+                <td>${s.teacher}</td>
+                ${subjects.map(sub => {
+                    const subData = (s.grades && s.grades[sub.id]) || { m1: '', m2: '', m3: '' };
+                    return `
+                        <td>
+                            <div class="subject-group" title="${sub.name}">
+                                <input type="number" class="grade-input m1" min="0" max="100" placeholder="ش1" 
+                                       value="${subData.m1}" oninput="updateGrade(${s.id}, '${sub.id}', 'm1', this.value)">
+                                <input type="number" class="grade-input m2" min="0" max="100" placeholder="ش2" 
+                                       value="${subData.m2}" oninput="updateGrade(${s.id}, '${sub.id}', 'm2', this.value)">
+                                <input type="number" class="grade-input m3" min="0" max="100" placeholder="ش3" 
+                                       value="${subData.m3}" oninput="updateGrade(${s.id}, '${sub.id}', 'm3', this.value)">
+                            </div>
+                        </td>
+                    `;
+                }).join('')}
             </tr>
-        `).join('') || '<tr><td colspan="11" style="text-align:center;">لا يوجد طلاب.</td></tr>';
+        `).join('') || '<tr><td colspan="12" style="text-align:center;">لا يوجد طلاب.</td></tr>';
     }
 
     function getStatusColor(status) {
