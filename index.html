@@ -407,7 +407,7 @@
 
     <!-- نموذج إضافة طالب ومعلمة المادة -->
     <div class="card">
-        <div class="card-title"><i class="fa-solid fa-user-plus"></i> إضافة طالب جديد ومعلمة الشعبة (ترتيب أبجدي تلقائي)</div>
+        <div class="card-title"><i class="fa-solid fa-user-plus"></i> إضافة طالب جديد ومرشد الصف (ترتيب أبجدي تلقائي)</div>
         <div class="form-grid">
             <input type="text" id="studentName" placeholder="اسم الطالب الرباعي..." autocomplete="off">
             <select id="gradeSelect">
@@ -423,7 +423,7 @@
                 <option value="ب">شعبة (ب)</option>
                 <option value="ج">شعبة (ج)</option>
             </select>
-            <input type="text" id="teacherName" placeholder="اسم معلمة المادة..." oninput="saveTeacherName()">
+            <input type="text" id="teacherName" placeholder="اسم مرشد الصف..." oninput="saveTeacherName()">
             <button class="btn-add" onclick="addStudent()"><i class="fa-solid fa-plus"></i> إضافة الطالب</button>
         </div>
     </div>
@@ -460,7 +460,7 @@
                 <tbody id="studentsList"></tbody>
             </table>
 
-            <!-- جدول أسماء الطلاب الصافي فقط (بدون صف، شعبة، أو حذف) -->
+            <!-- جدول أسماء الطلاب الصافي فقط (التسلسل والاسم فقط بدون أي تفاصيل أخرى) -->
             <table id="pureNamesTable" style="display: none;">
                 <thead>
                     <tr>
@@ -677,7 +677,7 @@
 
     function renderData() {
         const teacherName = localStorage.getItem('m_teacher') || 'غير محدد';
-        document.getElementById('sectionTitle').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${currentGrade} - شعبة (${currentSection}) <span style="font-size: 0.95rem; color: #4b5563; font-weight: normal; margin-right: 10px;">| معلمة المادة: <strong>${teacherName}</strong></span>`;
+        document.getElementById('sectionTitle').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${currentGrade} - شعبة (${currentSection}) <span style="font-size: 0.95rem; color: #4b5563; font-weight: normal; margin-right: 10px;">| مرشد الصف: <strong>${teacherName}</strong></span>`;
         
         let filtered = students.filter(s => s.grade === currentGrade && s.section === currentSection);
 
@@ -701,7 +701,7 @@
             </tr>
         `).join('') || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
 
-        // جدول أسماء الطلاب الصافي فقط (التسلسل والاسم فقط بدون صف أو شعبة أو حذف)
+        // جدول أسماء الطلاب الصافي فقط (التسلسل والاسم فقط بدون أي أعمدة إضافية)
         const pureNamesBody = document.getElementById('pureNamesList');
         pureNamesBody.innerHTML = filtered.map((s, idx) => `
             <tr>
