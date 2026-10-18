@@ -170,12 +170,6 @@
             border: 1px solid #fca5a5;
         }
 
-        .alert-box.warning {
-            background-color: #fffbe3;
-            color: #854d0e;
-            border: 1px solid #fde047;
-        }
-
         .form-grid {
             display: grid;
             grid-template-columns: 2fr 1.2fr 1fr 1.2fr auto;
@@ -372,14 +366,84 @@
         }
         .btn-delete:hover { background: var(--danger); color: white; }
 
-        /* تنسيق خاص بالطباعة: طباعة المحتوى النشط فقط وبشكل مرتب */
+        /* ==========================================
+           تنسيق أيقونة تنبيه الدرجات المخصصة (Tooltip)
+        ========================================== */
+        .student-name-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-icon-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .alert-bell-btn {
+            background: #fffbe3;
+            border: 1px solid #fde047;
+            color: #d97706;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        .alert-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            width: 280px;
+            background-color: #fffbe3;
+            color: #854d0e;
+            text-align: right;
+            border-radius: 10px;
+            padding: 10px 12px;
+            position: absolute;
+            z-index: 100;
+            top: 50%;
+            right: 105%;
+            transform: translateY(-50%);
+            transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out;
+            border: 1px solid #fde047;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            white-space: normal;
+        }
+
+        .alert-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            margin-top: -6px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent transparent #fde047;
+        }
+
+        .alert-icon-wrapper:hover .alert-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* تنسيق خاص بالطباعة */
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            .card, .card * {
-                visibility: visible;
-            }
+            body * { visibility: hidden; }
+            .card, .card * { visibility: visible; }
             .card {
                 position: absolute;
                 left: 0;
@@ -390,12 +454,10 @@
                 margin: 0;
                 background: white;
             }
-            .nav-tabs, .card-header-flex button, .btn-delete, .classes-grid, .card:first-of-type, .attendance-search-box, .alerts-wrapper {
+            .nav-tabs, .card-header-flex button, .btn-delete, .classes-grid, .card:first-of-type, .attendance-search-box, .alerts-wrapper, .alert-icon-wrapper {
                 display: none !important;
             }
-            header {
-                display: none !important;
-            }
+            header { display: none !important; }
         }
     </style>
 </head>
@@ -458,7 +520,7 @@
             <input type="text" id="attendanceSearchInput" placeholder="اكتبي اسم الطالب للبحث وملاحظة أيّام الغياب والإجازات والتسرب..." oninput="renderData()">
         </div>
 
-        <!-- منطقة التنبيهات والرسائل التحذيرية الذكية -->
+        <!-- منطقة التنبيهات العامة للغياب فقط -->
         <div id="alertsContainer" class="alerts-wrapper"></div>
         
         <div class="table-responsive">
@@ -646,6 +708,7 @@
             
             student.grades[subjectId][monthType] = val;
             saveData();
+            renderData();
         }
     }
 
@@ -653,39 +716,36 @@
         localStorage.setItem('m_students', JSON.stringify(students));
     }
 
+    // إرجاع قائمة المواد غير المكتملة للطالب
+    function getMissingSubjectsForStudent(student) {
+        const isUpperGrade = (student.grade === "الخامس الابتدائي" || student.grade === "السادس الابتدائي");
+        if (!isUpperGrade) return [];
+
+        const currentSubjects = getSubjectsForGrade(student.grade);
+        let missingSubjects = [];
+
+        currentSubjects.forEach(sub => {
+            const subData = (student.grades && student.grades[sub.id]) || { m1: '', m2: '', m3: '' };
+            const enteredCount = [subData.m1, subData.m2, subData.m3].filter(v => v !== '' && v !== null && v !== undefined).length;
+            if (enteredCount < 3) {
+                missingSubjects.push(sub.name);
+            }
+        });
+
+        return missingSubjects;
+    }
+
     function checkSmartAlerts(filteredStudents) {
         const alertsContainer = document.getElementById('alertsContainer');
         alertsContainer.innerHTML = '';
 
-        const isUpperGrade = (currentGrade === "الخامس الابتدائي" || currentGrade === "السادس الابتدائي");
-        const currentSubjects = getSubjectsForGrade(currentGrade);
-
         filteredStudents.forEach(s => {
             const st = s.stats || { absent: 0 };
-            
             if (st.absent >= 10) {
                 const alertEl = document.createElement('div');
                 alertEl.className = 'alert-box danger';
                 alertEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ⚠️ تنبيه غياب مكثف: الطالب <strong>(${s.name})</strong> بلغ عدد أيام غيابه المتتالية <strong>${st.absent} أيام</strong>! يرجى رفع تقرير للإدارة.`;
                 alertsContainer.appendChild(alertEl);
-            }
-
-            if (isUpperGrade) {
-                let missingSubjects = [];
-                currentSubjects.forEach(sub => {
-                    const subData = (s.grades && s.grades[sub.id]) || { m1: '', m2: '', m3: '' };
-                    const enteredCount = [subData.m1, subData.m2, subData.m3].filter(v => v !== '' && v !== null && v !== undefined).length;
-                    if (enteredCount < 3) {
-                        missingSubjects.push(sub.name);
-                    }
-                });
-
-                if (missingSubjects.length > 0) {
-                    const alertEl = document.createElement('div');
-                    alertEl.className = 'alert-box warning';
-                    alertEl.innerHTML = `<i class="fa-solid fa-bell"></i> 📝 تنبيه الدرجات: الطالب <strong>(${s.name})</strong> لم يتم إكمال إدخال جميع درجات امتحانات الأشهر له في المادة/المواد: (<strong>${missingSubjects.join('، ')}</strong>).`;
-                    alertsContainer.appendChild(alertEl);
-                }
             }
         });
     }
@@ -704,7 +764,7 @@
             attendanceFiltered = filtered.filter(s => s.name.toLowerCase().includes(searchKeyword));
         }
         
-        // جدول الطلاب الرئيسي (لإدارة الطلاب)
+        // 1. جدول الطلاب الرئيسي (لإدارة الطلاب)
         const studentsBody = document.getElementById('studentsList');
         studentsBody.innerHTML = filtered.map((s, idx) => `
             <tr>
@@ -716,7 +776,7 @@
             </tr>
         `).join('') || '<tr><td colspan="5" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
 
-        // جدول أسماء الطلاب الصافي فقط
+        // 2. جدول أسماء الطلاب الصافي فقط
         const pureNamesBody = document.getElementById('pureNamesList');
         pureNamesBody.innerHTML = filtered.map((s, idx) => `
             <tr>
@@ -725,7 +785,7 @@
             </tr>
         `).join('') || '<tr><td colspan="2" style="text-align:center;">لا يوجد طلاب مسجلون في هذه الشعبة.</td></tr>';
 
-        // جدول الغياب
+        // 3. جدول الغياب
         const attendanceBody = document.getElementById('attendanceList');
         attendanceBody.innerHTML = attendanceFiltered.map((s, idx) => {
             const st = s.stats || { absent: 0, excused: 0, escaped: 0 };
@@ -761,7 +821,7 @@
             `;
         }).join('') || '<tr><td colspan="6" style="text-align:center;">لم يتم العثور على طالب بهذا الاسم.</td></tr>';
 
-        // سجل الدرجات (للخامس والسادس) مع إدخال الدرجة كاملة
+        // 4. سجل الدرجات المطور بخاصية التنبيه بالأيقونات المخفية
         const isUpperGrade = (currentGrade === "الخامس الابتدائي" || currentGrade === "السادس الابتدائي");
         const noticeEl = document.getElementById('primaryNotice');
         const gradesTableEl = document.getElementById('gradesTable');
@@ -783,10 +843,34 @@
             `;
 
             const gradesBody = document.getElementById('gradesList');
-            gradesBody.innerHTML = filtered.map((s, idx) => `
+            gradesBody.innerHTML = filtered.map((s, idx) => {
+                const missing = getMissingSubjectsForStudent(s);
+                let alertHtml = '';
+                
+                if (missing.length > 0) {
+                    alertHtml = `
+                        <div class="alert-icon-wrapper">
+                            <span class="alert-bell-btn">
+                                <i class="fa-solid fa-pen-to-square"></i> <i class="fa-solid fa-bell"></i>
+                            </span>
+                            <div class="alert-tooltip">
+                                📝 <strong>تنبيه الدرجات:</strong><br>
+                                لم يتم إكمال إدخال جميع درجات امتحانات الأشهر له في المادة/المواد:<br>
+                                <strong>(${missing.join('، ')})</strong>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return `
                 <tr>
                     <td>${idx + 1}</td>
-                    <td><strong>${s.name}</strong></td>
+                    <td>
+                        <div class="student-name-container">
+                            <strong>${s.name}</strong>
+                            ${alertHtml}
+                        </div>
+                    </td>
                     ${activeSubjects.map(sub => {
                         const subData = (s.grades && s.grades[sub.id]) || { m1: '', m2: '', m3: '' };
                         return `
@@ -803,7 +887,8 @@
                         `;
                     }).join('')}
                 </tr>
-            `).join('') || `<tr><td colspan="${activeSubjects.length + 2}" style="text-align:center;">لا يوجد طلاب.</td></tr>`;
+                `;
+            }).join('') || `<tr><td colspan="${activeSubjects.length + 2}" style="text-align:center;">لا يوجد طلاب.</td></tr>`;
         }
     }
 
